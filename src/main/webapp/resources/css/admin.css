@@ -11,8 +11,6 @@
         #B16359   Brown
         #E79F75   Orange
     */
-    
-*/
 
 
 /* header */
@@ -63,14 +61,19 @@ header #dropmenu {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgba(244, 162, 89, 0.7);
+    /* background-color: rgba(244, 162, 89, 0.7); */
+    background-color: rgb(255, 235, 226);
 }
 
 header #dropmenu a {
     display: block;
     text-align: center;
+    margin-bottom: 5px;
 }
 
+header #dropmenu a:nth-child(1) {
+	margin-top: 5px;
+}
 
 /* section */
 
@@ -82,7 +85,11 @@ section {
 /* footer */
 
 footer {
-    background-color:#e79f75;
+    clear:both;
+}
+
+footer {
+    background-color:#e6e6e6;
 }
 
 #footerlink > ul {
@@ -101,6 +108,43 @@ footer {
 
 footer .copy {
     text-align: center;
+    padding-bottom: 10px;
+}
+
+
+/* footer에 고정되어있는 logo */
+footer .logo {
+    width:250px;
+}
+
+footer {
+    background-color: rgb(247, 247, 247);
+    text-align:center;
+    padding: 20px;
+}
+
+footer .click_footer {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    top: 30px;
+    left: 30px;
+    margin-left: -20px;
+}
+
+footer .hot_line {
+    display: inline-block;
+    width: 200px;
+    height: 80px;
+    background-color: #f18579ff;
+    border-radius: 20px;
+    padding: 16px;
+    margin-left: 130px;
+}
+
+footer .hot_line, footer .hot_line p {
+    color: white;
+    font-size: 1.1em;
 }
 
 /* global */
@@ -167,7 +211,7 @@ h6 { font-size:15px; }
 /* 7. 일반 강조 */
 strong, b {
     font-family: 'S-CoreDream-3Light';
-    color:#5B8E7D;
+    color: #B16359;
 }
 
 /*
