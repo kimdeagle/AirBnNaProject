@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review">
+
+	<!-- <insert id="add" parameterType="dto">
+		insert into tblSpringBoard(seq, id, subject, content, regdate) values (seqSpringBoard.nextVal, #{id}, #{subject}, #{content}, default)
+	</insert>
+	
+	<select id="list" resultType="dto">
+		select * from tblSpringBoard order by seq desc
+	</select> -->
+	
+	<select id="list" resultType="com.test.bnna.member.review.ReviewDTO">
+		select r.*, b.bookdate from tblReview r
+    inner join tblBook b
+        on r.seqbook=b.seq
+        	where b.seqmember=1
+	</select>
+	
+<!-- 	<insert id="add" parameterType="dto">
+		insert into tblReview(seq, seqBook, title, content, star, readcnt, recommendcnt, thread, depth, secret) values (seqReview.nextVal, #{seq}, #{title}, #{content}, #{star}, 0, 0, select max(thread)+1000 from tblReview), 0, 0)
+	</insert> -->
+	
+</mapper>
