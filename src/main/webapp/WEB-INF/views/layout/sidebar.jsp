@@ -18,6 +18,7 @@
 		<tiles:insertAttribute name="header"></tiles:insertAttribute>
 		<tiles:insertAttribute name="sidebar"></tiles:insertAttribute>
 		<tiles:insertAttribute name="content"></tiles:insertAttribute>		
+		<tiles:insertAttribute name="footer"></tiles:insertAttribute>		
 	</div>
 
 </body>
