@@ -26,7 +26,7 @@ public class ReviewController {
 		
 		req.setAttribute("list", list);
 		
-		return "member.review.list";
+		return "member.sidebar.review.list";
 	}
 	
 }
