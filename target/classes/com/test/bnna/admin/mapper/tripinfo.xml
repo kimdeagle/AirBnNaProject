@@ -6,4 +6,12 @@
 <!-- test.xml(Mapper File) SQL 관리 파일 -->
 <mapper namespace="tripinfo">
 
+	<select id="list" resultType="com.test.bnna.admin.board.tripinfo.TripInfoDTO">
+		select * from tblTripInfo order by seq desc
+	</select>
+
+	<select id="view" parameterType="String" resultType="com.test.bnna.admin.board.tripinfo.TripInfoDTO">
+		select * from tblTripInfo where seq = #{seq} order by seq desc 
+	</select>
+
 </mapper>

@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<link rel="stylesheet" href="/bnna/resources/css/admin-tripinfo.css">
+
 <section class="mainsection">
 
     <div id="menupath">
         게시판 <span class="glyphicon glyphicon-menu-right" style="position: static; z-index: -1;"></span> 여행정보 게시판
-        <span class="glyphicon glyphicon-menu-right" style="position: static; z-index: -1;"></span> 목록보기
+        <span class="glyphicon glyphicon-menu-right" style="position: static; z-index: -1;"></span> 전체보기
     </div>
-    <hr>
+    <hr style="margin-top: -5px">
     <!-- 여기까지 menu path -->
 
     <article>
@@ -26,19 +29,13 @@
         <div class="admin-listarea">
             <table class="tbl-tripinfo table table-bordered">
                 <tr>
-                    <th>글번호</th>
+                    <th>번호</th>
                     <th>제목</th>
                     <th>조회수</th>
                     <th>작성일</th>
                 </tr>
                 <tr>
-                    <td>1</td>
-                    <td><a href="#">제목입니다.</a></td>
-                    <td>10</td>
-                    <td>2021-02-02</td>
-                </tr>
-                <tr>
-                    <td>1</td>
+                    <td>0</td>
                     <td>
                         <span class="glyphicon glyphicon-share-alt"></span>
                         <a href="#">제목입니다.</a>
@@ -49,12 +46,32 @@
                     <td>10</td>
                     <td>2021-02-02</td>
                 </tr>
+                
+                <c:forEach items="${list}" var="dto">
                 <tr>
-                    <td>1</td>
-                    <td><a href="#">제목입니다.</a></td>
-                    <td>10</td>
-                    <td>2021-02-02</td>
+                    <td>${dto.seq}</td>
+                    <td>
+              	 	<a href="/bnna/admin/board/tripinfo/view.action?seq=${dto.seq}&search=${search}&page=${nowPage}" 
+          	style="margin-left: ${dto.depth * 30}px;">
+          			
+          			<c:if test="${dto.depth > 0}">
+          			<span class="glyphicon glyphicon-share-alt"></span>
+          			</c:if>
+          			
+                    ${dto.subject}
+                    
+                    <!-- 댓글 수 -->
+                   	<c:if test="${dto.cmtcnt > 0}">
+                   	<span class="badge">${dto.cmtcnt}</span>
+                   	</c:if>
+                   	
+                    </a>
+                    </td>
+                    <td>${dto.readcnt}</td>
+                    <td>${dto.regdate.substring(0, 10)}</td>
                 </tr>
+                </c:forEach>
+                
             </table>
 
             <div class=pagearea>
