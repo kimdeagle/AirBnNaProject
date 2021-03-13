@@ -401,3 +401,9 @@ section #menupath span {
     color: #e79f75;
     vertical-align: middle;
 }
+
+
+/* + 페이지바 구역 가운데 정렬 (21.03.13 추가)  */
+.pagearea {
+    text-align: center;
+}

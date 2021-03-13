@@ -487,6 +487,10 @@ footer .hot_line, footer .hot_line p {
 
 /* + 페이지 바 넣을까 말까 고민중 */
 /* pagination */
+.pagearea {
+    text-align: center;
+}
+
 .pagination {
     display: inline-block;
 }
