@@ -387,3 +387,17 @@ a, button, input[type=button] {
 a {
     text-decoration: none;
 }
+
+
+/* + 헤더 아래 메뉴 경로 보여주는 바 menupath (21.03.13 추가)  */
+section #menupath { 
+    border-left: 3px solid #e79f75;
+    padding-left: 10px;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+section #menupath span {
+    color: #e79f75;
+    vertical-align: middle;
+}
