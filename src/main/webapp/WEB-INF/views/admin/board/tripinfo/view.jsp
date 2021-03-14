@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <link rel="stylesheet" href="/bnna/resources/css/admin-tripinfo.css">
 
 <section class="mainsection">
@@ -17,28 +18,29 @@
 
 	<article>
 
-		<h1>여행정보 게시판</h1>
+		<h2>여행정보 게시판</h2>
 
+		<hr>
 
 		<div class="viewarea">
 
-			<div class="subject">[여행정보제목] 제목입니다.</div>
+			<div class="subject">${dto.subject}</div>
 			<div class="btnarea">
-				<button class="btn btn-list">목록으로</button>
+				<button class="btn btn-list" onclick="location.href='/bnna/admin/board/tripinfo/list.action';">목록으로</button>
 				<button class="btn link">스크랩</button>
 			</div>
 
 			<div class="imgarea">
 				<div class="background">
 					<span class="glyphicon glyphicon-chevron-left"></span> <img
-						src="/image/tripplan/1.jpg" alt=""> <span
+						src="/bnna/resources/image/tripinfo/1_1.png" alt=""> <span
 						class="glyphicon glyphicon-chevron-right"></span>
 				</div>
 			</div>
-
-			<div class="content">글 내용입니다. 어쩌구 저쩌구입니다. 글 내용입니다. 어쩌구 저쩌구입니다.
-				글 내용입니다. 어쩌구 저쩌구입니다. 글 내용입니다. 어쩌구 저쩌구입니다. 글 내용입니다. 어쩌구 저쩌구입니다. 글
-				내용입니다. 어쩌구 저쩌구입니다. 글 내용입니다. 어쩌구 저쩌구입니다. 글 내용입니다. 어쩌구 저쩌구입니다.</div>
+			
+			<div class="content">
+				 <p style="white-space: pre-line;">${dto.content}</p>
+			</div>
 
 
 			<div class="related">
@@ -57,20 +59,24 @@
 			<div class="cmtarea">
 				댓글
 				<table class="table tbl-cmt">
+				
+					<c:forEach items="${cmtlist}" var="cdto">
 					<tr>
 						<td rowspan="2" class="pic">
 							<div class="crop">
-								<img src="/image/annface.jpg" alt="">
+								<img src="/bnna/resources/image/mempic/${cdto.pic}" alt="">
 							</div>
 						</td>
-						<td class="id small">anna123</td>
+						<td class="id small">${cdto.id}</td>
 						<td></td>
-						<td class="regdate small">2021-02-02 11:11:11</td>
+						<td class="regdate small">${cdto.regdate}</td>
 					</tr>
 					<tr>
-						<td colspan="2" class="ccontent noborder">댓글내용입니다롱</td>
+						<td colspan="2" class="ccontent noborder">${cdto.ccontent}</td>
 						<td class="btn-del noborder"><span>[삭제]</span></td>
 					</tr>
+					</c:forEach>
+
 				</table>
 
 				<div class="cmt-write">

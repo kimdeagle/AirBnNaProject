@@ -11,7 +11,19 @@
 	</select>
 
 	<select id="view" parameterType="String" resultType="com.test.bnna.admin.board.tripinfo.TripInfoDTO">
-		select * from tblTripInfo where seq = #{seq} order by seq desc 
+		select * from tblTripInfo where seq = #{seq}
 	</select>
+
+	<select id="cmtlist" parameterType="String" resultType="com.test.bnna.admin.board.tripinfo.TripInfoCmtDTO">
+		select 
+		    m.pic,
+		    m.id,
+		    tpc.*
+		from tblTripinfocmt tpc
+		    inner join tblMember m
+		        on m.seq = tpc.seqmember
+		where tpc.seqtripinfo = #{seq}
+	</select>
+	
 
 </mapper>

@@ -5,6 +5,10 @@
     2. tripinfo view
 
 */
+.mainsection {
+	width: 100%;
+}
+
 
 /*   1. tripinfo list   */
 /* list table */
@@ -50,14 +54,31 @@
 
 
 /* 검색창 및 버튼 */
+.boardhead {
+    padding: 15px 0px 10px;
+}
+
 .searcharea {
     display: inline-block;
-	padding-bottom: 20px;
+}
+
+.searcharea .boardsearch {
+    width: 300px;
+    float: left;
+    margin-left: 615px;
+}
+
+.searcharea .btn {
+    float: left;
+    background-color: #f1a979ff;
+}
+
+.searcharea .btn span {
+    color: white;
 }
 
 .btns {
-    display: inline-block;
-    margin-left: 500px;
+    float: left;
 }
 
 .btns::after {
@@ -69,8 +90,8 @@
 .btns .btn-thumbnail {
     background-color:#e79f75;
     color: white;
-    
 }
+
 
 
 
@@ -80,7 +101,7 @@
 /* 제목 + 상위버튼 영역 */
 .viewarea .subject {
     font-weight: bold;
-    font-size: 1.6em;
+    font-size: 1.8em;
     margin-top: 10px;
 }
 
@@ -97,6 +118,10 @@
     border-radius: 10px;
     padding: 20px;
     margin: 10px 0px;
+}
+
+.viewarea .imgarea img {
+	width: 500px;
 }
 
 .viewarea .imgarea span {

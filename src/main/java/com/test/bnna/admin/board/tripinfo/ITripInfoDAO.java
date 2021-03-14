@@ -8,4 +8,6 @@ public interface ITripInfoDAO {
 
 	TripInfoDTO view(String seq);
 
+	List<TripInfoCmtDTO> cmtlist(String seq);
+
 }
