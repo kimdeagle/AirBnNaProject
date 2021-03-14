@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MileageController {
 
 	
-	@RequestMapping(value="/member/mileage/add.action", method={RequestMethod.GET})
+	@RequestMapping(value="/member/mileage/list.action", method={RequestMethod.GET})
 	public String tempalte(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		
 		
-		return "member.mypagesidebar.mileage.add";		
+		return "member.mypagesidebar.mileage.list";		
 	}
 	
 	
