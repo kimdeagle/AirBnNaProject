@@ -16,7 +16,6 @@
 /* ----------- 0. main frame ---------- */
 .mainsection {
     width: 100%;
-    min-width: 1150px;
 }
 
 .mainsection #dayarea, .mainsection #planarea, .mainsection #map, .mainsection #searcharea {
@@ -76,6 +75,10 @@
 
 /* ----------- 1. day area CSS ---------- */
 /* 일정 간단 정보 */
+#dayarea {
+    padding-right: 5px;
+}
+
 #dayarea #dayInfo {
     text-align: center;
     font-weight: bold;
@@ -129,7 +132,7 @@
     font-size: 1.1em;
 }
 
-#dayarea #dayList .day-add {
+#dayarea .day-add {
     background-color: #f18579ff;
     color: white;
     font-weight: bold;
@@ -141,13 +144,18 @@
     margin-top: 10px;
 }
 
-#dayarea #dayList .day-add:hover {
+#dayarea .day-add:hover {
     background-color: rgb(238, 84, 87);
+    cursor: pointer;
 }
 
 
 
 /* ----------- 2. plan area CSS ---------- */
+#planarea {
+    padding-right: 5px;
+}
+
 /* plan head */
 #planarea #planHead {
     text-align: center;
@@ -173,8 +181,8 @@
 
 
 /* plan body */
-#planarea #planBody #planDetail .scheduleItem {
-    
+#planarea #planBody{
+    margin-top: 5px;
 }
 
 #planDetail .scheduleItem img {
@@ -184,8 +192,95 @@
 }
 
 
+/* result item */
+#planDetail .resultItem {
+    height: 95px;
+    box-shadow: 0 3px 5px 0px rgb(0 0 0 / 18%);
+    background-color: white;
+    border: 1px solid rgb(172, 172, 172);
+    margin-bottom: 5px;
+    border-radius: 6px;
+}
+
+#planDetail .resultItem:hover {
+    cursor: pointer;
+    background-color: #F3F3F3;
+}
+
+#planDetail .resultItem .img_box {
+    width: 60px;
+    height: 60px;
+    margin-top: 15px;
+    margin-left: 15px;
+    border: 1px solid black;
+}
 
 
+#planDetail .resultItem .img_box img {
+    width: 100%;
+    height: 100%;
+}
+
+#planDetail .resultItem .item_number {
+    width: 18px;
+    height: 18px;
+    position: relative;
+    left: -17px;
+    top: -76px;
+    background: rgb(248, 147, 116);
+    border-top-left-radius: 6px;
+    line-height: 19px;
+    text-align: center;
+    color: white;
+    font-size: 11px;
+}
+
+#planDetail .resultItem .content_box {
+    width: 90px;
+    margin-top: -63px;
+    margin-left: 80px;
+}
+
+#planDetail .resultItem .content_box .content_name{
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+#planDetail .resultItem .content_box .content_type{
+    margin-top: 5px;
+    font-size: 11px;
+    color: #999;
+}
+
+#planDetail .resultItem .btn_del {
+    position: relative;
+    left: 152px;
+    top: -77px;
+    z-index: 1;
+    background-color: transparent;
+    line-height: 19px;
+    padding: 0px 3px;
+    border-radius: 0%;
+}
+
+#planDetail .resultItem .btn_del:focus {
+    outline: none;
+}
+
+#planDetail .resultItem .btn_del span {
+    font-size: 12px;
+    color: #666;
+}
+
+/* #planDetail .resultItem .btn_box {
+    width: 30px;
+    margin-top: 15px;
+}
+
+#planDetail .resultItem .btn_box input {
+    margin-top : 8px;
+    font-size: 0.9em;
+} */
 
 
 /* ----------- 3. search area CSS ---------- */

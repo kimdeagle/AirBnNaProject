@@ -1,7 +1,15 @@
-/**
- * addschedule.js
+/*
+	여행 일정 만들기 js
+	tpmake.js
+	
+	1. CSS 관련
+	2. 관광정보 관련
+	3. KAKAO MAP 관련
+
  */
 
+
+// ------------------- 1. CSS 관련 -----------------------
 // 일정 선택 CSS
 $(document).on('click', '#dayContent .selectAble', function() {
 
@@ -13,43 +21,40 @@ $(document).on('click', '#dayContent .selectAble', function() {
 });
 
 // 테마 선택시 CSS 변경
-$(document).on('click', '#searchTheme .image_box', function() {
+$(document).on('click', '#searchTheme .btn', function() {
 
-	$("#searchTheme .image_box").each(function() {
+	$("#searchTheme .btn").each(function() {
 		$(this).css('opacity', '1');
 	});
 
-	$(this).css('opacity', '0.75');
+	$(this).css('background-color', '#444');
+	$(this).css('color', 'white');
+	$(this).css('outline', 'none');
 });
 
 // DAY 추가 버튼
-$(".dayAdd").on('click', function() {
+$(".day-add").on('click', function() {
 
 	let tmp = '';
 
-	tmp += '<div class="dayItem selectAble">'
-	tmp += '<div class="dayItemLeft">'
-	tmp += '<div class="dayDay">DAY1</div>'
-	tmp += '<div class="dayDate">03.10</div>'
-	tmp += '</div>'
-	tmp += '<div class="dayItemRight">'
-	tmp += '<div class="dayOfWeek">수요일</div>'
-	tmp += '</div>'
-	tmp += '</div>'
+	tmp += '<div class="dayitem selectAble">'
+	tmp += '<div class="day-num">DAY'
+	tmp += '<span class="num">2</span></div>'
+	tmp += '<span class="day-date">03.15</span>'
+	tmp += '<span class="day-day">(월)</span>'
 
 	$("#dayList").append(tmp);
 });
 
 
+
 $(function() {
 	
-	
-
 	let index = 0;
 	// 일정 경로
-	 $("#scheduleDetail").sortable({
+	 $("#planDetail").sortable({
 		 revert : true,
-		 placeholder : "schedule-placeholder",
+		 placeholder : "plan-placeholder",
 		 update : function() {
 			 rearrangeItem(); // 경로 숫자 재설정
 		 }
@@ -61,24 +66,16 @@ $(function() {
 		console.log('드래그 이벤트 등록');
 
 		$(this).draggable({
-			connectToSortable : "#scheduleDetail",
+			connectToSortable : "#planDetail",
 			helper : "clone",
 			revert : "invalid"
 		});
 	});
 	
-	
-
-	
 
 	// 검색 결과 아이템 드래그 시작 - 동적 생성된 태그에도 적용
 	$(document).on('dragstart', '.resultItem', function(event, ui) {
 		console.log('dragstart =======');
-//		console.log(event);
-//		console.log(ui);
-//		console.log(this);
-		// console.log(ui.helper.children('.btn_box').hide());
-		//        
 		$(ui).width("205");
 		$(ui).height("90");
 		$(ui.helper).children('.btn_box').hide();
@@ -127,6 +124,7 @@ $(function() {
 
 });
 
+
 // 일정 목록에 있는 아이템을 삭제
 $(document).on('click', '.deleteScheduleItem', function(e) {
 	// console.log(e.relatedTarget); //null
@@ -140,18 +138,12 @@ $(document).on('click', '.deleteScheduleItem', function(e) {
 // 검색 목록에 있는 일정추가
 $(document).on('click', '.addScheduleItem', function(e) {
 
-	// console.log(e.relatedTarget); //null
-//	console.log(e.currentTarget);
-//	console.log(e.target);
-	// console.log(e.target.parent());
-
 	let resultItem = $(e.target).parent().parent().clone();
 	resultItem.children('.btn_box').hide();
 	resultItem.children('.btn_del').show();
 	resultItem.children('.img_box').children('.item_number').show();
-	// resultItem.append('<input type="button" class="deleteScheduleItem"
-	// value="삭제">');
-	resultItem.appendTo('#scheduleDetail');
+
+	resultItem.appendTo('#planDetail');
 
 	rearrangeItem();
 
@@ -159,7 +151,7 @@ $(document).on('click', '.addScheduleItem', function(e) {
 
 // 경로 일정을 재정렬 하는 메서드
 function rearrangeItem() {
-	$("#scheduleDetail .img_box").each(function(index) {
+	$("#planDetail .img_box").each(function(index) {
 //		console.log(this);
 		index = index + 1;
 		$(this).children('.item_number').text(index);
@@ -168,8 +160,16 @@ function rearrangeItem() {
 	});
 }
 
-// 관광정보 API
-// ===========================================================================================
+
+
+
+
+
+
+
+
+
+// ------------------- 2. 관광정보 관련 -----------------------
 
 /*
  * API 데이터 리스트를 받아오는 메서드
@@ -363,8 +363,15 @@ function getData(number) {
 
 }
 
-// kakao map
-// ===========================================================================================
+
+
+
+
+
+
+
+// ------------------- 3. KAKAO MAP 관련 -----------------------
+
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 mapOption = {

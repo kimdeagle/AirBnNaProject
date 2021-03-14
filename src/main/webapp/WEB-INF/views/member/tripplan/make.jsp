@@ -19,25 +19,28 @@
 			</div>
 		</div>
 
-		<!-- 총 며칠간의 여행? -->
-		<div id="dayList">
+		<div id="dayContent">
+			<!-- 총 며칠간의 여행? -->
+			<div id="dayList">
 
-			<div class="dayitem">
-				<div class="day-num">
-					DAY <span class="num">1</span>
+				<div class="dayitem selectAble selected">
+					<div class="day-num">
+						DAY <span class="num">1</span>
+					</div>
+					<span class="day-date">03.14</span> <span class="day-day">(일)</span>
 				</div>
-				<span class="day-date">03.14</span> <span class="day-day">(일)</span>
-			</div>
 
-			<div class="dayitem">
-				<div class="day-num">
-					DAY <span class="num">2</span>
+				<div class="dayitem selectAble">
+					<div class="day-num">
+						DAY <span class="num">2</span>
+					</div>
+					<span class="day-date">03.15</span> <span class="day-day">(월)</span>
 				</div>
-				<span class="day-date">03.15</span> <span class="day-day">(월)</span>
 			</div>
 
 			<div class="day-add">DAY 추가</div>
 		</div>
+
 
 	</div>
 
@@ -50,28 +53,28 @@
 
 		<div id="planBody">
 			<div id="planDetail">
-				<!-- 
-                        <div class="scheduleItem">
-                            <div class="imgbox">
-                                <div class="item_number">1</div>
-                                <img src="/image/tripplan/1.jpg" alt="">
-                            </div>
+				<!--                         
+                     <div class="scheduleItem">
+                         <div class="imgbox">
+                             <div class="item_number">1</div>
+                             <img src="/image/tripplan/1.jpg" alt="">
+                         </div>
 
-                            <div class="contentbox">
-                                <p>장소이름1</p>
-                                <p>장소종류1</p>
-                            </div>
+                         <div class="contentbox">
+                             <p>장소이름1</p>
+                             <p>장소종류1</p>
+                         </div>
 
-                            <button class="btn btn_del">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </button>
-                            
-                            <div class="btn_box" style="display: none;">
-                                <input type="button" class="btn btn-default" data-toggle="modal" data-target="#detailCommonInfo" value="정보보기">
-                                <input type="button" class="btn btn-default addScheduleItem" value="일정추가">
-                            </div>
-                        </div> 
-                        -->
+                         <button class="btn btn_del">
+                             <span class="glyphicon glyphicon-remove"></span>
+                         </button>
+                         
+                         <div class="btn_box" style="display: none;">
+                             <input type="button" class="btn btn-default" data-toggle="modal" data-target="#detailCommonInfo" value="정보보기">
+                             <input type="button" class="btn btn-default addScheduleItem" value="일정추가">
+                         </div>
+                     </div> 
+                     -->
 			</div>
 		</div>
 	</div>
@@ -79,7 +82,7 @@
 
 	<!-- 지도파트 -->
 	<div id="maparea">
-		<div id="map" style="height: 100px;"></div>
+		<div id="map"></div>
 	</div>
 
 	<!-- 검색창 파트 -->
@@ -121,15 +124,15 @@
 			<!-- resultItem -->
 			<div class="resultItem">
 				<div class="img_box">
-					<img src="/image/tripplan/" alt="">
+					<img src="/image/tripplan/1.jpg" alt="">
 					<div class="item_number" style="display: none;"></div>
 				</div>
 				<div class="content_box">
 					<p class="content_name">장소이름</p>
 					<p class="content_type">자연</p>
 				</div>
-				<button class="btn_del" style="display: none;">
-					<span class="glyphicon glyphicon-remove"></span>
+				<button class="btn_del btn" style="display: none;">
+					<span class="glyphicon glyphicon-remove deleteScheduleItem"></span>
 				</button>
 				<div class="btn_box">
 					<input type="button" class="btn btn-default" data-toggle="modal"
@@ -171,7 +174,8 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<script src="/bnna/resources/js/tpmake.js"></script>
 
 </section>
+
