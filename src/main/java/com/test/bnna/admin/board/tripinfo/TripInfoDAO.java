@@ -27,6 +27,12 @@ public class TripInfoDAO implements ITripInfoDAO {
 		
 		return template.selectOne("tripinfo.view", seq);
 	}
+	
+	@Override
+	public List<TripInfoCmtDTO> cmtlist(String seq) {
+
+		return template.selectList("tripinfo.cmtlist", seq);
+	}
 
 
 }

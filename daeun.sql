@@ -41,3 +41,15 @@ from tblMember m
     inner join tblBook b
         on b.seqmember = m.seq
 group by m.seq;
+
+
+select * from tbltRIPINFO;
+select * from tbltripinfocmt;
+
+select 
+    m.seq,
+    m.pic,
+    m.id
+from tblTripinfocmt tpc
+    inner join tblMember m
+        on m.seq = tpc.seqmember;

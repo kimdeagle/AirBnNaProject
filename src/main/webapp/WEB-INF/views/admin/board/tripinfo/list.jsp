@@ -17,13 +17,16 @@
 
         <h1>여행정보 게시판</h1>
 
-        <div class="searcharea">
-            여기가 검색창
-        </div>
+        <div class="boardhead">
+            <div class="searchform searcharea">
+                <input type="text" class="form-control boardsearch">
+                <button id="searchBtn" class="btn"><span class="glyphicon glyphicon-search"></span></button>
+            </div>
 
-        <div class="btns">
-            <button class="btn btn-thumbnail">썸네일보기</button>
-            <button class="btn btn-write">새글쓰기</button>
+            <div class="btns">
+                <button class="btn btn-thumbnail">썸네일보기</button>
+                <button class="btn btn-write">새글쓰기</button>
+            </div>
         </div>
 
         <div class="admin-listarea">

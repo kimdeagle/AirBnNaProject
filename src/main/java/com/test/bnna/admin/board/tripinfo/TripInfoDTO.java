@@ -21,6 +21,7 @@ public class TripInfoDTO {
 	private int depth;			//depth
 	
 	
+	
 	public String getSeq() {
 		return seq;
 	}

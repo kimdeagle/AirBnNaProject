@@ -44,7 +44,10 @@ public class TripInfoController {
 		
 		TripInfoDTO dto = dao.view(seq);
 		
+		List<TripInfoCmtDTO> cmtlist = dao.cmtlist(seq);
+		
 		req.setAttribute("dto", dto);
+		req.setAttribute("cmtlist", cmtlist);
 		
 		return "admin.board.tripinfo.view";
 	}
