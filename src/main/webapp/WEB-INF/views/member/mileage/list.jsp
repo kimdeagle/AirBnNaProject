@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
-		<link rel="stylesheet" href="/bnna/resources/css/mileage.css">
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+
+<link rel="stylesheet" href="/bnna/resources/css/mileage.css">
 
 		<!-- 주요내용! 여기에 작성한 코드 넣을 것! -->
 		<section class="contentsection page-start">
@@ -21,15 +22,16 @@
 		
 				<div class="infobox">
 					<div class="crop">
-						<img src="/bnna/resources/image/annface.jpg" alt="">
+						<img src="/bnna/resources/image/mempic/${dto.pic}" alt="${dto.pic}">
 					</div>
 		
 					<div class="basicinfo">
 						<h4>
-							조앤나<span> &nbsp;mascot123</span>
+							${dto.name}<span> &nbsp;${dto.id}</span>
 						</h4>
-						가입일 : 2020-01-01
+						가입일 : ${dto.regdate.substring(0, 10)}
 					</div>
+
 		
 					<div class="numbered">
 						<div class="dibs">
@@ -93,30 +95,28 @@
 							<th>누적마일리지</th>
 							<th>적립일자</th>
 						</tr>
+						
+						<c:if test="${empty list}">
+							<td colspan="4">내역이 없습니다.</td>
+						</c:if>
+						
+						<c:forEach items="${list}" var="dto">
 						<tr>
-							<td>+ 500 M</td>
+							<c:if test="${dto.saveM != 0}">
+							<td>+ ${dto.saveM} M</td>
 							<td>예약 적립</td>
-							<td>7500 M</td>
-							<td>2020-02-21</td>
-						</tr>
-						<tr>
-							<td>+ 1500 M</td>
-							<td>예약 적립</td>
-							<td>7000 M</td>
-							<td>2020-02-01</td>
-						</tr>
-						<tr>
-							<td>+ 500 M</td>
-							<td>예약 적립</td>
-							<td>5500 M</td>
-							<td>2020-01-20</td>
-						</tr>
-						<tr>
-							<td style="color: rgb(228, 55, 55);">- 500 M</td>
+							</c:if>
+							
+							<c:if test="${dto.useM != 0}">
+							<td style="color: rgb(228, 55, 55);">- ${dto.useM} M</td>
 							<td>예약 사용</td>
-							<td>0 M</td>
-							<td>2020-01-01</td>
+							</c:if>
+							
+							<td>${dto.totalM} M</td>
+							<td>${dto.regdate.substring(0, 10)}</td>
 						</tr>
+						</c:forEach>
+
 					</table>
 				</div>
 		
