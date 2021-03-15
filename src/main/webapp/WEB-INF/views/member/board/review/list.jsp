@@ -43,4 +43,4 @@
 		    </div>
 		</div>
 
-</section class="contentsection">
+</section>
