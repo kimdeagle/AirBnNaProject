@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<link rel="stylesheet" href="/bnna/resources/css/admin-tripinfo.css">
+<link rel="stylesheet" href="/bnna/resources/css/tripinfo/admin-tripinfo.css">
 
 <section class="mainsection">
 
@@ -25,7 +25,7 @@
 
             <div class="btns">
                 <button class="btn btn-thumbnail">썸네일보기</button>
-                <button class="btn btn-write">새글쓰기</button>
+                <button class="btn btn-write" onclick="location.href='/bnna/admin/board/tripinfo/write.action'">새글쓰기</button>
             </div>
         </div>
 

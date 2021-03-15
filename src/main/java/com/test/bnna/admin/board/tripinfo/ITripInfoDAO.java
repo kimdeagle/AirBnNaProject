@@ -10,4 +10,6 @@ public interface ITripInfoDAO {
 
 	List<TripInfoCmtDTO> cmtlist(String seq);
 
+	int write(TripInfoDTO dto);
+
 }

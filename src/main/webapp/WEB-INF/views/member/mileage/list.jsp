@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 
-<link rel="stylesheet" href="/bnna/resources/css/mileage.css">
+<link rel="stylesheet" href="/bnna/resources/css/myinfo/mileage.css">
 
 		<!-- 주요내용! 여기에 작성한 코드 넣을 것! -->
 		<section class="contentsection page-start">

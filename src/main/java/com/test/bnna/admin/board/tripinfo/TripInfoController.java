@@ -52,4 +52,55 @@ public class TripInfoController {
 		return "admin.board.tripinfo.view";
 	}
 	
+	
+	@RequestMapping(value="/admin/board/tripinfo/write.action", method= {RequestMethod.GET})
+	public String write(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+		
+		
+		return "admin.board.tripinfo.write";
+	}
+	
+	@RequestMapping(value="/admin/board/tripinfo/writeok.action", method= {RequestMethod.POST})
+	public void writeok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, TripInfoDTO dto) {
+		
+		session.setAttribute("seq", 1);
+		
+		int result = dao.write(dto);
+		
+		try {
+			if (result == 1) {
+				resp.sendRedirect("/admin/board/tripinfo/list.action");
+			} else {
+				resp.sendRedirect("/admin/board/tripinfo/write.action");
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	@RequestMapping(value="/admin/board/tripinfo/edit.action", method= {RequestMethod.GET})
+	public String edit(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+		
+		
+		return "admin.board.tripinfo.edit";
+	}
+	
+//	@RequestMapping(value="/admin/board/tripinfo/editok.action", method= {RequestMethod.POST})
+//	public void editok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, TripInfoDTO dto) {
+//		
+//		session.setAttribute("seq", 1);
+//		
+//		int result = dao.edit(dto);
+//		
+//		try {
+//			if (result == 1) {
+//				resp.sendRedirect("/admin/board/tripinfo/view.action?seq=" + dto.getSeq());
+//			} else {
+//				resp.sendRedirect("/admin/board/tripinfo/edit.action?seq=" + dto.getSeq());
+//			}
+//		} catch (Exception e) {
+//			System.out.println(e);
+//		}
+//	}
+	
 }
