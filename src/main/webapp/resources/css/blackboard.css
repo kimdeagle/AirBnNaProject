@@ -1,0 +1,29 @@
+table th {
+	width: 150px;
+}
+
+table td {
+	width: auto;
+}
+
+.board-title {
+	font-variant: small-caps;
+}
+
+table #content {
+	height: 200px;
+}
+
+.btns {
+	text-align: right;
+}
+
+.btns button {
+	width: 120px;
+	height: 50px;
+	margin-left: 20px;
+}
+
+table #image {
+	display: none;
+}

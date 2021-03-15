@@ -243,6 +243,10 @@ a h5:hover {
     color:#f05e61ff;
 }
 
+input[type=button], button {
+	outline: none !important;
+}
+
 /* 4. 리스트 점 없애기 21.02.14 추가 */
 ul {
     list-style:none;
