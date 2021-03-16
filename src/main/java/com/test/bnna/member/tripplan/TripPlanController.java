@@ -11,6 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class TripPlanController {
+	
+	
+	@RequestMapping(value="/member/tripplan/start.action", method={RequestMethod.GET})
+	public String start(HttpServletRequest req, HttpServletResponse resp) {
+		
+		
+		return "member.tripplanwfooter.start";
+	}
+	
 
 	@RequestMapping(value="/member/tripplan/make.action", method={RequestMethod.GET})
 	public String make(HttpServletRequest req, HttpServletResponse resp) {
@@ -18,6 +27,7 @@ public class TripPlanController {
 		
 		return "member.tripplan.make";
 	}
+	
 
 	
 }
