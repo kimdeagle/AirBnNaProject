@@ -1,17 +1,16 @@
-table th {
-	width: 150px;
+/* 회원 > 블랙리스트 신고게시판 CSS */
+
+/* common */
+aside {
+	width: 17%;
 }
 
-table td {
-	width: auto;
+.contentsection {
+	width: 74%;
 }
 
 .board-title {
 	font-variant: small-caps;
-}
-
-table #content {
-	height: 200px;
 }
 
 .btns {
@@ -24,6 +23,75 @@ table #content {
 	margin-left: 20px;
 }
 
-table #image {
+
+/* add, view */
+#tblAdd th, #tblView th {
+	width: 150px;
+}
+
+#tblAdd td, #tblView td {
+	width: auto;
+}
+
+/* add > content */
+#tblAdd #content {
+	height: 200px;
+}
+
+/* add > image attach button */
+#tblAdd #image {
 	display: none;
 }
+
+/* view */
+
+/* view > imgname */
+#tblView .imgname {
+	display: block;
+}
+
+/* view > insertimg */
+#tblView .insertimg {
+	max-width: 550px;
+	display: block;
+	margin: 5px auto;
+}
+
+/* view > content */
+#tblView .content {
+	margin-top: 20px;
+}
+
+/* view > comment */
+
+.comment-title {
+	font-variant: small-caps;
+}
+
+/* view > comment table */
+
+#tblComment {
+	margin-top: 20px;
+}
+
+#tblComment th:nth-child(1) {
+	width: 200px;
+}
+
+#tblComment th:nth-child(2) {
+	width: auto;
+}
+
+#tblComment th:nth-child(3) {
+	width: 130px;
+}
+
+#tblComment th, #tblComment td {
+	padding-left: 10px;
+}
+
+
+
+
+
+

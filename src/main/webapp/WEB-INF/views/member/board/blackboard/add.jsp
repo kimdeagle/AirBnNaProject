@@ -22,7 +22,7 @@
 
 	<form method="POST" action="/bnna/member/board/blackboard/addok.action" enctype="multipart/form-data">
 	
-		<table class="table table-bordered">
+		<table class="table table-bordered" id="tblAdd">
 			<tr>
 				<th>제목</th>
 				<td>
@@ -32,10 +32,10 @@
 			<tr>
 				<th>
 					신고대상회원
-					<button type="button" class="btn btn-default" id="btnSearch"><span class="glyphicon glyphicon-search"></span></button>				
+					<button type="button" class="btn btn-default btn-sm" id="btnSearch"><span class="glyphicon glyphicon-search"></span></button>				
 				</th>
 				<td>
-					<span>홍길동(hong12)</span>
+					<span id="issueMemberInfo">홍길동(hong12)</span>
 				</td>
 			</tr>
 			<tr>
@@ -48,6 +48,7 @@
 				<th>이미지</th>
 				<td>
 					<button type="button" class="btn btn-success" onclick="$('#image').click();">파일 선택</button>
+					<span class="upload-help">*** 다중 이미지 선택이 가능합니다.</span>
 					<input type="file" id="image" name="image" multiple="multiple">
 					<div id="imagename"></div>
 				</td>
@@ -58,6 +59,8 @@
 			<button type="submit" class="btn btn-primary">작성</button>
 			<button type="button" class="btn btn-warning" onclick="location.href='/bnna/member/board/blackboard/list.action';">취소</button>
 		</div>
+		
+		<input type="hidden" id="seqIssueMember" name="seqIssueMember" value="">
 		
 	</form>
 
@@ -76,15 +79,15 @@
 				<div class="modal-body">
 				
 					<div class="form-inline" style="text-align: right;">
-						<select class="form-control">
+						<select class="form-control" id="condition" name="condition">
 							<option>이름</option>
 							<option>아이디</option>
 						</select>
 						<input type="text" class="form-control" id="keyword" name="keyword">
-						<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+						<button type="button" class="btn btn-default" id="btnSearchResult"><span class="glyphicon glyphicon-search"></span></button>
 					</div>
 					
-					<table class="table table-hover">
+					<table class="table table-hover" id="tblResult">
 						<thead>
 							<tr>
 								<th>선택</th>
@@ -94,14 +97,7 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="radio" id="select1" name="select" value="회원번호"></td>
-								<td><label for="select1">hong12</label></td>
-								<td><label for="select1">홍길동</label></td>
-							</tr>
-							<tr>
-								<td><input type="radio" id="select2" name="select" value="회원번호"></td>
-								<td><label for="select2">amugae</label></td>
-								<td><label for="select2">아무개</label></td>
+								<td colspan="3">검색 결과가 없습니다.</td>
 							</tr>
 						</tbody>
 					</table>
@@ -117,3 +113,12 @@
 </section>
 
 <script src="/bnna/resources/js/blackboard.js"></script>
+<script>
+
+
+	
+
+	
+	
+
+</script>
