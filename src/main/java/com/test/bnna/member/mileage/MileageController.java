@@ -18,7 +18,7 @@ public class MileageController {
 	private IMileageDAO dao;
 	
 	@RequestMapping(value="/member/mileage/list.action", method={RequestMethod.GET})
-	public String tempalte(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+	public String list(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
 		
 		List<MileageDTO> list = dao.list();
 		

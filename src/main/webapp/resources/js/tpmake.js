@@ -200,15 +200,15 @@ function getData(number) {
 
 	$
 			.ajax({
-				url : '/naman/schedule/publicdata.action',
+				url : 'plandata.action',
 				type : 'GET',
 				dataType : 'json',
 				// data : 'pageNo='+number,
-				// data : 'pageNo='+number+'&keyword='+keyword,
-				data : 'pageNo=' + number + '&keyword=' + keyword
-						+ '&areaCode=' + areaCode.value,
+				 data : 'pageNo='+number+'&keyword='+keyword,
+				//data : 'pageNo=' + number + '&keyword=' + keyword
+				//		+ '&areaCode=' + areaCode.value,
 				success : function(data) {
-//					console.log(data);
+					console.log(data);
 //					console.log(data.response.body.items.item);
 					myItem = data.response.body.items.item;
 					itemInfo = data.response.body;
@@ -282,7 +282,7 @@ function getData(number) {
 
 					// ===================================================================
 
-					for (var i = 0; i < myItem.length; i++) {
+					for (var i = 0; i < myItem.length ; i++) {
 						var output = '';
 						// console.log(myItem.length);
 						// output += '<input type="button"

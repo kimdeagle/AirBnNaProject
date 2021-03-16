@@ -65,7 +65,7 @@
 .searcharea .boardsearch {
     width: 300px;
     float: left;
-    margin-left: 615px;
+    margin-left: 605px;
 }
 
 .searcharea .btn {
@@ -177,14 +177,14 @@
 }
 
 .viewarea .cmtarea .tbl-cmt .crop {
-    width: 80px;
-    height: 80px;
-    border-radius: 40px;
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
     overflow: hidden;
 }
 
 .viewarea .cmtarea .tbl-cmt img {
-    width: 80px;
+    width: 64px;
 }
 
 .viewarea .cmtarea .tbl-cmt .pic {
@@ -203,13 +203,14 @@
 /* 댓글남기기 영역 */
 .viewarea .cmtarea .cmt-write {
     display: inline-block;
-    width: 1070px;
+    width: 93%;
 }
 
 .viewarea .cmtarea .btn-cmt {
     height: 110px;
-    width: 60px;
+    width: 6%;
     margin-top: -130px;
     background-color: #ee9968;
     color: white;
 }
+

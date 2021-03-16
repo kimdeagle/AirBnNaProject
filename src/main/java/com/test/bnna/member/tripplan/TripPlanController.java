@@ -18,5 +18,6 @@ public class TripPlanController {
 		
 		return "member.tripplan.make";
 	}
+
 	
 }
