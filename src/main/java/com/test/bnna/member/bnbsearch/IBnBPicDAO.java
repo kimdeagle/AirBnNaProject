@@ -6,4 +6,6 @@ public interface IBnBPicDAO {
 
 	List<BnBPicDTO> picList(List<BnBSearchResultDTO> list);
 
+	List<BnBPicDTO> pic(int parseInt);
+
 }

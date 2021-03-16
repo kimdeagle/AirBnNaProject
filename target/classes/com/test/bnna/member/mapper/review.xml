@@ -12,7 +12,7 @@
 		select * from tblSpringBoard order by seq desc
 	</select> -->
 	
-	<select id="list" resultType="com.test.bnna.member.board.review.ReviewDTO">
+	<select id="alllist" resultType="com.test.bnna.member.board.review.ReviewDTO">
 		select r.*, b.bookdate from tblReview r
     inner join tblBook b
         on r.seqbook=b.seq
@@ -22,5 +22,37 @@
 <!-- 	<insert id="add" parameterType="dto">
 		insert into tblReview(seq, seqBook, title, content, star, readcnt, recommendcnt, thread, depth, secret) values (seqReview.nextVal, #{seq}, #{title}, #{content}, #{star}, 0, 0, select max(thread)+1000 from tblReview), 0, 0)
 	</insert> -->
+	
+	<!-- 특정 숙소의 리뷰를 가져오는 쿼리 -->
+	<select id="onelist" parameterType="String" resultType="com.test.bnna.member.board.review.ReviewDTO">
+		select
+			r.seq,
+		    r.title as title,
+		    r.content as content,
+		    r.star as star,
+		    m.id as writer,
+		    b.bookdate,
+		    r.readcnt,
+		    r.recommendcnt,
+		    r.thread,
+		    r.depth
+		from tblReview r
+		    inner join tblBook b
+		        on b.seq=r.seqbook
+		            inner join tblMember m
+		                on m.seq=b.seqmember
+		                    where seqbnb=#{seq} and r.secret=0
+		                        order by r.seq desc
+	</select>
+	
+	<!-- 조회수를 올리는 쿼리 -->
+	<update id="readcntup" parameterType="String">
+	update tblReview set readcnt=readcnt+1 where seq=#{seq}
+	</update>
+	
+	<!-- 추천수를 올리는 쿼리 -->
+	<update id="recommendcntup" parameterType="String">
+	update tblReview set recommendcnt=recommendcnt+1 where seq=#{seq}
+	</update>
 	
 </mapper>

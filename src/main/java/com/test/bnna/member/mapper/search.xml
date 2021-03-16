@@ -4,6 +4,69 @@
 
 <mapper namespace="search">
 
+	<!-- 숙소 1개의 정보를 가져오는 쿼리 -->
+	<select id="info" parameterType="String" resultType="com.test.bnna.member.bnbsearch.BnBDTO">
+		select
+		    bnb.seq as seq,
+		    m.name as hostName,
+		    m.pic as hostImage,
+		    bt.bnbtype as bnbType,
+		    bnb.name as bnbName,
+		    bnb.intro as bnbIntro,
+		    bnb.cap as cap,
+		    bnb.price as price,
+		    bnb.bedroom as bedroom,
+		    bnb.bathroom as bathroom,
+		    bnb.tel as tel,
+		    o.amenity as amenity,
+		    o.kitchen as kitchen,
+		    o.heating as heating,
+		    o.washing as washing,
+		    o.wifi as wifi,
+		    o.workroom as workroom,
+		    o.babybed as babybed,
+		    o.dryer as dryer,
+		    o.breakfast as breakfast,
+		    o.tv as tv,
+		    o.ac as ac,
+		    o.hairdryer as hairdryer,
+		    o.parking as parking,
+		    o.disabled as disabled,
+		    o.bed as bed,
+		    r.pet as pet,
+		    r.smoke as smoke,
+		    r.evt as evt,
+		    r.selfcheck as selfcheck,
+		    r.checkin as checkin,
+		    r.checkout as checkout,
+		    ba.loadname as loadname,
+		    ba.detail as detail,
+		    ba.zipcode as zipcode,
+		    ba.mapx as mapx,
+		    ba.mapy as mapy,
+		    h.intro as hostIntro,
+		    h.regdate as hostRegdate,
+		    (select avg(star) from tblBook bk
+    			inner join tblReview r on bk.seq=r.seqbook
+            	where bk.seqbnb=1 group by bk.seqbnb) as star
+			from tblBnB bnb
+			    inner join tblBnBType bt
+			        on bt.seq=bnb.seqbnbtype
+			            inner join tblOption o
+			                on bnb.seq=o.seqbnb
+			                    inner join tblRule r
+			                        on bnb.seq=r.seqbnb
+			                            inner join tblBnBAddress ba
+			                                on bnb.seq=ba.seqbnb
+			                                    inner join tblHost h
+			                                        on h.seq=bnb.seqhost
+			                                            inner join tblMember m
+			                                                on h.seqmember=m.seq
+			                                                    inner join tblDibs d
+			                                                        on bnb.seq=d.seqbnb
+			                                                            where bnb.seq=#{seq}
+	</select>
+
 	<!-- 검색결과를 가져오는 쿼리 -->
 	<select id="list" parameterType="com.test.bnna.member.bnbsearch.SearchConditionDTO" resultType="com.test.bnna.member.bnbsearch.BnBSearchResultDTO">
 		select pbnb.seq as seq,

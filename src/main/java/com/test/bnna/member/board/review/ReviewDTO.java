@@ -2,109 +2,23 @@ package com.test.bnna.member.board.review;
 
 import lombok.Data;
 
+/**
+ * 리뷰정보를 담는 DTO입니다.
+ * @author 조아라
+ *
+ */
 @Data
 public class ReviewDTO {
 	
-	private int seq;
-	private int seqbook;
-	private String title;
-	private String content;
-	private int star;
-	private int readcnt;
-	private int recommendcnt;
-	private int thread;
-	private int depth;
-	private int secret;
-	
-	private String bookdate;
+	private String seq;		 // 리뷰번호
+	private String title;    // 리뷰제목
+	private String content;  // 리뷰내용
+	private String star;	 // 별점
+	private String writer;	 // 작성자 ID
+	private String bookdate; // 예약일
+	private int readcnt;	 // 조회수
+	private int recommendcnt;// 추천수
+	private int thread;	     // 계층형 게시판을 위한 thread
+	private int depth;		 // 계층형 게시판을 위한 depth
 
-	public int getSeq() {
-		return seq;
-	}
-
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
-
-	public int getSeqbook() {
-		return seqbook;
-	}
-
-	public void setSeqbook(int seqbook) {
-		this.seqbook = seqbook;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public int getStar() {
-		return star;
-	}
-
-	public void setStar(int star) {
-		this.star = star;
-	}
-
-	public int getReadcnt() {
-		return readcnt;
-	}
-
-	public void setReadcnt(int readcnt) {
-		this.readcnt = readcnt;
-	}
-
-	public int getRecommendcnt() {
-		return recommendcnt;
-	}
-
-	public void setRecommendcnt(int recommendcnt) {
-		this.recommendcnt = recommendcnt;
-	}
-
-	public int getThread() {
-		return thread;
-	}
-
-	public void setThread(int thread) {
-		this.thread = thread;
-	}
-
-	public int getDepth() {
-		return depth;
-	}
-
-	public void setDepth(int depth) {
-		this.depth = depth;
-	}
-
-	public int getSecret() {
-		return secret;
-	}
-
-	public void setSecret(int secret) {
-		this.secret = secret;
-	}
-
-	public String getBookdate() {
-		return bookdate;
-	}
-
-	public void setBookdate(String bookdate) {
-		this.bookdate = bookdate;
-	}
-
-	
 }

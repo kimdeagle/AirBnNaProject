@@ -39,4 +39,14 @@ public class BnBPicDAO implements IBnBPicDAO{
 		return plist;
 	}
 
+	/**
+	 * 숙소 한 개의 사진 여러 개를 가져오는 메서드입니다.
+	 * @param seq 숙소번호입니다.
+	 * @return 숙소이미지 정보를 담고 있는 DTO들의 리스트를 반환합니다.
+	 */
+	public List<BnBPicDTO> pic(int seq) {
+		
+		return template.selectList("search.plist", seq);
+	}
+
 }
