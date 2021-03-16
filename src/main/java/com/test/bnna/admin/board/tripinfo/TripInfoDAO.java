@@ -29,6 +29,7 @@ public class TripInfoDAO implements ITripInfoDAO {
 		return template.selectOne("tripinfo.view", seq);
 	}
 	
+	//view에서 댓글 목록 불러오기
 	@Override
 	public List<TripInfoCmtDTO> cmtlist(String seq) {
 
@@ -38,7 +39,7 @@ public class TripInfoDAO implements ITripInfoDAO {
 	@Override
 	public int write(TripInfoDTO dto) {
 		
-		return 0;
+		return template.insert("tripinfo.add", dto);
 	}
 
 

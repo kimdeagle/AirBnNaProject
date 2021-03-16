@@ -37,7 +37,7 @@
                         <button class="btn">미리보기</button>
                     </div>
                     <div class="right">
-                        <button class="btn btn-general" onclick="location.href='/bnna/admin/board/tripinfo/writeok.action'">등록</button>
+                        <button class="btn btn-general" type="submit" onclick="location.href='/bnna/admin/board/tripinfo/writeok.action'">등록</button>
                     </div>
 
                 </div>
