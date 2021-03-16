@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="/bnna/resources/css/member/search.css">
-
 <section class="mainsection page-start">
 	
 	<c:if test="${not empty list}">
@@ -35,12 +34,11 @@
 			</c:if>
 		</div>
 		<div id="intro">
-			<h4 id="title">${dto.bnbName}</h4>
+			<a href="/bnna/member/bnbsearch/view.action?seq=${dto.seq}"><h4 id="title">${dto.bnbName}</h4></a>
 			<p><span class="glyphicon glyphicon-home"> 호스트 ${dto.hostName}</p>
 			<div>${dto.intro}</div>
 			<span id="detail">
 				<span class="glyphicon glyphicon-star"><span>${dto.star}점</span></span>
-				<span>&middot;</span>
 				<c:if test="${dto.pet eq 1}">
 				<span>반려동물동반가능<span class="glyphicon glyphicon-ok"></span></span>
 				</c:if>
@@ -96,39 +94,39 @@
 					<hr>
 					<table>
 						<tr>
-							<td class="cb"><input type="checkbox" id="amenity" name="amenity" value=1><label for="amenity">세면도구</label></td>
-							<td class="cb"><input type="checkbox" id="dryer" name="dryer" value=1><label for="dryer">건조기</label></td>
-							<td class="cb"><input type="checkbox" id="kitchen" name="kitchen" value=1><label for="kitchen">주방이용가능</label></td>
+							<td class="cb"><input type="checkbox" id="amenity" name="amenity" value=1><label for="amenity">&nbsp;&nbsp;세면도구</label></td>
+							<td class="cb"><input type="checkbox" id="dryer" name="dryer" value=1><label for="dryer">&nbsp;&nbsp;건조기</label></td>
+							<td class="cb"><input type="checkbox" id="kitchen" name="kitchen" value=1><label for="kitchen">&nbsp;&nbsp;주방이용가능</label></td>
 						</tr>
 						<tr>
-							<td class="cb"><input type="checkbox" id="heating" name="heating" value=1><label for="heating">난방가능</label></td>
-							<td class="cb"><input type="checkbox" id="washing" name="washing" value=1><label for="washing">세탁기이용가능</label></td>
-							<td class="cb"><input type="checkbox" id="wifi" name="wifi" value=1><label for="wifi">무선인터넷</label></td>
+							<td class="cb"><input type="checkbox" id="heating" name="heating" value=1><label for="heating">&nbsp;&nbsp;난방가능</label></td>
+							<td class="cb"><input type="checkbox" id="washing" name="washing" value=1><label for="washing">&nbsp;&nbsp;세탁기이용가능</label></td>
+							<td class="cb"><input type="checkbox" id="wifi" name="wifi" value=1><label for="wifi">&nbsp;&nbsp;무선인터넷</label></td>
 						</tr>
 						<tr>
-							<td class="cb"><input type="checkbox" id="workroom" name="workroom" value=1><label for="workroom">업무전용공간</label></td>
-							<td class="cb"><input type="checkbox" id="babybed" name="babybed" value=1><label for="babybed">아기침대이용가능</label></td>
-							<td class="cb"><input type="checkbox" id="breakfast" name="breakfast" value=1><label for="breakfast">조식제공</label></td>
+							<td class="cb"><input type="checkbox" id="workroom" name="workroom" value=1><label for="workroom">&nbsp;&nbsp;업무전용공간</label></td>
+							<td class="cb"><input type="checkbox" id="babybed" name="babybed" value=1><label for="babybed">&nbsp;&nbsp;아기침대이용가능</label></td>
+							<td class="cb"><input type="checkbox" id="breakfast" name="breakfast" value=1><label for="breakfast">&nbsp;&nbsp;조식제공</label></td>
 						</tr>
 						<tr>
-							<td class="cb"><input type="checkbox" id="tv" name="tv" value=1><label for="tv">TV</label></td>
-							<td class="cb"><input type="checkbox" id="ac" name="ac" value=1><label for="ac">에어컨</label></td>
-							<td class="cb"><input type="checkbox" id="hairdryer" name="hairdryer" value=1><label for="hairdryer">헤어드라이기</label></td>
+							<td class="cb"><input type="checkbox" id="tv" name="tv" value=1><label for="tv">&nbsp;&nbsp;TV</label></td>
+							<td class="cb"><input type="checkbox" id="ac" name="ac" value=1><label for="ac">&nbsp;&nbsp;에어컨</label></td>
+							<td class="cb"><input type="checkbox" id="hairdryer" name="hairdryer" value=1><label for="hairdryer">&nbsp;&nbsp;헤어드라이기</label></td>
 						</tr>
 						<tr>
-							<td class="cb"><input type="checkbox" id="parking" name="parking" value=1><label for="parking">주차가능</label></td>
-							<td class="cb"><input type="checkbox" id="disabled" name="disabled" value=1><label for="disabled">장애인편의시설</label></td>
+							<td class="cb"><input type="checkbox" id="parking" name="parking" value=1><label for="parking">&nbsp;&nbsp;주차가능</label></td>
+							<td class="cb"><input type="checkbox" id="disabled" name="disabled" value=1><label for="disabled">&nbsp;&nbsp;장애인편의시설</label></td>
 						</tr>
 					</table>
 					<hr>
 					<table>
 						<tr>
-							<td class="cb"><input type="checkbox" id="pet" name="pet" value=1><label for="pet">반려동물동반가능</label></td>
-							<td class="cb"><input type="checkbox" id="smoke" name="smoke" value=1><label for="smoke">흡연가능</label></td>
+							<td class="cb"><input type="checkbox" id="pet" name="pet" value=1><label for="pet">&nbsp;&nbsp;반려동물동반가능</label></td>
+							<td class="cb"><input type="checkbox" id="smoke" name="smoke" value=1><label for="smoke">&nbsp;&nbsp;흡연가능</label></td>
 						</tr>
 						<tr>
-							<td class="cb"><input type="checkbox" id="evt" name="evt" value=1><label for="evt">이벤트가능</label></td>
-							<td class="cb"><input type="checkbox" id="selfcheck" name="selfcheck" value=1><label for="selfcheck">셀프체크인가능</label></td>
+							<td class="cb"><input type="checkbox" id="evt" name="evt" value=1><label for="evt">&nbsp;&nbsp;이벤트가능</label></td>
+							<td class="cb"><input type="checkbox" id="selfcheck" name="selfcheck" value=1><label for="selfcheck">&nbsp;&nbsp;셀프체크인가능</label></td>
 						</tr>
 					</table>
 				</div>
