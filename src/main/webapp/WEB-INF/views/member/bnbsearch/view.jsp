@@ -133,17 +133,24 @@
 			<th>추천수</th>
 			<th>조회수</th>
 		</tr>
-		<c:forEach items="${rlist}" var="rdto">
-		<tr>
-			<td>${rdto.seq}</td>
-			<td id="todetail"><a data-toggle="modal" data-target="#detailModal" data-seq="${rdto.seq}" data-content="${rdto.content}">${rdto.title}</a></td>
-			<td>${rdto.writer}</td>
-			<td>${rdto.star}</td>
-			<td>${rdto.bookdate.substring(0, 10)}</td>
-			<td>${rdto.recommendcnt}</td>
-			<td>${rdto.readcnt}</td>
-		</tr>
-		</c:forEach>
+		<c:if test="${rlist.size()!=0}">
+			<c:forEach items="${rlist}" var="rdto">
+			<tr>
+				<td>${rdto.seq}</td>
+				<td id="todetail"><a data-toggle="modal" data-target="#detailModal" data-seq="${rdto.seq}" data-content="${rdto.content}">${rdto.title}</a></td>
+				<td>${rdto.id}</td>
+				<td>${rdto.star}</td>
+				<td>${rdto.bookdate.substring(0, 10)}</td>
+				<td>${rdto.recommendcnt}</td>
+				<td>${rdto.readcnt}</td>
+			</tr>
+			</c:forEach>
+		</c:if>
+		<c:if test="${rlist.size()==0}">
+			<tr>
+				<td colspan="7">작성된 리뷰가 없습니다.</td>
+			</tr>
+		</c:if>
 	</table>
 	
 </section>

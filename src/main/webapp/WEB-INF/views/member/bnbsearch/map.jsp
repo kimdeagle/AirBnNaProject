@@ -3,12 +3,18 @@
 <link rel="stylesheet" href="/bnna/resources/css/member/search.css">
 <section class="mainsection page-start">
 	
+	<c:if test="${empty list}">
+		<h4 id="noresult">원하는 조건의 숙소가 없습니다.</h4>
+	</c:if>
+	
 	<c:if test="${not empty list}">
-	<!-- 지도로 보기, 필터 추가 버튼 -->
+	<!-- 목록으로 보기, 필터 추가 버튼 -->
 	<div id="btns">
-		<button id="tomap" class="btn btn-default inline" onclick="location.href='/bnna/member/bnbsearch/map.action?location=${condition.location}&checkIn=${condition.checkIn}&checkOut=${condition.checkOut}&guest=${condition.guest}&gap=${condition.gap}'">지도로 보기</button>
+		<button id="tomap" class="btn btn-default inline" onclick="location.href='/bnna/member/bnbsearch/result.action?location=${condition.location}&checkIn=${condition.checkIn}&checkOut=${condition.checkOut}&guest=${condition.guest}&gap=${condition.gap}'">목록으로 보기</button>
 		<button id="addfilter" class="btn btn-default inline" data-toggle="modal" data-target="#filterModal">필터 추가</button>
 	</div>
+	
+	<div id="map" style="width:100%; height:600px;"></div>
 
 	<c:forEach items="${list}" var="dto">
 	<!-- 개별 숙소 정보 -->
@@ -35,7 +41,7 @@
 		</div>
 		<div id="intro">
 			<a href="/bnna/member/bnbsearch/view.action?seq=${dto.seq}"><h4 id="title">${dto.bnbName}</h4></a>
-			<p><span class="glyphicon glyphicon-home"> 호스트 ${dto.hostName}</p>
+			<p><span class="glyphicon glyphicon-home"> 호스트 ${dto.hostName}</span></p>
 			<div>${dto.intro}</div>
 			<span id="detail">
 				<span class="glyphicon glyphicon-star"><span>${dto.star}점</span></span>
@@ -66,10 +72,6 @@
 	<div style="clear:both;"></div>
 	</c:forEach>
 	</c:if>
-	
-	<c:if test="${empty list}">
-		<h4 id="noresult">원하는 조건의 숙소가 없습니다.</h4>
-	</c:if>
 
 </section>
 
@@ -79,7 +81,7 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 				</div>
-				<form method="GET" action="/bnna/member/bnbsearch/filterresult.action">
+				<form method="GET" action="/bnna/member/bnbsearch/filtermap.action">
 				<div class="modal-body">
 					<table>
 						<tr>
@@ -138,3 +140,76 @@
 		</div>
 	</div>
 </div>
+
+<c:if test="${not empty list}">
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=69bfe67931ff11ac5d3aa813e9eb15dd"></script>
+
+<script>
+
+	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	var options = { //지도를 생성할 때 필요한 기본 옵션
+		center: new kakao.maps.LatLng(${list.get(0).mapx}, ${list.get(0).mapy}), //지도의 중심좌표.
+		level: 10 //지도의 레벨(확대, 축소 정도)
+	};
+	
+	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+	var positions = [
+	
+	    <c:forEach items="${list}" var="dto">     
+	
+	   {
+	
+	       title: '${dto.bnbName}', 
+	
+	       latlng: new daum.maps.LatLng(${dto.mapx} , ${dto.mapy}),
+	       
+	       content: '${String.format("%,d", dto.price * condition.gap * condition.guest)}'
+	
+	   },
+	
+	   </c:forEach>
+	
+	];
+	
+	for (var i = 0; i < positions.length; i ++) {
+	
+	    // 마커를 생성합니다
+	
+	    var marker = new daum.maps.Marker({
+	
+	        map: map, // 마커를 표시할 지도
+	
+	        position: positions[i].latlng, // 마커를 표시할 위치
+	
+	    });
+	    
+	    var iwContent = '<div style="padding:5px; width:250px; height:100px;"><h4 style="text-align:center;">'+positions[i].title+'</h4><div style="text-align:center;">총'+positions[i].content+'원</div>'+'</div>', iwRemoveable = true;
+	    
+	    var infowindow = new kakao.maps.InfoWindow({
+	        /* content: positions[i].content // 인포윈도우에 표시할 내용 */
+	        content:iwContent
+	    });
+	    
+	    infowindow.open(map, marker);
+		
+	    marker.setMap(map);
+	
+	}
+	
+	function makeOverListener(map, marker, infowindow) {
+	    return function() {
+	        infowindow.open(map, marker);
+	    };
+	}
+	
+	function makeOutListener(infowindow) {
+	    return function() {
+	        infowindow.close();
+	    };
+	}
+	
+</script>
+
+</c:if>

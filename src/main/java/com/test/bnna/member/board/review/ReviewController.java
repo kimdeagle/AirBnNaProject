@@ -91,9 +91,6 @@ public class ReviewController {
 	    			
 	    			// 이동
 	    			multiList.get(i).transferTo(file); // renameTo()와 동일
-	            
-	    			// multiList 파일의 이름을 바꿔준다.
-	    			System.out.println(multiList.get(i).getName());
 	    			
 	            }
             

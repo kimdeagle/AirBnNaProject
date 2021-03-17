@@ -98,7 +98,9 @@
             ru.pet as pet,
             ru.smoke as smoke,
             ru.evt as evt,
-            ru.selfcheck as selfcheck
+            ru.selfcheck as selfcheck,
+            ba.mapx,
+            ba.mapy
             from (select seq,
 	            tblbnb.name,
                 tblbnb.intro,

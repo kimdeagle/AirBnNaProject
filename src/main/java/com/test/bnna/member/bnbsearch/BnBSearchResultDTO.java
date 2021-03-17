@@ -40,5 +40,8 @@ public class BnBSearchResultDTO {
 	private int smoke;		// 흡연가능 여부
 	private int evt;		// 이벤트가능 여부
 	private int selfcheck;	// 셀프체크인가능 여부
+	
+	private String mapx;	// 지도에서의 x좌표
+	private String mapy;	// 지도에서의 y좌표
 
 }
