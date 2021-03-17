@@ -6,15 +6,29 @@
 <!-- test.xml(Mapper File) SQL 관리 파일 -->
 <mapper namespace="tripinfo">
 
-	<select id="list" resultType="com.test.bnna.admin.board.tripinfo.TripInfoDTO">
-		select * from tblTripInfo order by seq desc
+	<!-- 여행정보 게시판 총 게시물 개수 세기 -->
+	<select id="gettotalcount" resultType="Integer">
+		select count(*) as cnt from tblTripInfo
 	</select>
 
-	<select id="view" parameterType="String" resultType="com.test.bnna.admin.board.tripinfo.TripInfoDTO">
+	<!-- 여행정보 게시판 목록 보기 -->
+	<select id="list" parameterType="HashMap" resultType="TripInfoDTO">
+		select 
+		    * 
+		from (select 
+		            a.*, 
+		            rownum as rnum 
+		        from ( select * from tblTripInfo order by seq desc ) a)
+		where rnum between #{begin} and #{end}
+	</select>
+
+	<!-- 여행정보 게시글 상세조회 -->
+	<select id="view" parameterType="String" resultType="TripInfoDTO">
 		select * from tblTripInfo where seq = #{seq}
 	</select>
 
-	<select id="cmtlist" parameterType="String" resultType="com.test.bnna.admin.board.tripinfo.TripInfoCmtDTO">
+	<!-- 여행정보 게시글의 댓글 리스트 가져오기 -->
+	<select id="cmtlist" parameterType="String" resultType="TripInfoDTO">
 		select 
 		    m.pic,
 		    m.id,
@@ -24,6 +38,26 @@
 		        on m.seq = tpc.seqmember
 		where tpc.seqtripinfo = #{seq}
 	</select>
+	
+	<!-- 리뷰번호에 따른 리뷰이미지를 가져오는 쿼리 -->
+	<select id="ilist" parameterType="String" resultType="TripInfoImgDTO">
+		select * from tblTripInfoImg where seqTripInfo = #{seq}
+	</select>
+	
+	<!-- 여행정보 게시글 쓰기 -->
+	<insert id="add" parameterType="TripInfoDTO">
+		insert into tblTripInfo values (seqTripInfo.nextVal, 1, #{subject}, #{content}, default, default, default, 0, 0)
+	</insert>
+	
+	<!-- 가장 최근 게시글 번호 가져오기 -->
+	<select id="getTripInfoSeq" resultType="String">
+		select max(seq) from tblTripInfo
+	</select>
+	
+	<!-- 게시글에 이미지를 추가 -->
+	<insert id="addimage" parameterType="TripInfoImgDTO">
+		insert into tblTripInfoImg (seq, seqTripInfo, image, orgimage) values (seqTripInfoImg.nextVal, #{seqTripInfo}, #{image}, #{orgimage})
+	</insert>
 	
 
 </mapper>

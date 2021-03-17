@@ -1,15 +1,20 @@
 package com.test.bnna.admin.board.tripinfo;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ITripInfoDAO {
 
-	List<TripInfoDTO> list();
+	List<TripInfoDTO> list(HashMap<String, String> map);
 
 	TripInfoDTO view(String seq);
 
 	List<TripInfoCmtDTO> cmtlist(String seq);
 
 	int write(TripInfoDTO dto);
+
+	int getTotalCount();
+
+	String getTripInfoSeq();
 
 }

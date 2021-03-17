@@ -35,9 +35,13 @@
 		
 					<div class="imgarea">
 						<div class="background">
-							<span class="glyphicon glyphicon-chevron-left"></span> <img
-								src="/bnna/resources/image/tripinfo/1_1.png" alt=""> <span
-								class="glyphicon glyphicon-chevron-right"></span>
+							<span class="glyphicon glyphicon-chevron-left"></span> 
+							
+								<c:forEach items="${ilist}" var="idto">
+									<img src="/bnna/resources/image/board/tripinfo/${idto.image}" >
+								</c:forEach>
+								<!-- <img src="/bnna/resources/image/tripinfo/1_1.png" alt=""> -->
+							<span class="glyphicon glyphicon-chevron-right"></span>
 						</div>
 					</div>
 		

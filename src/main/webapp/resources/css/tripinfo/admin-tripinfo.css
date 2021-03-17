@@ -3,6 +3,7 @@
 
     1. tripinfo list
     2. tripinfo view
+    3. tripinfo write
 
 */
 .mainsection {
@@ -214,3 +215,23 @@
     color: white;
 }
 
+
+
+
+
+/* 3. tripinfo write */
+.writearea  .subject, .writearea  .content {
+    margin-bottom: 10px;
+}
+
+.writearea  .subject {
+	text-weight: bold;
+}
+
+.writearea .file {
+    margin-bottom: 5px;
+}
+
+.right {
+    text-align: right;
+}

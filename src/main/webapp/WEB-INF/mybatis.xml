@@ -10,6 +10,7 @@
 	<typeAliases>
 	
 		<typeAlias type="com.test.bnna.admin.board.tripinfo.TripInfoDTO" alias="TripInfoDTO"/>
+		<typeAlias type="com.test.bnna.admin.board.tripinfo.TripInfoImgDTO" alias="TripInfoImgDTO"/>
 		<typeAlias type="com.test.bnna.member.mileage.MileageDTO" alias="MileageDTO"/>
 		<typeAlias type="com.test.bnna.member.dibs.DibsDTO" alias="DibsDTO"/>
 	

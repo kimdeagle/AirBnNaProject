@@ -1,11 +1,11 @@
 package com.test.bnna.admin.board.tripinfo;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  * 관리자 페이지의 여행정보 게시판 관련 메소드를 담고있는 DAO입니다.
@@ -18,9 +18,15 @@ public class TripInfoDAO implements ITripInfoDAO {
 	private SqlSessionTemplate template;
 
 	@Override
-	public List<TripInfoDTO> list() {
+	public int getTotalCount() {
 
-		return template.selectList("tripinfo.list");
+		return template.selectOne("tripinfo.gettotalcount");
+	}
+	
+	@Override
+	public List<TripInfoDTO> list(HashMap<String, String> map) {
+
+		return template.selectList("tripinfo.list", map);
 	}
 	
 	@Override
@@ -41,6 +47,13 @@ public class TripInfoDAO implements ITripInfoDAO {
 		
 		return template.insert("tripinfo.add", dto);
 	}
+	
+	@Override
+	public String getTripInfoSeq() {
+		
+		return template.selectOne("tripinfo.getTripInfoSeq");
+	}
+
 
 
 }

@@ -17,13 +17,14 @@
         
                 <h1>여행정보 게시판 <small>게시물 작성</small></h1>
 
+				<form method="POST" action="/bnna/admin/board/tripinfo/writeok.action" enctype="multipart/form-data">
                 <div class="writearea">
-
-                    <input type="text" class="form-control subject" placeholder="제목을 입력하세요.">
-                    <textarea name="" id="" class="form-control content" cols="30" rows="10" placeholder="내용을 입력하세요."></textarea>
+                
+                    <input type="text" class="form-control subject" name="subject" id="subject" placeholder="제목을 입력하세요.">
+                    <textarea name="content" id="content" class="form-control content" cols="30" rows="10" placeholder="내용을 입력하세요."></textarea>
                     
                     <div id="filearea" style="width: 85%;">
-                        <input multiple="multiple" type="file" name="file" class="form-control file"/>
+                        <input multiple="multiple" type="file" name="image" class="form-control file"/>
                     </div>
 
                     <div style="text-align: right; margin-top: -40px;">
@@ -41,6 +42,7 @@
                     </div>
 
                 </div>
+                </form>
         
             </article>
         
