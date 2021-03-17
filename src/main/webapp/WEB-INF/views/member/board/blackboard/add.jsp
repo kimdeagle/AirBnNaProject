@@ -12,7 +12,7 @@
 		<span class="glyphicon glyphicon-menu-right" style="position: static; z-index: -1;"></span>
 		신고게시판
 		<span class="glyphicon glyphicon-menu-right" style="position: static; z-index: -1;"></span>
-		추가
+		작성
 	</div>
 	<hr style="margin-top: -5px;">
 	<!-- 여기까지 menu path -->
@@ -20,13 +20,13 @@
 	<!-- 본인 작업 -->
 	<h1 class="board-title">신고게시판 <small>Blacklist Board</small></h1>
 
-	<form method="POST" action="/bnna/member/board/blackboard/addok.action" enctype="multipart/form-data">
+	<form id="add" method="POST" action="/bnna/member/board/blackboard/addok.action" enctype="multipart/form-data">
 	
 		<table class="table table-bordered" id="tblAdd">
 			<tr>
 				<th>제목</th>
 				<td>
-					<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요." maxlength=100>
+					<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요." maxlength=100 required>
 				</td>
 			</tr>
 			<tr>
@@ -35,13 +35,13 @@
 					<button type="button" class="btn btn-default btn-sm" id="btnSearch"><span class="glyphicon glyphicon-search"></span></button>				
 				</th>
 				<td>
-					<span id="issueMemberInfo">홍길동(hong12)</span>
+					<span id="issueMemberInfo"></span>
 				</td>
 			</tr>
 			<tr>
 				<th>내용</th>
 				<td>
-					<textarea class="form-control" id="content" name="content" placeholder="내용을 입력하세요." maxlength=1000></textarea>
+					<textarea class="form-control" id="content" name="content" placeholder="내용을 입력하세요." maxlength=1000 required></textarea>
 				</td>
 			</tr>
 			<tr>
@@ -57,10 +57,13 @@
 	
 		<div class="btns">
 			<button type="submit" class="btn btn-primary">작성</button>
-			<button type="button" class="btn btn-warning" onclick="location.href='/bnna/member/board/blackboard/list.action';">취소</button>
+			<button type="button" class="btn btn-default" onclick="location.href='/bnna/member/board/blackboard/list.action';">취소</button>
 		</div>
 		
-		<input type="hidden" id="seqIssueMember" name="seqIssueMember" value="">
+		<input type="hidden" id="seqIssueMember" name="seqIssueMember">
+		<input type="hidden" id="reply" name="reply" value="${reply}">
+		<input type="hidden" id="thread" name="thread" value="${thread}">
+		<input type="hidden" id="depth" name="depth" value="${depth}">
 		
 	</form>
 
@@ -91,19 +94,17 @@
 						<thead>
 							<tr>
 								<th>선택</th>
+								<th>이름</th>
 								<th>아이디</th>
-								<th>이름</th>								
 							</tr>						
 						</thead>
 						<tbody>
-							<tr>
-								<td colspan="3">검색 결과가 없습니다.</td>
-							</tr>
+							
 						</tbody>
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary">선택</button>
+					<button type="button" class="btn btn-primary" id="choice">선택</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 				</div>
 			</div>
@@ -113,12 +114,5 @@
 </section>
 
 <script src="/bnna/resources/js/blackboard.js"></script>
-<script>
 
 
-	
-
-	
-	
-
-</script>

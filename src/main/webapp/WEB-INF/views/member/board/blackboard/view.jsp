@@ -19,7 +19,6 @@
 
 	<!-- 본인 작업 -->
 	<h1 class="board-title">신고게시판 <small>Blacklist Board</small></h1>
-
 		
 		<!-- 글 상세 정보 -->
 		<table class="table table-bordered" id="tblView">
@@ -79,8 +78,15 @@
 		</table>
 	
 		<div class="btns">
-			<button type="button" class="btn btn-success" onclick="location.href='/bnna/member/board/blackboard/edit.action?seq=${seq}';">수정</button>
-			<button type="button" class="btn btn-danger" onclick="location.href='/bnna/member/board/blackboard/del.action?seq=${seq}';">삭제</button>
+			<c:if test="${not empty seqMember}">
+				<c:if test="${dto.seqMember.equals(seqMember)}">
+					<button type="button" class="btn btn-success" onclick="location.href='/bnna/member/board/blackboard/edit.action?seq=${seq}';">수정</button>
+					<button type="button" class="btn btn-danger" onclick="location.href='/bnna/member/board/blackboard/del.action?seq=${seq}';">삭제</button>
+				</c:if>
+				<c:if test="${!dto.seqMember.equals(seqMember)}">
+					<button type="button" class="btn btn-warning" onclick="location.href='/bnna/member/board/blackboard/add.action?reply=y&thread=${dto.thread}&depth=${dto.depth}';">답글</button>
+				</c:if>
+			</c:if>
 			<button type="button" class="btn btn-default" onclick="location.href='/bnna/member/board/blackboard/list.action';">목록</button>
 		</div>
 		
@@ -107,8 +113,18 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		
+		<c:if test="${not empty seqMember}">
+			<h4 class="comment-title">댓글 작성 <small>Write Comment</small></h4>
+			<div class="write-comment">
+				<textarea class="form-control" id="commentContent" name="commentContent"></textarea>
+				<button type="button" class="btn btn-default btn-lg" id="addcmt">작성</button>
+			</div>
+			
+			<input type="hidden" id="seq" name="seq" value="${seq}">	
+		</c:if>
 
 </section>
 
-
+<script src="/bnna/resources/js/blackboard.js"></script>
 

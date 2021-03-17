@@ -23,4 +23,32 @@
 		select bbc.*, (select id from tblMember where seq = bbc.seqMember) as id, (select name from tblMember where seq = bbc.seqMember) as name from tblBlackBoardCmt bbc where seqBlackBoard = #{seq}
 	</select>
 	
+	<!-- 21.03.17 추가분 -->
+
+	<select id="getThread" resultType="Integer">
+		select nvl(max(thread), 0) + 1000 as thread from tblBlackBoard
+	</select>
+
+	
+	<update id="updateThread" parameterType="map">
+		update tblBlackBoard set thread = thread - 1 where thread <![CDATA[<]]> #{parentThread} and thread <![CDATA[>]]> #{previousThread}
+	</update>
+	
+	<insert id="addok" parameterType="com.test.bnna.member.board.blackboard.BlackBoardDTO">
+		insert into tblBlackBoard(seq, seqMember, seqIssueMember, title, content, readcnt, regdate, thread, depth) 
+			values(seqBlackBoard.nextVal, #{seqMember}, #{seqIssueMember}, #{title}, #{content}, default, default, #{thread}, #{depth})
+	</insert>
+	
+	<select id="getAddSeq" resultType="String">
+		select max(seq) as seq from tblBlackBoard 
+	</select>
+	
+	<delete id="del" parameterType="String">
+		delete from tblBlackBoard where seq = #{addSeqBlackBoard}
+	</delete>
+	
+	<select id="list" resultType="com.test.bnna.member.board.blackboard.BlackBoardDTO">
+		select bb.*, (select id from tblMember where seq = bb.seqMember) as id, (select name from tblMember where seq = bb.seqMember) as name from tblBlackBoard bb order by bb.thread desc
+	</select>
+
 </mapper>

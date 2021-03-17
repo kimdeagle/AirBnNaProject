@@ -1,5 +1,6 @@
 package com.test.bnna.member.board.blackboard;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IBlackBoardDAO {
@@ -9,5 +10,17 @@ public interface IBlackBoardDAO {
 	List<BlackBoardImgDTO> getImages(String seq);
 
 	List<BlackBoardCmtDTO> getComments(String seq);
+
+	int getThread();
+
+	void updateThread(HashMap<String, Integer> map);
+	
+	int addok(BlackBoardDTO dto);
+
+	String getAddSeq();
+
+	void del(String addSeqBlackBoard);
+
+	List<BlackBoardDTO> list();
 
 }
