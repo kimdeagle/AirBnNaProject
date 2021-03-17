@@ -23,4 +23,8 @@ public interface ITripInfoDAO {
 
 	int del(String path, String seq);
 
+	int getThread();
+
+	void updateThread(HashMap<String, Integer> map);
+
 }

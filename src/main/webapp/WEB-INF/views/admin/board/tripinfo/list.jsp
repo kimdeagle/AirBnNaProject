@@ -25,7 +25,7 @@
 
             <div class="btns">
                 <button class="btn btn-thumbnail">썸네일보기</button>
-                <button class="btn btn-write" onclick="location.href='/bnna/admin/board/tripinfo/write.action'">새글쓰기</button>
+                <button class="btn btn-write" onclick="location.href='/bnna/admin/board/tripinfo/write.action?reply=n'">새글쓰기</button>
             </div>
         </div>
 

@@ -46,7 +46,22 @@ public class TripInfoDAO implements ITripInfoDAO {
 	@Override
 	public int write(TripInfoDTO dto) {
 		
+		System.out.println("dao에서 과연 무슨값을 가질까?"+ dto.getDepth() + "/" + dto.getThread());
+		
 		return template.insert("tripinfo.add", dto);
+	}
+	
+	//가장 큰 thread값 + 1000을 반환해 dto에 담는다.
+	@Override
+	public int getThread() {
+		
+		return template.selectOne("tripinfo.getThread");
+	}
+	
+	@Override
+	public void updateThread(HashMap<String, Integer> map) {
+		
+		template.update("tripinfo.updateThread", map);
 	}
 	
 	@Override

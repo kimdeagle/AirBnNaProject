@@ -1,6 +1,7 @@
 package com.test.bnna.admin.board.tripinfo;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -154,15 +155,117 @@ public class TripInfoController {
 	@RequestMapping(value="/admin/board/tripinfo/write.action", method= {RequestMethod.GET})
 	public String write(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
 		
-
+		String reply = req.getParameter("reply");
+		String thread = req.getParameter("thread");
+		String depth = req.getParameter("depth");
+		
+		//write.action에서 잘 찍히는지 검사
+		System.out.println("write reply:" + reply);
+		System.out.println("write thread:" + thread);
+		System.out.println("write depth:" + depth);
+		
+		req.setAttribute("reply", reply);
+		req.setAttribute("thread", thread);
+		req.setAttribute("depth", depth);
+		
 		return "admin.board.tripinfo.write";
 	}
 	
 	@RequestMapping(value="/admin/board/tripinfo/writeok.action", method= {RequestMethod.POST})
-	public void writeok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, TripInfoDTO dto) {
+	public void writeok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, TripInfoDTO dto) throws UnsupportedEncodingException {
 
-		MultipartHttpServletRequest multi=(MultipartHttpServletRequest)req;
+		//1. 
+		session = req.getSession();
+		
+		//1. 
+		req.setCharacterEncoding("UTF-8");
+		
+		System.out.println("writeok 진입은 하니?");
+		
+		
+		String reply = "";
+		int parentThread = 0;
+		int parentDepth = 0;
+		
+		MultipartHttpServletRequest multi = (MultipartHttpServletRequest)req;
 		List<MultipartFile> multiList = multi.getFiles("image");
+		
+		System.out.println("어디서 막히니 ? 1");
+		
+		// 답글
+		try {
+			
+			reply = multi.getParameter("reply");
+			
+			System.out.println("어디서 막히니 ? 2");
+			
+			//view.do -> 부모글의 thread값 + 부모글의 depth값
+			parentThread = Integer.parseInt(multi.getParameter("thread"));
+			parentDepth = Integer.parseInt(multi.getParameter("depth"));
+			
+			System.out.println("어디서 막히니 ? 3");
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		int thread = 0;
+		int depth = 0;
+		
+		
+		if (reply.equals("n")) {
+			
+			//1. 새글 쓰기
+			//a. 게시물 중 가장 큰 thread를 찾아서 그 값에 +1000 한 값을 새글의 thread 값으로 사용한다.(단, 첫번째 글은 이전 글이 존재하지 않기 때문에 일단 1000을 넣는다.)
+			//b. 새글의 depth는 무조건 0을 넣는다.
+			
+			System.out.println("어디서 막히니 ? n1 4");
+			System.out.println(dao.getThread());
+			
+			thread = dao.getThread();
+			
+			System.out.println("어디서 막히니 ? n2 5");
+			
+			depth = 0;
+					
+		} else {
+			
+			//2. 답변글 쓰기
+			//a. 게시물의 모든 thread 값 중 답변글의 부모글 thread 값보다 작고, 이전 새글의 thread 값보다 큰 글들을 모두 찾아서 thread - 1 업데이트 한다.
+			//b. 답변글의 thread 값은 부모글의 thread - 1을 넣는다.
+			//c. 답변글의 depth 값은 부모글의 depth + 1을 넣는다.
+			
+			
+			System.out.println("어디서 막히니 ? y1 ");
+			//이전 새글의 thread
+			int previousThread = (int)Math.floor((parentThread - 1) / 1000) * 1000;
+			
+			System.out.println("어디서 막히니 ? y2 ");
+			HashMap<String,Integer> map = new HashMap<String,Integer>();
+			
+			System.out.println("어디서 막히니 ? y3 ");
+			map.put("parentThread", parentThread);
+			map.put("previousThread", previousThread);
+			
+			System.out.println(parentThread);
+			System.out.println(previousThread);
+			
+			System.out.println("어디서 막히니 ? y4 ");
+			dao.updateThread(map);
+			
+			
+			System.out.println("어디서 막히니 ? y5 ");
+			thread = parentThread - 1;
+			depth = parentDepth + 1;
+			
+		}
+		
+		System.out.println("여기까지는 오나? thread : " + thread + "& depth: " + depth);
+		
+		dto.setThread(thread);
+		dto.setDepth(depth);
+		
+		
 		
 		// 파일업로드
 		if (multiList.size() == 1 && multiList.get(0).getOriginalFilename().equals("")) {
@@ -175,7 +278,7 @@ public class TripInfoController {
 				
 				for (int i = 0; i < multiList.size(); i++) {
 					
-					String path=req.getRealPath("/resources/image/board/tripinfo/");
+					String path = req.getRealPath("/resources/image/board/tripinfo/");
 					
 					filename = getFileName(path, multiList.get(i).getOriginalFilename());
 					
@@ -209,6 +312,8 @@ public class TripInfoController {
 		
 		
 		try {
+			
+			System.out.println("controller에서 dto depth: " + dto.getDepth());
 			
 			int result = dao.write(dto);	//게시글 DB에 데이터 넣기
 			

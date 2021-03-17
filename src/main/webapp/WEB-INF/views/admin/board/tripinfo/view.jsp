@@ -54,7 +54,7 @@
 		
 					<div class="related">
 						관련 글 보기
-						<button class="btn btn-related" onclick="location.href='/bnna/admin/board/tripinfo/write.action?seq=${dto.seq}';">답글쓰기</button>
+						<button class="btn btn-related" onclick="location.href='/bnna/admin/board/tripinfo/write.action?reply=y&thread=${dto.thread}&depth=${dto.depth}';">답글쓰기</button>
 		
 						<table class="table tbl-related">
 							<tr>
@@ -103,8 +103,6 @@
 						<div style="clear: both;"></div>
 		
 					</div>
-		
-		
 		
 				</div>
 		

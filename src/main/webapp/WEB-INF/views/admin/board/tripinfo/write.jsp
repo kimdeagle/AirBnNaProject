@@ -38,8 +38,23 @@
                         <button class="btn">미리보기</button>
                     </div>
                     <div class="right">
-                        <button class="btn btn-general" type="submit" onclick="location.href='/bnna/admin/board/tripinfo/writeok.action'">등록</button>
+                        <button class="btn btn-general" type="submit">등록</button>
                     </div>
+                    
+	                <input type="hidden" id="reply" name="reply" value="${reply}">
+	                
+	                <c:if test="${empty thread}">
+ 	                	<input type="hidden" id="thread" name="thread" value="0">
+ 	                </c:if>
+ 	                <c:if test="${not empty thread}">
+ 	                	<input type="hidden" id="thread" name="thread" value="${thread}">
+ 	                </c:if>
+ 	                <c:if test="${empty depth}">
+ 	                	<input type="hidden" id="depth" name="depth" value="0">
+ 	                </c:if>
+ 	                <c:if test="${not empty depth}">
+	                	<input type="hidden" id="depth" name="depth" value="${depth}"> 
+	                </c:if>
 
                 </div>
                 </form>
