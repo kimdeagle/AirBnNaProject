@@ -29,15 +29,21 @@
 					<div class="btnarea">
 						<button class="btn btn-list"
 							onclick="location.href='/bnna/admin/board/tripinfo/list.action';">목록으로</button>
-						<button class="btn" id="btnDel">삭제하기</button>
+						<button class="btn" id="btnDel">삭제</button>
+						<button class="btn" id="btnEdit" onclick="location.href='/bnna/admin/board/tripinfo/edit.action?seq=${dto.seq}';">수정</button>
 						<button class="btn link">스크랩</button>
 					</div>
 		
 					<div class="imgarea">
 						<div class="background">
-							<span class="glyphicon glyphicon-chevron-left"></span> <img
-								src="/bnna/resources/image/tripinfo/1_1.png" alt=""> <span
-								class="glyphicon glyphicon-chevron-right"></span>
+							<span class="glyphicon glyphicon-chevron-left"></span> 
+							
+								<c:forEach items="${ilist}" var="idto">
+									<img src="/bnna/resources/image/board/tripinfo/${idto.image}" >
+									
+								</c:forEach>
+								<!-- <img src="/bnna/resources/image/tripinfo/1_1.png" alt=""> -->
+							<span class="glyphicon glyphicon-chevron-right"></span>
 						</div>
 					</div>
 		
@@ -48,7 +54,7 @@
 		
 					<div class="related">
 						관련 글 보기
-						<button class="btn btn-related">답글쓰기</button>
+						<button class="btn btn-related" onclick="location.href='/bnna/admin/board/tripinfo/write.action?reply=y&thread=${dto.thread}&depth=${dto.depth}';">답글쓰기</button>
 		
 						<table class="table tbl-related">
 							<tr>
@@ -62,6 +68,11 @@
 					<div class="cmtarea">
 						댓글
 						<table class="table tbl-cmt">
+							<c:if test="${empty cmtlist}">
+								<tr>
+									<td colspan="4">아직 댓글이 없습니다.</td>
+								</tr>
+							</c:if>
 		
 							<c:forEach items="${cmtlist}" var="cdto">
 								<tr>
@@ -93,8 +104,6 @@
 		
 					</div>
 		
-		
-		
 				</div>
 		
 			</article>
@@ -105,8 +114,7 @@
 
             $("#btnDel").click(function(){
                 if(confirm("정말 삭제하시겠습니까 ?") == true){
-                    alert("글이 삭제되었습니다");
-                    location.href = "/bnna/admin/board/tripinfo/delok.action?seq=" + ${dto.seq};
+                    location.href = "/bnna/admin/board/tripinfo/delok.action?seq=${dto.seq}";
                 }
                 else{
                     return ;

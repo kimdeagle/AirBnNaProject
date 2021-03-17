@@ -17,30 +17,39 @@
         
                 <h1>여행정보 게시판 <small>게시물 수정</small></h1>
 
+                <form method="POST" action="/bnna/admin/board/tripinfo/editok.action">
                 <div class="writearea">
-
-                    <input type="text" class="form-control subject" placeholder="제목을 입력하세요.">
-                    <textarea name="" id="" class="form-control content" cols="30" rows="10" placeholder="내용을 입력하세요."></textarea>
+                
+                    <input type="text" class="form-control subject" name="subject" id="subject" value="${dto.subject}" required>
+                    <textarea name="content" id="content" class="form-control content" cols="30" rows="10" required>${dto.content}</textarea>
                     
                     <div id="filearea" style="width: 85%;">
-                        <input multiple="multiple" type="file" name="file" class="form-control file"/>
+                    
+					<c:forEach items="${ilist}" var="idto">
+						<div>${idto.orgimage}</div>
+					</c:forEach>
+                       
                     </div>
 
-                    <div style="text-align: right; margin-top: -40px;">
+					<!--                     
+					<div style="text-align: right; margin-top: -40px;">
                         <button class="btn btn-add">파일 추가</button>
-                    </div>
+                    </div> 
+                    -->
 
                     <hr>
 
                     <div class="btns">
-                        <button class="btn">취소</button>
+                        <button class="btn" onclick="location.href='/bnna/admin/board/tripinfo/list.action'">취소</button>
                         <button class="btn">미리보기</button>
                     </div>
                     <div class="right">
-                        <button class="btn btn-general" onclick="location.href='/bnna/admin/board/tripinfo/editok.action'">수정</button>
+                        <button class="btn btn-general" type="submit"  onclick="location.href='/bnna/admin/board/tripinfo/editok.action'">수정</button>
                     </div>
+                    <input type="hidden" name="seq" value="${dto.seq}">
 
                 </div>
+                </form>
         
             </article>
         

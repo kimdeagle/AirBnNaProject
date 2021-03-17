@@ -7,13 +7,18 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * 관심숙소 관련 메서드들을 담은 DAO입니다.
+ * @author 김다은
+ *
+ */
 @Repository
 public class DibsDAO implements IDibsDAO {
 	
 	@Autowired
 	private SqlSessionTemplate template;
 	
-	
+
 	@Override
 	public int getTotalCount() {
 		
@@ -26,7 +31,6 @@ public class DibsDAO implements IDibsDAO {
 
 		return template.selectList("dibs.list", map);
 	}
-	
 	
 	
 	@Override
