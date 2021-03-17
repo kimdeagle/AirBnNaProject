@@ -68,6 +68,13 @@
 	
 	
 	<!-- Trip Plan Tiles (다은 추가) -->
+	<definition name="member.tripplanwfooter.*" template="/WEB-INF/views/layout/tripplanwfooter.jsp">
+		<put-attribute name="asset" value="/WEB-INF/views/member/tripplan/asset.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/member/tripplan/header.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/member/tripplan/{1}.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/member/tripplan/footer.jsp"></put-attribute>
+	</definition>
+	
 	<definition name="member.tripplan.*" template="/WEB-INF/views/layout/tripplan.jsp">
 		<put-attribute name="asset" value="/WEB-INF/views/member/tripplan/asset.jsp"></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/views/member/tripplan/header.jsp"></put-attribute>
