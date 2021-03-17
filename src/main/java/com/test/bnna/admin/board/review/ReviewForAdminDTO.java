@@ -1,4 +1,4 @@
-package com.test.bnna.member.board.review;
+package com.test.bnna.admin.board.review;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  *
  */
 @Data
-public class ReviewDTO {
+public class ReviewForAdminDTO {
 	
 	private String seq;		 // 리뷰번호
 	private String seqbook;	 // 예약번호
