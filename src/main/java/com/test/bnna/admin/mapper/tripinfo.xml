@@ -28,7 +28,7 @@
 	</select>
 
 	<!-- 여행정보 게시글의 댓글 리스트 가져오기 -->
-	<select id="cmtlist" parameterType="String" resultType="TripInfoDTO">
+	<select id="cmtlist" parameterType="String" resultType="TripInfoCmtDTO">
 		select 
 		    m.pic,
 		    m.id,
@@ -58,6 +58,28 @@
 	<insert id="addimage" parameterType="TripInfoImgDTO">
 		insert into tblTripInfoImg (seq, seqTripInfo, image, orgimage) values (seqTripInfoImg.nextVal, #{seqTripInfo}, #{image}, #{orgimage})
 	</insert>
+	
+	<!-- 게시글 수정할 때 해당 게시물 정보 가져오기 -->
+	<select id="get" parameterType="String" resultType="TripInfoDTO">
+		select * from tblTripInfo where seq = #{seq}
+	</select>
+	
+	<!-- 게시물 수정을 위한 update -->
+	<update id="edit" parameterType="String">
+		update tblTripInfo set subject = #{subject}, content = #{content} where seq = #{seq}
+	</update>
+	
+	<!-- 삭제를 원하는 게시물의 사진도 함께 삭제 -->
+	<delete id="delimg" parameterType="String">
+		delete from tblTripInfoImg where seqTripInfo = #{seq}
+	</delete>
+	
+	<!-- 게시물 삭제 -->
+	<delete id="del" parameterType="String">
+		delete from tblTripInfo where seq = #{seq}
+	</delete>
+	
+	
 	
 
 </mapper>

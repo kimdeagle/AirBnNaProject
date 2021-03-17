@@ -20,11 +20,11 @@
 				<form method="POST" action="/bnna/admin/board/tripinfo/writeok.action" enctype="multipart/form-data">
                 <div class="writearea">
                 
-                    <input type="text" class="form-control subject" name="subject" id="subject" placeholder="제목을 입력하세요.">
-                    <textarea name="content" id="content" class="form-control content" cols="30" rows="10" placeholder="내용을 입력하세요."></textarea>
+                    <input type="text" class="form-control subject" name="subject" id="subject" placeholder="제목을 입력하세요." required>
+                    <textarea name="content" id="content" class="form-control content" cols="30" rows="10" placeholder="내용을 입력하세요." required></textarea>
                     
                     <div id="filearea" style="width: 85%;">
-                        <input multiple="multiple" type="file" name="image" class="form-control file"/>
+                        <input multiple="multiple" type="file" name="image" class="form-control file" required/>
                     </div>
 
                     <div style="text-align: right; margin-top: -40px;">
@@ -51,11 +51,14 @@
 		<script>
             // 파일업로드 추가 버튼
             $(".btn-add").on('click', function() {
-
+				
+            	//var cnt = 1;
+            	
                 let tmp = '';
-                tmp += '<input multiple="multiple" type="file" name="file" class="form-control file"/>'
+                tmp += '<input multiple="multiple" type="file" name="image" class="form-control file"/>'
 
                 $("#filearea").append(tmp);
+                //cnt++;
 
             });
         </script>

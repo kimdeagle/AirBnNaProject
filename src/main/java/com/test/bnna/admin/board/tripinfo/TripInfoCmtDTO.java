@@ -2,6 +2,12 @@ package com.test.bnna.admin.board.tripinfo;
 
 import lombok.Data;
 
+
+/**
+ * 여행정보 게시판 댓글 DTO입니다.
+ * @author 김다은
+ *
+ */
 @Data
 public class TripInfoCmtDTO {
 	

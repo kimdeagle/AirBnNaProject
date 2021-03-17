@@ -17,4 +17,10 @@ public interface ITripInfoDAO {
 
 	String getTripInfoSeq();
 
+	TripInfoDTO get(String seq);
+
+	int edit(TripInfoDTO dto);
+
+	int del(String path, String seq);
+
 }

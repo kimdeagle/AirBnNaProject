@@ -1,6 +1,5 @@
 package com.test.bnna.admin.board.tripinfo;
 
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 
 /**
  * 관리자 페이지의 여행정보 게시판 관련 컨트롤러입니다.
@@ -137,10 +137,15 @@ public class TripInfoController {
 		
 		TripInfoDTO dto = dao.view(seq);
 		
+		// 게시글 번호로 댓글정보 가져오기
 		List<TripInfoCmtDTO> cmtlist = dao.cmtlist(seq);
+		
+		// 게시글 번호로 image 가져오기
+		List<TripInfoImgDTO> ilist = idao.list(seq);
 		
 		req.setAttribute("dto", dto);
 		req.setAttribute("cmtlist", cmtlist);
+		req.setAttribute("ilist", ilist);
 		
 		return "admin.board.tripinfo.view";
 	}
@@ -171,11 +176,6 @@ public class TripInfoController {
 				for (int i = 0; i < multiList.size(); i++) {
 					
 					String path=req.getRealPath("/resources/image/board/tripinfo/");
-					
-					//path/ orgname 찍히는지 테스트
-					System.out.println("path : " + path);
-					System.out.println("orgfilename : " + multiList.get(i).getOriginalFilename());
-					System.out.println("size : " + multiList.size());
 					
 					filename = getFileName(path, multiList.get(i).getOriginalFilename());
 					
@@ -212,11 +212,8 @@ public class TripInfoController {
 			
 			int result = dao.write(dto);	//게시글 DB에 데이터 넣기
 			
-			System.out.println("게시글 잘 들어갔나? : " + result);
 			
 			String seq = dao.getTripInfoSeq();	//여행정보 글번호 가져오기
-			
-			System.out.println("게시글 번호 : " + seq);
 			
 			for (int i = 0; i < ilist.size(); i++) {
 				ilist.get(i).setSeqTripInfo(seq);
@@ -224,7 +221,6 @@ public class TripInfoController {
 			
 			int fileResult = idao.addTripInfoImg(ilist);	//여행정보 사진 DB에 데이터 넣기
 			
-			System.out.println("tripinfoimg 에 사진 들어갔니?" + fileResult);
 			
 			if (fileResult == 1) {
 				resp.sendRedirect("/bnna/admin/board/tripinfo/list.action");
@@ -262,28 +258,62 @@ public class TripInfoController {
 
 
 	@RequestMapping(value="/admin/board/tripinfo/edit.action", method= {RequestMethod.GET})
-	public String edit(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+	public String edit(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
 		
+		//해당 seq의 여행정보 게시글 가져오기
+		TripInfoDTO dto = dao.get(seq);
+		
+		// 리뷰번호로 이미지가져오기
+		List<TripInfoImgDTO> ilist = idao.list(seq);
+		
+		req.setAttribute("dto", dto);
+		req.setAttribute("ilist", ilist);
 		
 		return "admin.board.tripinfo.edit";
 	}
 	
-//	@RequestMapping(value="/admin/board/tripinfo/editok.action", method= {RequestMethod.POST})
-//	public void editok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, TripInfoDTO dto) {
-//		
-//		session.setAttribute("seq", 1);
-//		
-//		int result = dao.edit(dto);
-//		
-//		try {
-//			if (result == 1) {
-//				resp.sendRedirect("/admin/board/tripinfo/view.action?seq=" + dto.getSeq());
-//			} else {
-//				resp.sendRedirect("/admin/board/tripinfo/edit.action?seq=" + dto.getSeq());
-//			}
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
-//	}
+	@RequestMapping(value="/admin/board/tripinfo/editok.action", method= {RequestMethod.POST})
+	public void editok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, TripInfoDTO dto) {
+		
+		
+		int result = dao.edit(dto);
+		
+		try {
+			if (result == 1) {
+				resp.sendRedirect("/bnna/admin/board/tripinfo/view.action?seq=" + dto.getSeq());
+			} else {
+				resp.sendRedirect("/bnna/admin/board/tripinfo/edit.action?seq=" + dto.getSeq());
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	
+	
+	@RequestMapping(value="/admin/board/tripinfo/delok.action", method={RequestMethod.GET})
+	public void delok(HttpServletRequest req, HttpServletResponse resp, String seq) { 
+		
+		String path = req.getRealPath("/resources/image/board/tripinfo/");
+		
+		int result = dao.del(path, seq);
+		
+		
+		// 3.
+		
+		try {
+			
+			if (result == 1) {
+				resp.sendRedirect("/bnna/admin/board/tripinfo/list.action");
+			} else {
+				resp.sendRedirect("/bnna/admin/board/tripinfo/view.action?seq="+seq);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 }
