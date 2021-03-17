@@ -26,11 +26,11 @@
 	<!-- 특정 숙소의 리뷰를 가져오는 쿼리 -->
 	<select id="onelist" parameterType="String" resultType="com.test.bnna.member.board.review.ReviewDTO">
 		select
-			r.seq,
+			r.seq as seq,
 		    r.title as title,
 		    r.content as content,
 		    r.star as star,
-		    m.id as writer,
+		    m.id as id,
 		    b.bookdate,
 		    r.readcnt,
 		    r.recommendcnt,

@@ -15,15 +15,6 @@ public class ReviewDAO implements IReviewDAO {
 	private SqlSessionTemplate template;
 
 	/**
-	 *  전체 리뷰를 가져오는 메서드입니다.
-	 */
-	@Override
-	public List<ReviewDTO> list() {
-		
-		return template.selectList("review.alllist");
-	}
-	
-	/**
 	 * 하나의 숙소의 리뷰를 가져오는 메서드입니다.
 	 * @param list
 	 * @return 리뷰정보를 담고 있는 DTO의 리스트를 반환합니다.
@@ -78,16 +69,8 @@ public class ReviewDAO implements IReviewDAO {
 	public int del(String path, String seq) {
 		
 		int result=delFiles(path, seq);
-		
-		if (result>0) {
-			
-			template.delete("review.delPic", seq);
-			return template.delete("review.del", seq);
-		} else {
-			System.out.println("리뷰글의 원본이미지파일을 지우지 못했습니다.");
-		}
-		
-		return 0;
+		template.delete("review.delPic", seq);
+		return template.delete("review.del", seq);
 	}
 	
 	/**

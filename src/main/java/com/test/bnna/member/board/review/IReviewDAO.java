@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface IReviewDAO {
 
-	List<ReviewDTO> list();
-	
 	List<ReviewDTO> list(String seq); // 이건 숙소번호를 파라미터로 해서 그 숙소의 리뷰를 찾아오는 메서드
 
 	void readCountUp(String seq);
