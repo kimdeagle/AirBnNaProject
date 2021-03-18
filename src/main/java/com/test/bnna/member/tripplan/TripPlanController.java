@@ -28,6 +28,13 @@ public class TripPlanController {
 		return "member.tripplan.make";
 	}
 	
+	@RequestMapping(value="/member/tripplan/board.action", method={RequestMethod.GET})
+	public String board(HttpServletRequest req, HttpServletResponse resp) {
+		
+		
+		return "member.tripplanwfooter.board";
+	}
+	
 
 	
 }
