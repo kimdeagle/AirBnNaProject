@@ -145,6 +145,11 @@ public class TripInfoController {
 	@RequestMapping(value="/admin/board/tripinfo/view.action", method={RequestMethod.GET})
 	public String view(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
 		
+		String search = req.getParameter("search"); //검색어
+		String page = req.getParameter("page"); //page - view.jsp 한테 넘기기 위해!
+		
+		dao.updateReadcount(seq); //조회수 증가. session 처리 안함
+		
 		TripInfoDTO dto = dao.view(seq);
 		
 		//dto에서 thread만 빼서 보관하기
@@ -164,6 +169,9 @@ public class TripInfoController {
 		req.setAttribute("cmtlist", cmtlist);
 		req.setAttribute("ilist", ilist);
 		req.setAttribute("rlist", rlist);
+		
+		req.setAttribute("search", search);
+		req.setAttribute("page", page);
 		
 		return "admin.board.tripinfo.view";
 	}

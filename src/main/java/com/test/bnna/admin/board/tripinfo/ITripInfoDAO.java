@@ -29,4 +29,6 @@ public interface ITripInfoDAO {
 
 	int getTotalCount(HashMap<String, String> map);
 
+	void updateReadcount(String seq);
+
 }

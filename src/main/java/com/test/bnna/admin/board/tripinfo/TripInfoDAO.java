@@ -68,6 +68,13 @@ public class TripInfoDAO implements ITripInfoDAO {
 		return template.selectList("tripinfo.rlist", thread);
 	}
 	
+	//글 조회수 증가시키기
+	@Override
+	public void updateReadcount(String seq) {
+		
+		template.update("tripinfo.updateReadcnt", seq);
+	}
+	
 	@Override
 	public int write(TripInfoDTO dto) {
 		

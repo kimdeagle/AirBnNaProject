@@ -98,6 +98,11 @@
 	</delete>
 	
 	
+	<!-- 조회수 증가시키기 -->
+	<update id="updateReadcnt" parameterType="String">
+		update tblTripInfo set readcnt = readcnt + 1 where seq = #{seq}
+	</update>
+	
 	
 
 </mapper>
