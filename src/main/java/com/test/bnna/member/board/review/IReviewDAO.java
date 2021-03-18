@@ -27,4 +27,6 @@ public interface IReviewDAO {
 
 	int edit(EditReviewDTO dto);
 
+	String getOwner(String seq);
+
 }

@@ -28,13 +28,13 @@ public class ReviewController {
 	private IBookForMemberDAO bdao;
 	
 	@RequestMapping(value="/member/board/review/list.action", method={RequestMethod.GET})
-	public String list(HttpServletRequest req, HttpServletResponse resp) {
+	public String listForMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
 		
 		// 1번회원 데이터를 보여주기로 했으므로 회원번호 1번으로 설정
-		req.setAttribute("seq", 1);
+		session.setAttribute("seq", 1);
 		
 		// 회원번호 가져와서
-		String seqMember=req.getAttribute("seq").toString();
+		String seqMember=session.getAttribute("seq").toString();
 		// 그 회원의 리뷰목록 찾아오기
 		List<ReviewForMemberDTO> list=dao.listForMember(seqMember);
 		
@@ -44,7 +44,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/member/board/review/add.action", method={RequestMethod.GET})
-	public String add(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+	public String addForMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
 		
 		// 1번회원 데이터 보여주기로 했으므로.
 		session.setAttribute("seq", 1);
@@ -59,7 +59,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/member/board/review/addok.action", method={RequestMethod.POST})
-	public void addok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, AddReviewDTO dto) {
+	public void addokForMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, AddReviewDTO dto) {
 
 		MultipartHttpServletRequest multi=(MultipartHttpServletRequest)req;
 		List<MultipartFile> multiList = multi.getFiles("reviewpic");
@@ -170,7 +170,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/member/board/review/edit.action", method={RequestMethod.GET})
-	public String edit(HttpServletRequest req, HttpServletResponse resp, String seq) {
+	public String editForSpecificMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
 		
 		// 리뷰번호로 전체정보가져오기
 		ReviewForMemberDTO dto=dao.info(seq);
@@ -185,7 +185,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/member/board/review/editok.action", method={RequestMethod.POST})
-	public void editok(HttpServletRequest req, HttpServletResponse resp, EditReviewDTO dto) { // 1.
+	public void editokForSpecificMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, EditReviewDTO dto) { // 1.
 
 		// 1. 데이터 가져오기
 		// 2. DB 위임 -> edit
@@ -209,7 +209,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/member/board/review/view.action", method={RequestMethod.GET})
-	public String view(HttpServletRequest req, HttpServletResponse resp, String seq) {
+	public String viewForSpecificMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
 		
 		// 리뷰번호로 전체정보가져오기
 		ReviewForMemberDTO dto=dao.info(seq);
@@ -224,7 +224,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/member/board/review/delok.action", method={RequestMethod.GET})
-	public void delok(HttpServletRequest req, HttpServletResponse resp, String seq) { // 1.
+	public void delokForSpecificMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) { // 1.
 
 		// 1. 데이터 가져오기
 		// 2. DB 위임 -> delete
@@ -255,7 +255,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/member/board/review/delfile.action", method={RequestMethod.GET})
-	public String delFile(HttpServletRequest req, HttpServletResponse resp, String seq) { // 1.
+	public String delFileForSpecificMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) { // 1.
 
 		// 1. 데이터 가져오기
 		// 2. DB 위임 -> delete

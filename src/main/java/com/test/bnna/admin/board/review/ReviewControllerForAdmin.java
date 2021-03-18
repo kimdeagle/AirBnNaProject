@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ public class ReviewControllerForAdmin {
 	IReviewPicForAdminDAO pdao;
 	
 	@RequestMapping(value="/admin/board/review/list.action", method={RequestMethod.GET})
-	public String list(HttpServletRequest req, HttpServletResponse resp) {
+	public String listForAdmin(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
 		
 		// 리뷰를 전부 가져온다.
 		List<ReviewForAdminDTO> list=dao.list();
@@ -35,7 +36,7 @@ public class ReviewControllerForAdmin {
 	}
 	
 	@RequestMapping(value="/admin/board/review/view.action", method={RequestMethod.GET})
-	public String view(HttpServletRequest req, HttpServletResponse resp, String seq) {
+	public String viewForAdmin(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
 		
 		// 선택한 글번호를 가져와서 그 번호로 리뷰글정보를 찾는다.
 		ReviewForAdminDTO dto=dao.info(seq);
@@ -49,7 +50,7 @@ public class ReviewControllerForAdmin {
 	}
 	
 	@RequestMapping(value="/admin/board/review/delok.action", method={RequestMethod.GET})
-	public void delok(HttpServletRequest req, HttpServletResponse resp, String seq) {
+	public void delokForAdmin(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
 		
 		// 1. 데이터 가져오기
 		// 2. DB 위임 -> delete

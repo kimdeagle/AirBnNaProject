@@ -116,11 +116,23 @@ public class ReviewDAO implements IReviewDAO {
 		
 		return template.selectOne("review.getCurrentReviewSeq");
 	}
-
+	
+	/**
+	 * 리뷰를 수정하는 메서드입니다.
+	 */
 	@Override
 	public int edit(EditReviewDTO dto) {
 		
 		return template.update("review.edit", dto);
+	}
+
+	/**
+	 * 리뷰번호로 리뷰를 작성한 사람의 ID를 가져오는 메서드입니다.
+	 */
+	@Override
+	public String getOwner(String seq) {
+		
+		return template.selectOne("review.getOwner", seq);
 	}
 
 }
