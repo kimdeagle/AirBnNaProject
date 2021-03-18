@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,20 +44,6 @@ public class BlackBoardController {
 		//검색 결과 받아오기
 		List<MemberDTO> mlist = mdao.list(condition, keyword);
 		
-		System.out.println(mlist.size());
-		
-//		[
-//		{
-//		"name": "홍길동",
-//		"age": 20
-//		}
-//		,
-//		{
-//		"name": "홍길동",
-//		"age": 20
-//		}
-//		]		
-		
 		try {
 			PrintWriter writer = resp.getWriter();
 			
@@ -83,45 +70,27 @@ public class BlackBoardController {
 			e.printStackTrace();
 		}
 		
-		
-		
-	}
+	} //searchmember
 	
 	@RequestMapping(value="/member/board/blackboard/add.action", method={RequestMethod.GET})
-	public String add(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String reply, String thread, String depth) {
+	public String add(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String reply, String thread, String depth) {
 		
-		if (reply.equals("y")) {
-			req.setAttribute("thread", thread);
-			req.setAttribute("depth", depth);			
-		}
+
 		req.setAttribute("reply", reply);
+		req.setAttribute("thread", thread);
+		req.setAttribute("depth", depth);
+		req.setAttribute("nowPage", page);
 		
 		return "member.board.blackboard.add";
-	}
+	} //add
 	
 	@RequestMapping(value="/member/board/blackboard/addok.action", method={RequestMethod.POST})
-	public void addok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, BlackBoardDTO dto, String reply, String thread, String depth) {
+	public void addok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, BlackBoardDTO dto, String page, String reply) {
 		
 		//데이터 가져오기 - parameter(dto)
 		
-		System.out.println("before");
-		System.out.println(dto.toString());
-		System.out.println(reply);
-		System.out.println(thread);
-		System.out.println(depth);
-		
 		//회원번호
 		dto.setSeqMember((String)session.getAttribute("seqMember"));
-		
-		System.out.println("after");
-		System.out.println(dto.toString());
-		System.out.println(reply);
-		System.out.println(thread);
-		System.out.println(depth);
-		
-
-		int ithread = 0;
-		int idepth = 0;
 		
 		int parentThread = 0;
 		int parentDepth = 0;
@@ -129,12 +98,12 @@ public class BlackBoardController {
 		if (reply.equals("n")) {
 			//새글쓰기
 			
-			ithread = dao.getThread();
-			idepth = 0;
+			dto.setThread(dao.getThread() + "");
+			dto.setDepth("0");
 			
 		} else {
-			parentThread = Integer.parseInt(thread);
-			parentDepth = Integer.parseInt(depth);	
+			parentThread = Integer.parseInt(dto.getThread());
+			parentDepth = Integer.parseInt(dto.getDepth());	
 			//답글쓰기
 			
 			//이전 새글의 thread
@@ -147,12 +116,10 @@ public class BlackBoardController {
 			
 			dao.updateThread(map);
 			
-			ithread = parentThread - 1;
-			idepth = parentDepth + 1;
+			dto.setThread((parentThread - 1) + "");
+			dto.setDepth((parentDepth + 1) + "");
+			
 		}
-		
-		dto.setThread(ithread);
-		dto.setDepth(idepth);
 		
 		//DB 위임 -> add
 		int result = dao.addok(dto);
@@ -165,21 +132,29 @@ public class BlackBoardController {
 				//1. 게시판 번호 가져오기
 				String addSeqBlackBoard = dao.getAddSeq();
 				
-				if (req.getAttribute("image") != null) {
+				//2. 파일 저장 + 테이블에 추가할 글번호, 파일명, 원본파일명 저장
+				MultipartHttpServletRequest mreq = (MultipartHttpServletRequest)req;
+				
+				List<MultipartFile> flist = mreq.getFiles("image");
+				
+				//이미지 추가 안한 경우도 flist.size()가 1이다...
+				//실제 파일 이름을 가져와 빈문자열이면 이미지 첨부X
+				//flist.get(0).getOriginalFilename()
+				
+				if (flist.get(0).getOriginalFilename() != "") {
 					//이미지 추가한 경우만
 					
-					//2. 파일 저장 + 테이블에 추가할 글번호, 파일명, 원본파일명 저장
-					MultipartHttpServletRequest mreq = (MultipartHttpServletRequest)req;
-
-					List<MultipartFile> flist = mreq.getFiles("image");
-
 					List<BlackBoardImgDTO> ilist = new ArrayList<BlackBoardImgDTO>();
 					
 					//webapp > resources > image > board > blackboard
 					String path = req.getRealPath("resources/image/board/blackboard");
 					
+					System.out.println("contextPath : " + req.getContextPath());
+					System.out.println("servletPath : " + req.getServletPath());				
+					
 					//TODO path test
-					System.out.println(path);
+					//path : D:\class\spring\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\AirBnNa\resources\image\board\blackboard
+					System.out.println("path : " + path);
 					
 					for (MultipartFile mf : flist) {
 						BlackBoardImgDTO idto = new BlackBoardImgDTO();
@@ -212,7 +187,7 @@ public class BlackBoardController {
 						writer.print("<html><head><meta charset='utf-8' /></head><body>");
 						writer.print("<script>");
 						writer.print("alert('글쓰기 성공!!\\n목록으로 이동합니다.');");
-						writer.print("location.href='/bnna/member/board/blackboard/list.action';");
+						writer.print("location.href='/bnna/member/board/blackboard/list.action?page="+ page +"';");
 						writer.print("</script>");
 						writer.print("</body></html>");
 						
@@ -245,7 +220,7 @@ public class BlackBoardController {
 					writer.print("<html><head><meta charset='utf-8' /></head><body>");
 					writer.print("<script>");
 					writer.print("alert('글쓰기 성공!!\\n목록으로 이동합니다.');");
-					writer.print("location.href='/bnna/member/board/blackboard/list.action';");
+					writer.print("location.href='/bnna/member/board/blackboard/list.action?page="+ page +"';");
 					writer.print("</script>");
 					writer.print("</body></html>");
 					
@@ -282,17 +257,14 @@ public class BlackBoardController {
 	}
 	
 	@RequestMapping(value="/member/board/blackboard/view.action", method={RequestMethod.GET})
-	public String view(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
+	public String view(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String page, String reply) {
 		
-		//1. 데이터 가져오기(seq)
+		//1. 데이터 가져오기(seq, reply)
 		//2. DB 위임 -> select
 		//3. 결과 처리
 		
 		//글 정보 가져오기
 		BlackBoardDTO dto = dao.get(seq);
-		
-		//날짜 자르기
-		dto.setRegdate(dto.getRegdate().substring(0, 10));
 		
 		//<br>처리
 		dto.setContent(dto.getContent().replace("\r\n", "<br>"));
@@ -304,7 +276,14 @@ public class BlackBoardController {
 		//댓글 가져오기
 		List<BlackBoardCmtDTO> clist = dao.getComments(seq);
 		
+		for (BlackBoardCmtDTO cdto : clist) {
+			//엔터 -> <br /> 변환 (클라이언트로 전달을 위해)
+			cdto.setContent(cdto.getContent().replace("\r\n", "<br />"));			
+		}
+		
 		req.setAttribute("seq", seq);
+		req.setAttribute("nowPage", page);
+		req.setAttribute("reply", reply);
 		req.setAttribute("dto", dto);
 		req.setAttribute("ilist", ilist);
 		req.setAttribute("clist", clist);
@@ -322,21 +301,25 @@ public class BlackBoardController {
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("application/json"); //*****JSON
 		
+		//<br /> -> 엔터 변환 (DB 저장을 위해)
+		content = content.replace("<br />", "\r\n");
+		
 		BlackBoardCmtDTO dto = new BlackBoardCmtDTO();
 		
 		dto.setSeqMember((String)session.getAttribute("seqMember"));
 		dto.setSeqBlackBoard(seq);
 		dto.setContent(content);
 		
-		
 		//댓글 추가하기
 		int result = cdao.add(dto);
-		
-		//돌려줄 데이터 가져오기(회원이름, 회원아이디, 작성내용, 작성일)
+				
+		//돌려줄 데이터 가져오기(댓글번호, 회원번호, 회원이름, 회원아이디, 작성내용, 작성일)
 		BlackBoardCmtDTO cdto = cdao.getAddCmt();
-
+		
+		//엔터 -> <br /> 변환 (클라이언트로 전달을 위해)
+		cdto.setContent(cdto.getContent().replace("\r\n", "<br />"));
+		
 		try {
-			
 			
 			if (result == 1) {
 				//추가 성공				
@@ -344,6 +327,8 @@ public class BlackBoardController {
 				
 				writer.print("[");
 				writer.print("{");
+				writer.print(String.format("\"seq\":\"%s\",", cdto.getSeq()));
+				writer.print(String.format("\"seqMember\":\"%s\",", cdto.getSeqMember()));
 				writer.print(String.format("\"id\":\"%s\",", cdto.getId()));
 				writer.print(String.format("\"name\":\"%s\",", cdto.getName()));
 				writer.print(String.format("\"content\":\"%s\",", cdto.getContent()));
@@ -371,25 +356,114 @@ public class BlackBoardController {
 			System.out.println(e);
 		}
 
+	}
+	
+	
+	@RequestMapping(value="/member/board/blackboard/delComment.action", method={RequestMethod.GET})
+	public void delComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String seqBlackBoard, String seqBlackBoardCmt, String reply) {
+		
+		resp.setCharacterEncoding("UTF-8");
+		
+		//데이터 받아오기
+		
+		//DB 위임 -> delete
+		int result = cdao.del(seqBlackBoardCmt);
+
+		//결과 처리
+		try {
+
+			if (result == 1) {
+				//삭제 성공
+				PrintWriter writer = resp.getWriter();
+				
+				writer.print("<html><head><meta charset='utf-8' /></head><body>");
+				writer.print("<script>");
+				writer.print("alert('댓글 삭제 성공!!\\n이전 페이지로 이동합니다.');");
+				writer.print("location.href='/bnna/member/board/blackboard/view.action?seq="+ seqBlackBoard +"&page="+ page +"&reply="+ reply +"';");
+				writer.print("</script>");
+				writer.print("</body></html>");
+				
+				writer.close();
+				
+			} else {
+				//삭제 실패
+				PrintWriter writer = resp.getWriter();
+				
+				writer.print("<html><head><meta charset='utf-8' /></head><body>");
+				writer.print("<script>");
+				writer.print("alert('댓글 삭제 실패..\\n이전 페이지로 이동합니다.');");
+				writer.print("history.back();");
+				writer.print("</script>");
+				writer.print("</body></html>");
+				
+				writer.close();
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}	
+
 	}	
 	
 	
 	@RequestMapping(value="/member/board/blackboard/list.action", method={RequestMethod.GET})
-	public String list(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+	public String list(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String condition, String keyword) {
+
+		//총 게시글 수 가져오기
+		int totalCount = dao.getCount();
 		
-		//DB 위임 -> select
-		List<BlackBoardDTO> list = dao.list();
+		//페이지바 만들기
+		Pagination pagination = new Pagination(page, totalCount);
 		
-		//날짜 자르기
+		//페이지바 가져오기
+		String pagebar = pagination.getPagebar();
+		
+		//페이지 번호 가져오기
+		int nowPage = pagination.getNowPage();
+
+		//페이지 세팅하기
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("begin", pagination.getBegin() + "");
+		map.put("end", pagination.getEnd() + "");
+		
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		//페이지에 해당하는 게시글 가져오기
+		List<BlackBoardDTO> list = dao.list(map);
+		
+		//사진 있는 게시글 번호 가져오기
+		List<String> hasImageSeqList = dao.getSeqHasImage();
+		
+		//날짜 자르기 및 답글여부 적용, 사진 있는지 확인하기
 		for (BlackBoardDTO dto : list) {
 			dto.setRegdate(dto.getRegdate().substring(0, 10));
+			if (dto.getSeqIssueMember() == null) {
+				dto.setReply("y");
+			} else {
+				dto.setReply("n");
+			}
+			
+			for (String seq : hasImageSeqList) {
+				if (dto.getSeq().equals(seq)) {
+					dto.setHasImage(true);
+					break;
+				}
+				
+			}
+			
 		}
 		
 		//결과 처리
 		req.setAttribute("list", list);
+		req.setAttribute("pagebar", pagebar);
+		req.setAttribute("nowPage", nowPage);
 		
 		return "member.board.blackboard.list";
-	}	
+	}
+	
+	///member/board/blackboard/searchList
 	
 	@RequestMapping(value="/member/board/blackboard/login.action", method= {RequestMethod.GET})
 	public void login(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seqMember) {

@@ -3,6 +3,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <link rel="stylesheet" href="/bnna/resources/css/blackboard.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
 
 <section class="contentsection page-start">
 
@@ -31,7 +33,7 @@
 		<div style="clear: both;"></div>
 	</div>	
 	
-	<table class="table table-bordered">
+	<table id="tblList" class="table table-bordered">
 		<thead>
 			<tr>
 				<th>제목</th>
@@ -44,11 +46,15 @@
 			<c:forEach items="${list}" var="dto">
 				<tr>
 					<td>
-						<a href="/bnna/member/board/blackboard/view.action?seq=${dto.seq}" style="margin-left: ${dto.depth * 30}px;">
+						<a href="/bnna/member/board/blackboard/view.action?seq=${dto.seq}&page=${nowPage}&reply=${dto.reply}" style="margin-left: ${dto.depth * 30}px;">
 							<c:if test="${dto.depth > 0}">
-								<span class="glyphicon glyphicon-share-alt"></span>
+								<i class="fab fa-replyd"></i>
+								
 							</c:if>
 							${dto.title}
+							<c:if test="${dto.hasImage}">
+								<i class="far fa-file-image imgicon"></i>
+							</c:if>
 						</a>
 					</td>
 					<td>${dto.name}(${dto.id})</td>
@@ -59,8 +65,30 @@
 		</tbody>
 	</table>
 	
-	<c:if test="${not empty seqMember}">
-		<button type="button" class="btn btn-primary btn-lg" id="btnAdd" onclick="location.href='/bnna/member/board/blackboard/add.action?reply=n';">작성</button>		
-	</c:if>
+	<div id="searchbar" class="form-inline">
+		<select class="form-control" id="searchCondition">
+			<option>제목</option>
+			<option>이름</option>
+			<option>아이디</option>
+		</select>
+		<input type="text" class="form-control" id="searchKeyword">
+		<button type="button" class="btn btn-default" id="btnSearchList"><i class="fas fa-search"></i></button>
+			
+		<c:if test="${not empty seqMember}">
+			<button type="button" class="btn btn-primary btn-lg" id="btnAdd" onclick="location.href='/bnna/member/board/blackboard/add.action?page=${nowPage}&reply=n';">작성</button>
+		</c:if>
+	</div>
+	
+	
+	<!-- paging -->
+	<c:if test="${not empty list}">
+		<div class="pagebox">
+			<nav class="pagebar">
+				<ul class="pagination">${pagebar}</ul>
+			</nav>
+		</div>
+	</c:if>	
 	
 </section>
+
+<script src="/bnna/resources/js/blackboard.js"></script>

@@ -47,8 +47,34 @@
 		delete from tblBlackBoard where seq = #{addSeqBlackBoard}
 	</delete>
 	
-	<select id="list" resultType="com.test.bnna.member.board.blackboard.BlackBoardDTO">
-		select bb.*, (select id from tblMember where seq = bb.seqMember) as id, (select name from tblMember where seq = bb.seqMember) as name from tblBlackBoard bb order by bb.thread desc
+	<select id="list" parameterType="map" resultType="com.test.bnna.member.board.blackboard.BlackBoardDTO">
+	<!-- select * from (select a.*, rownum as rnum from (select veb.* from viewEBook veb) a) where rnum between "begin" and "end" -->
+		
+		<choose>
+		
+			<when test="keyword != null and !keyword.equals('')">
+				select * from
+						(select b.*, rownum as rnum from
+													(select a.* from
+																(select bb.*, (select id from tblMember where seq = bb.seqMember) as id, (select name from tblMember where seq = bb.seqMember) as name from tblBlackBoard bb order by bb.thread desc) a
+													where ${condition} like '%'||#{keyword}||'%') b)
+				where rnum between 1 and 10
+			</when>
+			
+			<otherwise>
+				select * from (select a.*, rownum as rnum from (select bb.*, (select id from tblMember where seq = bb.seqMember) as id, (select name from tblMember where seq = bb.seqMember) as name from tblBlackBoard bb order by bb.thread desc) a) where rnum between #{begin} and #{end}
+			</otherwise>
+		
+		</choose>
+		
+	</select>
+	
+	<select id="getCount" resultType="Integer">
+		select count(*) from tblBlackBoard
+	</select>
+	
+	<select id="getSeqHasImage" resultType="String">
+		select distinct seqBlackBoard from tblBlackBoardImg
 	</select>
 
 </mapper>

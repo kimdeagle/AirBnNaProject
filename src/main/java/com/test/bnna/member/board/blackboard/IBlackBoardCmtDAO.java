@@ -6,4 +6,6 @@ public interface IBlackBoardCmtDAO {
 
 	BlackBoardCmtDTO getAddCmt();
 
+	int del(String seqBlackBoardCmt);
+
 }

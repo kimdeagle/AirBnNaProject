@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class BlackBoardImgDAO implements IBlackBoardImgDAO {
 
 	@Autowired
-	SqlSessionTemplate template;
+	private SqlSessionTemplate template;
 	
 	@Override
 	public int add(List<BlackBoardImgDTO> ilist) {

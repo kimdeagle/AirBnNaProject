@@ -21,6 +21,10 @@ public interface IBlackBoardDAO {
 
 	void del(String addSeqBlackBoard);
 
-	List<BlackBoardDTO> list();
+	List<BlackBoardDTO> list(HashMap<String, String> map);
+
+	int getCount();
+
+	List<String> getSeqHasImage();
 
 }

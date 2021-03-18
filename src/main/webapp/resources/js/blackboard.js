@@ -1,6 +1,8 @@
 
 $(document).ready(function () {
 	
+	$("#title").focus();
+	
 	//add > 이미지 파일명 출력
 	$("#image").on("change", function() {
 		
@@ -9,7 +11,17 @@ $(document).ready(function () {
 		
 		for (var i=0; i<$("#image")[0].files.length; i++) {
 			//console.log($("#image")[0].files[i].name);
-			$("#imagename").append($("#image")[0].files[i].name + "<br>");
+			let imagename = $("#image")[0].files[i].name;
+			
+			//add > 이미지 이외의 파일 추가한 경우
+			if (!(imagename.toLowerCase().endsWith("jpg") || imagename.toLowerCase().endsWith("gif") || imagename.toLowerCase().endsWith("png"))) {
+				alert("이미지 파일을 선택해주세요.");
+				$("#imagename").text("");
+				$("#image").val("");
+				return;
+			}
+			
+			$("#imagename").append(imagename + "<br>");
 		}
 		
 	});
@@ -126,15 +138,26 @@ $(document).ready(function () {
 	
 	//신고대상회원 검색하지 않은경우 submit 막기
 	$("#add").submit(function(event) {
-		if ($("#issueMemberInfo").text() == "") {
-			alert("신고대상회원을 검색해주세요.");
-			event.preventDefault();
+		if ($("#reply").val().equals("n")) {
+			if ($("#issueMemberInfo").text() == "") {
+				alert("신고대상회원을 검색해주세요.");
+				event.preventDefault();
+			}			
 		}
 	});
-
+	
 	//view > 댓글 추가
 	$("#addcmt").click(function() {
 		
+		//첫 댓글 추가시 "댓글이 없습니다." 삭제
+		if ($("#tblComment tbody tr td").attr("colspan") == 3) {
+			$("#tblComment tbody").html("");
+		}
+		
+		//개행문자 처리하기
+		$("#commentContent").val($("#commentContent").val().replace(/(?:\r\n|\r|\n)/g, '<br />'));
+
+		//ajax
 		$.ajax({
 			type: "GET",
 			url: "/bnna/member/board/blackboard/addcmt.action",
@@ -142,7 +165,7 @@ $(document).ready(function () {
 			data: "seq=" + $("#seq").val() + "&content=" + $("#commentContent").val(),
 			success: function(result) {
 				$(result).each(function(index, item) {
-					$("#tblComment tbody").append("<tr><td>"+ item.name +" ("+ item.id +")</td><td>"+ item.content +"</td><td>"+ item.regdate +"</td></tr>");					
+					$("#tblComment tbody").append("<tr><td>"+ item.name +" ("+ item.id +")<input type='hidden' id='seqBlackBoardCmt' value='"+ item.seq +"'><input type='hidden' id='seqMember' value='"+ item.seqMember +"'></td><td><span class='cmtContent'>"+ item.content +"</span> <button type='button' class='btn btn-success btn-sm btnCmtEdit'>수정</button> <button type='button' class='btn btn-danger btn-sm btnCmtDel'>삭제</button></td><td>"+ item.regdate +"</td></tr>");					
 				});
 				$("#commentContent").val("");
 				$("#commentContent").focus();
@@ -153,6 +176,67 @@ $(document).ready(function () {
 		});
 
 	});
+	
+	//댓글 수정
+	
+	//댓글 삭제 클릭
+	
+	var seqBlackBoard;
+	var seqBlackBoardCmt;
+	var nowPage;
+	var reply;
+	
+	//ajax로 생성한 버튼도 모달이 열리도록
+	//변경 전 : $(".btnCmtDel").click(function() {
+	//변경 후 : $(document).on('click', '.btnCmtDel', function() {
+	$(document).on('click', '.btnCmtDel', function() {
+		//게시글 번호 가져오기
+		seqBlackBoard = $("#seqBlackBoard").val();
+		
+		//댓글 번호 가져오기
+		seqBlackBoardCmt = $(this).parent().prev().children("input[type=hidden]:first-child").val();
+		
+		//페이지 번호 가져오기
+		nowPage = $("#nowPage").val();
+		
+		//답글여부 가져오기
+		reply = $("#reply").val();
+		
+		//open cmtDelModal
+		$("#cmtDelModal").modal('show');
+	});
+	
+	
+	//cmtDelModal > 삭제 버튼 클릭
+	$("#btnCmtDel").click(function() {
+		location.href="/bnna/member/board/blackboard/delComment.action?page="+ nowPage +"&seqBlackBoard="+ seqBlackBoard +"&seqBlackBoardCmt=" + seqBlackBoardCmt + "&reply=" + reply;
+	});
+	
+	//list > 검색
+	var searchCondition;
+	var searchKeyword;
+	
+	
+	//list > 검색 버튼 클릭
+	$("#btnSearchList").click(function() {
+		
+		searchKeyword = $("#searchKeyword").val();
+		
+		if ($("#searchCondition").val() == "제목") {
+			//제목
+			searchCondition = "title";
+		} else if ($("#searchCondition").val() == "이름") {
+			//이름
+			searchCondition = "name";
+		} else {
+			//아이디
+			searchCondition = "id";
+		}
+		
+		location.href="/bnna/member/board/blackboard/list.action?condition=" + searchCondition + "&keyword=" + searchKeyword;
+		
+	});
+	
 	
 	
 });

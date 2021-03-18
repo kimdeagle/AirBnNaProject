@@ -50,16 +50,16 @@ aside {
 	display: block;
 }
 
+/* view > images(div) */
+#tblView .images {
+	margin-bottom: 20px;
+}
+
 /* view > insertimg */
 #tblView .insertimg {
 	max-width: 550px;
 	display: block;
 	margin: 5px auto;
-}
-
-/* view > content */
-#tblView .content {
-	margin-top: 20px;
 }
 
 /* view > comment */
@@ -90,6 +90,10 @@ aside {
 	padding-left: 10px;
 }
 
+#tblComment tbody .cmtContent {
+	margin-right: 10px;
+}
+
 /* view > write comment */
 h4.comment-title {
 	margin-top: 30px;
@@ -115,10 +119,52 @@ h4.comment-title {
 	clear: both;
 }
 
+/* view > cmtDelModal */
+
+/* cmtBtns */
+#cmtDelModal .cmtBtns {
+	text-align: center;
+}
+
 /* list */
+#tblList th:nth-child(1) { width: auto; }
+#tblList th:nth-child(2) { width: 180px; }
+#tblList th:nth-child(3) { width: 120px; }
+#tblList th:nth-child(4) { width: 70px; }
+
+#tblList th:nth-child(1),
+#tblList th:nth-child(2), #tblList td:nth-child(2),
+#tblList th:nth-child(3), #tblList td:nth-child(3),
+#tblList th:nth-child(4), #tblList td:nth-child(4) {
+	text-align: center;
+}
+
+/* 제목 옆 이미지 아이콘 */
+#tblList .imgicon {
+	color: #F4A259;
+	margin-left: 5px;
+}
+
+/* 검색바 */
+#searchbar {
+	text-align: center;
+	line-height: 50px;
+}
+
+#searchbar::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
 #btnAdd {
 	float: right;
 	width: 120px;
 	height: 50px;
+}
+
+.pagebox {
+	text-align: center;
+	margin-top: 20px;
 }
 

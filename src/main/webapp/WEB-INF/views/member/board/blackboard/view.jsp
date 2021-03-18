@@ -58,21 +58,27 @@
 					
 				</td>
 			</tr>
-			<tr>
-				<th>
-					신고대상회원				
-				</th>
-				<td>
-					${dto.issueMemberName} (${dto.issueMemberId})
-				</td>
-			</tr>
+			<c:if test="${reply.equals('n')}">
+				<tr>
+					<th>
+						신고대상회원				
+					</th>
+					<td>
+						${dto.issueMemberName} (${dto.issueMemberId})
+					</td>
+				</tr>			
+			</c:if>
 			<tr>
 				<th>내용</th>
 				<td>
-					<c:forEach items="${ilist}" var="image">
-						<img src="/bnna/resources/image/board/blackboard/${image.image}" class="insertimg">					
-					</c:forEach>
-					<div class="content">${dto.content}</div>
+					<c:if test="${not empty ilist}">
+						<div class="images">
+							<c:forEach items="${ilist}" var="image">
+								<img src="/bnna/resources/image/board/blackboard/${image.image}" class="insertimg">					
+							</c:forEach>					
+						</div>					
+					</c:if>
+					${dto.content}
 				</td>
 			</tr>
 		</table>
@@ -80,14 +86,14 @@
 		<div class="btns">
 			<c:if test="${not empty seqMember}">
 				<c:if test="${dto.seqMember.equals(seqMember)}">
-					<button type="button" class="btn btn-success" onclick="location.href='/bnna/member/board/blackboard/edit.action?seq=${seq}';">수정</button>
+					<button type="button" class="btn btn-success" onclick="location.href='/bnna/member/board/blackboard/edit.action?seq=${seq}&page=${nowPage}';">수정</button>
 					<button type="button" class="btn btn-danger" onclick="location.href='/bnna/member/board/blackboard/del.action?seq=${seq}';">삭제</button>
 				</c:if>
 				<c:if test="${!dto.seqMember.equals(seqMember)}">
-					<button type="button" class="btn btn-warning" onclick="location.href='/bnna/member/board/blackboard/add.action?reply=y&thread=${dto.thread}&depth=${dto.depth}';">답글</button>
+					<button type="button" class="btn btn-warning" onclick="location.href='/bnna/member/board/blackboard/add.action?page=${nowPage}&reply=y&thread=${dto.thread}&depth=${dto.depth}';">답글</button>
 				</c:if>
 			</c:if>
-			<button type="button" class="btn btn-default" onclick="location.href='/bnna/member/board/blackboard/list.action';">목록</button>
+			<button type="button" class="btn btn-default" onclick="location.href='/bnna/member/board/blackboard/list.action?page=${nowPage}';">목록</button>
 		</div>
 		
 		<!-- 댓글 -->
@@ -106,8 +112,18 @@
 				</c:if>
 				<c:forEach items="${clist}" var="cmt">
 					<tr>
-						<td>${cmt.name} (${cmt.id})</td>
-						<td>${cmt.content}</td>
+						<td>
+							${cmt.name} (${cmt.id})
+							<input type="hidden" id="seqBlackBoardCmt" value="${cmt.seq}">
+							<input type="hidden" id="seqMember" value="${cmt.seqMember}">
+						</td>
+						<td>
+							<span class="cmtContent">${cmt.content}</span>
+							<c:if test="${seqMember.equals(cmt.seqMember)}">
+								<button type="button" class="btn btn-success btn-sm btnCmtEdit">수정</button>
+								<button type="button" class="btn btn-danger btn-sm btnCmtDel">삭제</button>
+							</c:if>
+						</td>
 						<td>${cmt.regdate}</td>
 					</tr>
 				</c:forEach>
@@ -123,6 +139,28 @@
 			
 			<input type="hidden" id="seq" name="seq" value="${seq}">	
 		</c:if>
+
+		<!-- cmtDelModal -->
+		<div class="modal fade" id="cmtDelModal" tabindex="-1" role="dialog" aria-labelledby="cmtDelModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="cmtDelModalLabel">댓글 삭제</h4>
+					</div>
+					<div class="modal-body">
+						삭제하시겠습니까?
+						<div class="cmtBtns">
+							<button type="button" id="btnCmtDel" class="btn btn-danger">삭제</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>						
+						</div>
+						<input type="hidden" id="seqBlackBoard" value="${seq}">
+						<input type="hidden" id="nowPage" value="${nowPage}">
+						<input type="hidden" id="reply" value="${reply}">
+					</div>
+				</div>
+			</div>
+		</div>
 
 </section>
 
