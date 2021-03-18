@@ -135,12 +135,23 @@
 	
 	<!-- 조회수를 올리는 쿼리 -->
 	<update id="readcntup" parameterType="String">
-	update tblReview set readcnt=readcnt+1 where seq=#{seq}
+		update tblReview set readcnt=readcnt+1 where seq=#{seq}
 	</update>
 	
 	<!-- 추천수를 올리는 쿼리 -->
 	<update id="recommendcntup" parameterType="String">
-	update tblReview set recommendcnt=recommendcnt+1 where seq=#{seq}
+		update tblReview set recommendcnt=recommendcnt+1 where seq=#{seq}
 	</update>
+	
+	<!-- 리뷰번호로 작성자 ID를 가져오는 쿼리 -->
+	<select id="getOwner" parameterType="String" resultType="String">
+		select m.id as id
+		from tblReview r
+             inner join tblBook b
+                 on r.seqbook=b.seq
+                     inner join tblMember m
+                         on m.seq=b.seqmember
+                             where r.seq=#{seq}
+	</select>
 	
 </mapper>

@@ -10,9 +10,9 @@ import lombok.Data;
 @Data
 public class AddReviewDTO {
 	
-	private String seqbook;
-	private String title;
-	private String content;
-	private String star;
+	private String seqbook; // 예약번호
+	private String title;	// 리뷰제목
+	private String content; // 리뷰내용
+	private String star;	// 별점
 
 }
