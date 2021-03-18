@@ -29,15 +29,17 @@
 					<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요." maxlength=100 required>
 				</td>
 			</tr>
-			<tr>
-				<th>
-					신고대상회원
-					<button type="button" class="btn btn-default btn-sm" id="btnSearch"><span class="glyphicon glyphicon-search"></span></button>				
-				</th>
-				<td>
-					<span id="issueMemberInfo"></span>
-				</td>
-			</tr>
+			<c:if test="${reply.equals('n')}">
+				<tr>
+					<th>
+						신고대상회원
+						<button type="button" class="btn btn-default btn-sm" id="btnSearch"><span class="glyphicon glyphicon-search"></span></button>				
+					</th>
+					<td>
+						<span id="issueMemberInfo"></span>
+					</td>
+				</tr>			
+			</c:if>
 			<tr>
 				<th>내용</th>
 				<td>
@@ -57,10 +59,11 @@
 	
 		<div class="btns">
 			<button type="submit" class="btn btn-primary">작성</button>
-			<button type="button" class="btn btn-default" onclick="location.href='/bnna/member/board/blackboard/list.action';">취소</button>
+			<button type="button" class="btn btn-default" onclick="location.href='/bnna/member/board/blackboard/list.action?page=${nowPage}';">취소</button>
 		</div>
 		
-		<input type="hidden" id="seqIssueMember" name="seqIssueMember">
+		<input type="hidden" id="seqIssueMember" name="seqIssueMember">		
+		<input type="hidden" id="page" name="page" value="${nowPage}">
 		<input type="hidden" id="reply" name="reply" value="${reply}">
 		<input type="hidden" id="thread" name="thread" value="${thread}">
 		<input type="hidden" id="depth" name="depth" value="${depth}">

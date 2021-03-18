@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public class BlackBoardCmtDAO implements IBlackBoardCmtDAO {
 
 	@Autowired
-	SqlSessionTemplate template;
+	private SqlSessionTemplate template;
 	
 	@Override
 	public int add(BlackBoardCmtDTO dto) {
@@ -20,6 +20,12 @@ public class BlackBoardCmtDAO implements IBlackBoardCmtDAO {
 	public BlackBoardCmtDTO getAddCmt() {
 		
 		return template.selectOne("blackboardcmt.getAddCmt");
+	}
+	
+	@Override
+	public int del(String seqBlackBoardCmt) {
+		
+		return template.delete("blackboardcmt.del", seqBlackBoardCmt);
 	}
 	
 }

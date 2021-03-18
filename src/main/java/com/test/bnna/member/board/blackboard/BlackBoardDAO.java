@@ -64,9 +64,21 @@ public class BlackBoardDAO implements IBlackBoardDAO {
 	}
 	
 	@Override
-	public List<BlackBoardDTO> list() {
+	public List<BlackBoardDTO> list(HashMap<String, String> map) {
 
-		return template.selectList("blackboard.list");
+		return template.selectList("blackboard.list", map);
+	}
+	
+	@Override
+	public int getCount() {
+
+		return template.selectOne("blackboard.getCount");
+	}
+	
+	@Override
+	public List<String> getSeqHasImage() {
+
+		return template.selectList("blackboard.getSeqHasImage");
 	}
 	
 }
