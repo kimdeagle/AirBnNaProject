@@ -14,6 +14,8 @@
 		<button id="addfilter" class="btn btn-default inline" data-toggle="modal" data-target="#filterModal">필터 추가</button>
 	</div>
 	
+	<h5>검색결과 ${list.size()} 건입니다.</h5>
+	
 	<div id="map" style="width:100%; height:600px;"></div>
 
 	<c:forEach items="${list}" var="dto">

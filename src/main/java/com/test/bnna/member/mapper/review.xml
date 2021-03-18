@@ -45,6 +45,21 @@
 		                        order by r.seq desc
 	</select>
 	
+	<!-- 특정 숙소의 리뷰의 이미지들을 가져오는 쿼리 -->
+	<select id="listByBnB" parameterType="String" resultType="com.test.bnna.member.board.review.ReviewPicDTO">
+		select
+		    rp.seq as seq,
+		    rp.seqreview as seqreview,
+		    rp.image as image,
+		    rp.orgimage as orgimage
+		from tblReviewPic rp
+		    inner join tblReview r
+		        on r.seq=rp.seqreview
+		            inner join tblBook b
+		                on b.seq=r.seqbook
+		                    where b.seqbnb=#{seq}
+	</select>
+	
 	<!-- 리뷰 한 개의 정보를 가져오는 쿼리 -->
 	<select id="info" parameterType="String" resultType="com.test.bnna.member.board.review.ReviewForMemberDTO">
 		select r.seq as seq,

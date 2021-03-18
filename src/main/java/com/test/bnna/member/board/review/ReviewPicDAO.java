@@ -55,4 +55,13 @@ public class ReviewPicDAO implements IReviewPicDAO {
 		
 	}
 
+	/**
+	 * 숙소번호로 그 숙소의 리뷰의 이미지들을 가져오는 메서드입니다.
+	 */
+	@Override
+	public List<ReviewPicDTO> listByBnB(String seq) {
+		
+		return template.selectList("review.listByBnB", seq);
+	}
+
 }

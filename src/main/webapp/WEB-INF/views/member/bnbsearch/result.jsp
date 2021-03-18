@@ -9,6 +9,8 @@
 		<button id="tomap" class="btn btn-default inline" onclick="location.href='/bnna/member/bnbsearch/map.action?location=${condition.location}&checkIn=${condition.checkIn}&checkOut=${condition.checkOut}&guest=${condition.guest}&gap=${condition.gap}'">지도로 보기</button>
 		<button id="addfilter" class="btn btn-default inline" data-toggle="modal" data-target="#filterModal">필터 추가</button>
 	</div>
+	
+	<h5>검색결과 ${list.size()} 건입니다.</h5>
 
 	<c:forEach items="${list}" var="dto">
 	<!-- 개별 숙소 정보 -->

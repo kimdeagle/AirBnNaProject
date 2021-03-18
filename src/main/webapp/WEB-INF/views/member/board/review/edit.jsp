@@ -38,17 +38,27 @@
 				<th>내용</th>
 				<td colspan="3"><textarea class="form-control" id="content" name="content">${dto.content}</textarea></td>
 			</tr>
+			<c:if test="${plist.size()>0}">
 			<tr>
-				<th>리뷰사진</th>
+				<th rowspan="2">리뷰사진</th>
+				<td colspan="3">
+					<div><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;삭제하기 버튼을 누르면 바로 삭제됩니다!</div>
+				</td>
+			</tr>
+			<tr>
 				<td colspan="3">
 					<c:forEach items="${plist}" var="pdto">
 						<div>${pdto.orgimage} <span id="delbtnbox"><button type="button" class="btn btn-default btn-xs" id="delfilebtn" data-seq=${pdto.seq}>삭제하기</button></span></div>
 					</c:forEach>
 				</td>
 			</tr>
+			</c:if>
 		</table>
 		<input type="hidden" value=${dto.seq} id="seq" name="seq">
-		<input type="submit" class="btn-general" value="수정하기">
+		<div id="btns">
+			<input type="submit" class="btn-general" value="수정하기">
+			<button type="button" class="btn-general" onclick="location.href='/bnna/member/board/review/list.action'">뒤로가기</button>
+		</div>
 	</form>
 </section>
 
@@ -69,7 +79,7 @@
 		});
 		
 		$(this).hide();
-		$(this).parent().html("<span>삭제되었습니다.</span>");
+		$(this).parent().html("&nbsp;<span class='glyphicon glyphicon-trash'></span>&nbsp;삭제되었습니다.");
 		
 	});
 </script>
