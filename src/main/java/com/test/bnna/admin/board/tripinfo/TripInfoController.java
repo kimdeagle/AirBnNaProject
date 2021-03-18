@@ -138,15 +138,23 @@ public class TripInfoController {
 		
 		TripInfoDTO dto = dao.view(seq);
 		
+		int thread = dto.getThread();
+		
+		System.out.println("쓰레드는? " +thread);
+		
 		// 게시글 번호로 댓글정보 가져오기
 		List<TripInfoCmtDTO> cmtlist = dao.cmtlist(seq);
 		
 		// 게시글 번호로 image 가져오기
 		List<TripInfoImgDTO> ilist = idao.list(seq);
 		
+		// 현재 thread로 관련글 리스트 가져오기
+		List<TripInfoDTO> rlist = dao.rlist(thread);
+		
 		req.setAttribute("dto", dto);
 		req.setAttribute("cmtlist", cmtlist);
 		req.setAttribute("ilist", ilist);
+		req.setAttribute("rlist", rlist);
 		
 		return "admin.board.tripinfo.view";
 	}
@@ -158,11 +166,6 @@ public class TripInfoController {
 		String reply = req.getParameter("reply");
 		String thread = req.getParameter("thread");
 		String depth = req.getParameter("depth");
-		
-		//write.action에서 잘 찍히는지 검사
-		System.out.println("write reply:" + reply);
-		System.out.println("write thread:" + thread);
-		System.out.println("write depth:" + depth);
 		
 		req.setAttribute("reply", reply);
 		req.setAttribute("thread", thread);
@@ -180,7 +183,6 @@ public class TripInfoController {
 		//1. 
 		req.setCharacterEncoding("UTF-8");
 		
-		System.out.println("writeok 진입은 하니?");
 		
 		
 		String reply = "";
@@ -190,20 +192,16 @@ public class TripInfoController {
 		MultipartHttpServletRequest multi = (MultipartHttpServletRequest)req;
 		List<MultipartFile> multiList = multi.getFiles("image");
 		
-		System.out.println("어디서 막히니 ? 1");
 		
 		// 답글
 		try {
 			
 			reply = multi.getParameter("reply");
 			
-			System.out.println("어디서 막히니 ? 2");
-			
 			//view.do -> 부모글의 thread값 + 부모글의 depth값
 			parentThread = Integer.parseInt(multi.getParameter("thread"));
 			parentDepth = Integer.parseInt(multi.getParameter("depth"));
 			
-			System.out.println("어디서 막히니 ? 3");
 			
 		} catch (Exception e) {
 			System.out.println(e);
@@ -219,12 +217,10 @@ public class TripInfoController {
 			//a. 게시물 중 가장 큰 thread를 찾아서 그 값에 +1000 한 값을 새글의 thread 값으로 사용한다.(단, 첫번째 글은 이전 글이 존재하지 않기 때문에 일단 1000을 넣는다.)
 			//b. 새글의 depth는 무조건 0을 넣는다.
 			
-			System.out.println("어디서 막히니 ? n1 4");
 			System.out.println(dao.getThread());
 			
 			thread = dao.getThread();
 			
-			System.out.println("어디서 막히니 ? n2 5");
 			
 			depth = 0;
 					
@@ -236,31 +232,22 @@ public class TripInfoController {
 			//c. 답변글의 depth 값은 부모글의 depth + 1을 넣는다.
 			
 			
-			System.out.println("어디서 막히니 ? y1 ");
 			//이전 새글의 thread
 			int previousThread = (int)Math.floor((parentThread - 1) / 1000) * 1000;
 			
-			System.out.println("어디서 막히니 ? y2 ");
 			HashMap<String,Integer> map = new HashMap<String,Integer>();
 			
-			System.out.println("어디서 막히니 ? y3 ");
 			map.put("parentThread", parentThread);
 			map.put("previousThread", previousThread);
 			
-			System.out.println(parentThread);
-			System.out.println(previousThread);
-			
-			System.out.println("어디서 막히니 ? y4 ");
 			dao.updateThread(map);
 			
 			
-			System.out.println("어디서 막히니 ? y5 ");
 			thread = parentThread - 1;
 			depth = parentDepth + 1;
 			
 		}
 		
-		System.out.println("여기까지는 오나? thread : " + thread + "& depth: " + depth);
 		
 		dto.setThread(thread);
 		dto.setDepth(depth);
@@ -417,6 +404,13 @@ public class TripInfoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	
+	@RequestMapping(value="/member/board/tripinfo/cmtok.action", method={RequestMethod.POST})
+	public void cmtok(HttpServletRequest req, HttpServletResponse resp) { 
+	
 		
 	}
 	

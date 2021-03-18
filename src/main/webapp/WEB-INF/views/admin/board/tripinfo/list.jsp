@@ -18,10 +18,14 @@
         <h1>여행정보 게시판</h1>
 
         <div class="boardhead">
+        
+        	<!-- 검색은 주로 GET방식 이용 : 상태유지를 위해 -->
+       		<form id="searchForm" method="GET" action="/bnna/admin/board/tripinfo/list.action">
             <div class="searchform searcharea">
-                <input type="text" class="form-control boardsearch">
+                <input type="text" class="form-control boardsearch" id="search" name="search" required value="">
                 <button id="searchBtn" class="btn"><span class="glyphicon glyphicon-search"></span></button>
             </div>
+            </form>
 
             <div class="btns">
                 <button class="btn btn-thumbnail">썸네일보기</button>

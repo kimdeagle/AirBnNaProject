@@ -27,4 +27,6 @@ public interface ITripInfoDAO {
 
 	void updateThread(HashMap<String, Integer> map);
 
+	List<TripInfoDTO> rlist(int thread);
+
 }

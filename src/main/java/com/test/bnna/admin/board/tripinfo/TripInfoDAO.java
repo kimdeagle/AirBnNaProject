@@ -43,10 +43,16 @@ public class TripInfoDAO implements ITripInfoDAO {
 		return template.selectList("tripinfo.cmtlist", seq);
 	}
 	
+	//view에서 관련글 목록 불러오기
+	@Override
+	public List<TripInfoDTO> rlist(int thread) {
+		
+		return template.selectList("tripinfo.rlist", thread);
+	}
+	
 	@Override
 	public int write(TripInfoDTO dto) {
 		
-		System.out.println("dao에서 과연 무슨값을 가질까?"+ dto.getDepth() + "/" + dto.getThread());
 		
 		return template.insert("tripinfo.add", dto);
 	}

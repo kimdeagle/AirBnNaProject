@@ -57,11 +57,22 @@
 						<button class="btn btn-related" onclick="location.href='/bnna/admin/board/tripinfo/write.action?reply=y&thread=${dto.thread}&depth=${dto.depth}';">답글쓰기</button>
 		
 						<table class="table tbl-related">
-							<tr>
-								<td><a href="#">관련글 제목입니다. 어쩌구 저쩌구</a></td>
-								<td>2021-03-13</td>
-							</tr>
+							<c:if test="${dto.depth > 0 || empty rlist}">
+								<tr>
+									<td colspan="2">이 글은 관련글이 없습니다.</td>
+								</tr>
+							</c:if>
+							
+							<c:if test="${dto.depth == 0}">
+							<c:forEach items="${rlist}" var="rdto">
+								<tr>
+									<td><a href="/bnna/admin/board/tripinfo/view.action?#">${rdto.subject}</a></td>
+									<td style="text-align: right;">${rdto.regdate.substring(0, 10)}</td>
+								</tr>
+							</c:forEach>
+							</c:if>
 						</table>
+						
 		
 					</div>
 		
@@ -87,19 +98,22 @@
 								</tr>
 								<tr>
 									<td colspan="2" class="ccontent noborder">${cdto.ccontent}</td>
-									<td class="btn-del noborder"><span>[삭제]</span></td>
+									<td class="btn-del noborder"><span onclick="location.href='/bnna/member/board/tripinfo/delcmtok.action?seq=${cdto.seq}&bseq=${dto.seq}';">[삭제]</span></td>
 								</tr>
 							</c:forEach>
 		
 						</table>
-		
+						
+						<form method="POST" action="/bnna/member/board/tripinfo/cmtok.action">
 						<div class="cmt-write">
 							<textarea class="form-control" id="ccontent" name="ccontent"
 								required placeholder="댓글을 남겨보세요." cols="30" rows="5"></textarea>
 							<div id="comment_cnt">(0 / 100)</div>
 						</div>
-		
+						
 						<button type="submit" class="btn btn-cmt">등록</button>
+						<input type="hidden" name="bseq" value="${dto.seq}">
+						</form>
 						<div style="clear: both;"></div>
 		
 					</div>

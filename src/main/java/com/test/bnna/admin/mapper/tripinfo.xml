@@ -39,6 +39,14 @@
 		where tpc.seqtripinfo = #{seq}
 	</select>
 	
+	<select id="rlist" parameterType="Integer" resultType="TripInfoDTO">
+		select 
+		    subject,
+		    regdate
+		from tblTripInfo
+		where depth != 0 and <![CDATA[thread > #{thread} - 1000 and thread < #{thread}]]>
+	</select>
+	
 	<!-- 리뷰번호에 따른 리뷰이미지를 가져오는 쿼리 -->
 	<select id="ilist" parameterType="String" resultType="TripInfoImgDTO">
 		select * from tblTripInfoImg where seqTripInfo = #{seq}
