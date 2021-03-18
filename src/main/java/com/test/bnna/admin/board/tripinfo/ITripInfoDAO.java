@@ -13,8 +13,6 @@ public interface ITripInfoDAO {
 
 	int write(TripInfoDTO dto);
 
-	int getTotalCount();
-
 	String getTripInfoSeq();
 
 	TripInfoDTO get(String seq);
@@ -26,5 +24,11 @@ public interface ITripInfoDAO {
 	int getThread();
 
 	void updateThread(HashMap<String, Integer> map);
+
+	List<TripInfoDTO> rlist(int thread);
+
+	int getTotalCount(HashMap<String, String> map);
+
+	void updateReadcount(String seq);
 
 }

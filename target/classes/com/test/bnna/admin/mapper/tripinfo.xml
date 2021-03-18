@@ -7,8 +7,8 @@
 <mapper namespace="tripinfo">
 
 	<!-- 여행정보 게시판 총 게시물 개수 세기 -->
-	<select id="gettotalcount" resultType="Integer">
-		select count(*) as cnt from tblTripInfo
+	<select id="gettotalcount" parameterType="HashMap" resultType="Integer">
+		select count(*) as cnt from tblTripInfo ${where}
 	</select>
 
 	<!-- 여행정보 게시판 목록 보기 -->
@@ -18,7 +18,7 @@
 		from (select 
 		            a.*, 
 		            rownum as rnum 
-		        from ( select * from tblTripInfo order by thread desc ) a)
+		        from ( select * from tblTripInfo ${where} order by thread desc ) a)
 		where rnum between #{begin} and #{end}
 	</select>
 
@@ -37,6 +37,14 @@
 		    inner join tblMember m
 		        on m.seq = tpc.seqmember
 		where tpc.seqtripinfo = #{seq}
+	</select>
+	
+	<select id="rlist" parameterType="Integer" resultType="TripInfoDTO">
+		select 
+		    subject,
+		    regdate
+		from tblTripInfo
+		where depth != 0 and <![CDATA[thread > #{thread} - 1000 and thread < #{thread}]]>
 	</select>
 	
 	<!-- 리뷰번호에 따른 리뷰이미지를 가져오는 쿼리 -->
@@ -89,6 +97,11 @@
 		delete from tblTripInfo where seq = #{seq}
 	</delete>
 	
+	
+	<!-- 조회수 증가시키기 -->
+	<update id="updateReadcnt" parameterType="String">
+		update tblTripInfo set readcnt = readcnt + 1 where seq = #{seq}
+	</update>
 	
 	
 
