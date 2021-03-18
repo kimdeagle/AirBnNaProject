@@ -42,6 +42,14 @@ public class TripInfoController {
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		
+		//검색
+		String search = req.getParameter("search");
+		
+		if (!(search == null || search.equals(""))) {
+			map.put("search", search);
+		}
+		
+		
 		//페이징
 		int nowPage = 0;		//현재 페이지 번호
 		int totalCount = 0;		//총 게시물 수 
@@ -72,7 +80,7 @@ public class TripInfoController {
 		
 		List<TripInfoDTO> list = dao.list(map);
 		
-		totalCount = dao.getTotalCount(); //총 게시물 수
+		totalCount = dao.getTotalCount(map); //총 게시물 수
 		
 		totalPage = (int)Math.ceil((double)totalCount / pageSize); //총 페이지 수
 		
@@ -126,6 +134,7 @@ public class TripInfoController {
 		
 		
 		req.setAttribute("list", list);
+		req.setAttribute("search", search);
 		req.setAttribute("pagebar", pagebar);
 		req.setAttribute("nowPage", nowPage);
 		
@@ -138,9 +147,9 @@ public class TripInfoController {
 		
 		TripInfoDTO dto = dao.view(seq);
 		
+		//dto에서 thread만 빼서 보관하기
 		int thread = dto.getThread();
 		
-		System.out.println("쓰레드는? " +thread);
 		
 		// 게시글 번호로 댓글정보 가져오기
 		List<TripInfoCmtDTO> cmtlist = dao.cmtlist(seq);

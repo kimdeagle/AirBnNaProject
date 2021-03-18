@@ -20,18 +20,24 @@
         <div class="boardhead">
         
         	<!-- 검색은 주로 GET방식 이용 : 상태유지를 위해 -->
-       		<form id="searchForm" method="GET" action="/bnna/admin/board/tripinfo/list.action">
             <div class="searchform searcharea">
-                <input type="text" class="form-control boardsearch" id="search" name="search" required value="">
-                <button id="searchBtn" class="btn"><span class="glyphicon glyphicon-search"></span></button>
+            	<form method="GET" action="/bnna/admin/board/tripinfo/list.action">
+                <input type="text" class="form-control boardsearch" id="search" name="search" required value="${search}">
+                <button id="searchBtn" class="btn" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                </form>
             </div>
-            </form>
 
             <div class="btns">
                 <button class="btn btn-thumbnail">썸네일보기</button>
                 <button class="btn btn-write" onclick="location.href='/bnna/admin/board/tripinfo/write.action?reply=n'">새글쓰기</button>
             </div>
         </div>
+        
+		<c:if test="${not empty search}">
+		<div class="message well well-sm" >
+		   '${search}'(으)로 ${list.size()}건의 게시물을 검색했습니다.
+		</div>
+		</c:if>
 
         <div class="admin-listarea">
             <table class="tbl-tripinfo table table-bordered">

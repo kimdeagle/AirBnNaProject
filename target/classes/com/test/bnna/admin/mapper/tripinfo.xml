@@ -7,8 +7,8 @@
 <mapper namespace="tripinfo">
 
 	<!-- 여행정보 게시판 총 게시물 개수 세기 -->
-	<select id="gettotalcount" resultType="Integer">
-		select count(*) as cnt from tblTripInfo
+	<select id="gettotalcount" parameterType="HashMap" resultType="Integer">
+		select count(*) as cnt from tblTripInfo ${where}
 	</select>
 
 	<!-- 여행정보 게시판 목록 보기 -->
@@ -18,7 +18,7 @@
 		from (select 
 		            a.*, 
 		            rownum as rnum 
-		        from ( select * from tblTripInfo order by thread desc ) a)
+		        from ( select * from tblTripInfo ${where} order by thread desc ) a)
 		where rnum between #{begin} and #{end}
 	</select>
 

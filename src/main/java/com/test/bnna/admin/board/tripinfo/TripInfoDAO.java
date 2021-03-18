@@ -19,13 +19,31 @@ public class TripInfoDAO implements ITripInfoDAO {
 	private SqlSessionTemplate template;
 
 	@Override
-	public int getTotalCount() {
+	public int getTotalCount(HashMap<String, String> map) {
+		
+		String where = "";
+		
+		if (map.get("search") != null) {
+			//검색 중..
+			where = String.format("where subject like '%%%s%%' or content like '%%%s%%'", map.get("search"), map.get("search"));
+		}
+		
+		map.put("where", where); //검색어 포함한 where 구문 담기
 
-		return template.selectOne("tripinfo.gettotalcount");
+		return template.selectOne("tripinfo.gettotalcount", map);
 	}
 	
 	@Override
 	public List<TripInfoDTO> list(HashMap<String, String> map) {
+		
+		String where = "";
+		
+		if (map.get("search") != null) {
+			//검색 중..
+			where = String.format("where subject like '%%%s%%' or content like '%%%s%%'", map.get("search"), map.get("search"));
+		}
+		
+		map.put("where", where); //검색어 포함한 where 구문 담기
 
 		return template.selectList("tripinfo.list", map);
 	}
