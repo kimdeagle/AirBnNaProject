@@ -11,4 +11,6 @@ public interface IReviewPicDAO {
 
 	void del(String path, String seq);
 
+	List<ReviewPicDTO> listByBnB(String seq);
+
 }

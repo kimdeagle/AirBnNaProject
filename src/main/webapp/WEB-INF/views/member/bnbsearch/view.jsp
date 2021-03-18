@@ -137,7 +137,18 @@
 			<c:forEach items="${rlist}" var="rdto">
 			<tr>
 				<td>${rdto.seq}</td>
-				<td id="todetail"><a data-toggle="modal" data-target="#detailModal" data-seq="${rdto.seq}" data-content="${rdto.content}">${rdto.title}</a></td>
+				<td id="todetail">
+					<a data-toggle="modal" data-target="#detailModal" data-seq="${rdto.seq}" data-content="${rdto.content}">${rdto.title}</a>
+					<c:set var="loop_flag" value="false" />
+					<c:forEach items="${rplist}" var="rpdto">
+						<c:if test="${rpdto.seqreview eq rdto.seq}">
+						<c:set var="loop_flag" value="true" />
+						</c:if>
+					</c:forEach>
+					<c:if test="${loop_flag eq true}">
+						<span class="glyphicon glyphicon-picture"></span>
+					</c:if>
+				</td>
 				<td>${rdto.id}</td>
 				<td>${rdto.star}</td>
 				<td>${rdto.bookdate.substring(0, 10)}</td>
@@ -152,7 +163,6 @@
 			</tr>
 		</c:if>
 	</table>
-	
 </section>
 
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -161,8 +171,9 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 			</div>
-			<div class="modal-body">
-			<p id="modalcontent"></p>
+			<div class="modal-body" style="text-align:center;">
+				<p id="modalcontent"></p>
+				<div id="reviewimgbox"></div>
 			</div>
 			<div class="modal-footer">
           		<button type="button" class="btn btn-general" id="recommend">추천</button>
@@ -184,14 +195,14 @@
 		slideWidth: 600
 	});
 	
-	/* 조회수 올리기 */
+	/* 모달 열기 + 조회수 올리기 */
 	$("#todetail > a").on('click', function(){
 		// 1. 조회수 올린다
 		$.ajax({
 			type: "GET",
 			url: "/bnna/member/bnbsearch/readcntup.action",
 			data: "seq=" + $(this).data("seq"),
-			success: function(result) {
+			success: function() {
 				console.log("readcnt++");
 			},
 			error: function(a,b,c) {
@@ -199,8 +210,31 @@
 			}
 		});
 		
+		var seq=$(this).data("seq");
+		
 		// 내용 모달로 옮긴다.
 		$('#modalcontent').text($(this).data("content"));
+		
+ 		// 리뷰번호에 따른 이미지도 모달로 넣는다.
+ 		// 아래는 리뷰번호에 따라 그 리뷰번호의 이미지들 가져오는 ajax
+		$.ajax({
+			url: "/bnna/member/bnbsearch/getreviewpic.action",
+			data: {seq: $(this).data("seq")},
+			dataType:"json",
+			success: function(data) {
+				var content="";
+				for(var key in data) {
+					content+='<div><img src="/bnna/resources/image/board/review/'+data[key]+'" style="max-width:350px; margin:10px;"></div>';
+				}
+				$(".modal-body > #reviewimgbox").html(content);
+				console.log("complete");
+			},
+			error: function() {
+				console.log("error!");
+			}
+		});
+		
+		// 추천버튼을 누르면 추천수를 올릴 수 있도록 리뷰번호 설정해준다.
 		$("#recommend").val($(this).data("seq"));
 		
 	});

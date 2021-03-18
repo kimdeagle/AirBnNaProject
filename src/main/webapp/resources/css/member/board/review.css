@@ -23,9 +23,7 @@
 /* 리뷰 첨부이미지 */
 
 #reviewPic {
-	width:300px;
-	height:150px;
-	object-fit:cover;
+	max-width:450px;
 	display:block;
 	margin:30px auto;
 }
