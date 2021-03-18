@@ -175,7 +175,7 @@
 		</div>
 	</div>
 
-	<script src="/bnna/resources/js/tpmake.js"></script>
+	<script src="/bnna/resources/js/tripplan/tpmake.js"></script>
 
 </section>
 
