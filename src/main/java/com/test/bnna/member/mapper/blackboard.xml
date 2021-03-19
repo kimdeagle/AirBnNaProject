@@ -88,5 +88,13 @@
 	<select id="hasComment" parameterType="String" resultType="Integer">
 		select count(*) from tblBlackBoardCmt where seqBlackBoard = #{seq}
 	</select>
+	
+	<update id="editok" parameterType="blackboarddto">
+		update tblBlackBoard set
+			seqIssueMember = #{seqIssueMember},
+			title = #{title},
+			content = #{content}
+		where seq = #{seq}
+	</update>
 
 </mapper>

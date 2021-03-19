@@ -262,7 +262,139 @@ public class BlackBoardController {
 			System.out.println(e);
 		}
 		
-	}
+	} //addok
+	
+	
+	@RequestMapping(value="/member/board/blackboard/edit.action", method={RequestMethod.GET})
+	public String edit(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String page, String reply) {
+		
+		//DB -> select
+		BlackBoardDTO dto = dao.get(seq);
+		
+		req.setAttribute("dto", dto);
+		req.setAttribute("seq", seq);
+		req.setAttribute("reply", reply);
+		req.setAttribute("nowPage", page);
+		
+		return "member.board.blackboard.edit";
+	} //add
+	
+	@RequestMapping(value="/member/board/blackboard/editok.action", method={RequestMethod.POST})
+	public void editok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, BlackBoardDTO dto, String page, String reply) {
+		
+		//데이터 가져오기 - parameter(dto)
+		
+		//회원번호
+		dto.setSeqMember((String)session.getAttribute("seqMember"));
+		
+		//DB 위임 -> edit
+		int result = dao.editok(dto);
+		
+		try {
+			
+			if (result == 1) {
+				//edit 성공 > 이미지 수정파일 있는지 확인
+				
+				//2. 파일 저장 + 테이블에 추가할 글번호, 파일명, 원본파일명 저장
+				MultipartHttpServletRequest mreq = (MultipartHttpServletRequest)req;
+				
+				List<MultipartFile> flist = mreq.getFiles("image");
+				
+				//이미지 추가 안한 경우도 flist.size()가 1이다...
+				//실제 파일 이름을 가져와 빈문자열이면 이미지 첨부X
+				//flist.get(0).getOriginalFilename()
+				
+				if (flist.get(0).getOriginalFilename() != "") {
+					//이미지 추가한 경우만
+					
+					//1. 기존 이미지 삭제
+					idao.del(dto.getSeq());
+					
+					//2. 수정 이미지 추가
+					
+					List<BlackBoardImgDTO> ilist = new ArrayList<BlackBoardImgDTO>();
+					
+					//webapp > resources > image > board > blackboard
+					String path = req.getRealPath("resources/image/board/blackboard");
+					
+					for (MultipartFile mf : flist) {
+						BlackBoardImgDTO idto = new BlackBoardImgDTO();
+						
+						String orgimage = mf.getOriginalFilename(); //원본파일명
+						String image = getFileName(path, orgimage); //중복 검사 후 파일명 저장
+						
+						String saveImage = path + "\\" + image; //저장될 경로 + 파일명
+						
+						mf.transferTo(new File(saveImage)); //파일 저장
+
+						idto.setSeqBlackBoard(dto.getSeq());
+						idto.setImage(image);
+						idto.setOrgimage(orgimage);
+						
+						ilist.add(idto); //글번호, 파일명, 원본파일명 저장
+						
+					}
+
+					//3. 이미지 테이블에 추가하기
+					int result2 = idao.add(ilist);
+					
+					if (result2 == ilist.size()) {
+						//add 성공
+						
+						resp.setCharacterEncoding("UTF-8");
+						
+						PrintWriter writer = resp.getWriter();
+						
+						writer.print("<html><head><meta charset='utf-8' /></head><body>");
+						writer.print("<script>");
+						writer.print("alert('글수정 성공!!\\n상세 페이지로 이동합니다.');");
+						writer.print("location.href='/bnna/member/board/blackboard/view.action?seq="+ dto.getSeq() +"&page="+ page +"&reply="+ reply +"';");
+						writer.print("</script>");
+						writer.print("</body></html>");
+						
+						writer.close();
+								
+					}
+				} else {
+					//이미지 추가 안한 경우
+					//안내 후 view로 이동
+					resp.setCharacterEncoding("UTF-8");
+					
+					PrintWriter writer = resp.getWriter();
+					
+					writer.print("<html><head><meta charset='utf-8' /></head><body>");
+					writer.print("<script>");
+					writer.print("alert('글수정 성공!!\\n상세 페이지로 이동합니다.');");
+					writer.print("location.href='/bnna/member/board/blackboard/view.action?seq="+ dto.getSeq() +"&page="+ page +"&reply="+ reply +"';");
+					writer.print("</script>");
+					writer.print("</body></html>");
+					
+					writer.close();
+				}
+				
+			} else {
+				//edit 실패
+				
+				resp.setCharacterEncoding("UTF-8");
+				
+				PrintWriter writer = resp.getWriter();
+				
+				writer.print("<html><head><meta charset='utf-8' /></head><body>");
+				writer.print("<script>");
+				writer.print("alert('글수정 실패..\\n이전 페이지로 이동합니다.');");
+				writer.print("history.back();");
+				writer.print("</script>");
+				writer.print("</body></html>");
+				
+				writer.close();
+				
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+	} //editok
 	
 	@RequestMapping(value="/member/board/blackboard/view.action", method={RequestMethod.GET})
 	public String view(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String page, String reply) {
@@ -359,7 +491,7 @@ public class BlackBoardController {
 				
 				writer.print("<html><head><meta charset='utf-8' /></head><body>");
 				writer.print("<script>");
-				writer.print("alert('글쓰기 실패..\\n이전 페이지로 이동합니다.');");
+				writer.print("alert('댓글 쓰기 실패..\\n이전 페이지로 이동합니다.');");
 				writer.print("history.back();");
 				writer.print("</script>");
 				writer.print("</body></html>");
@@ -528,7 +660,15 @@ public class BlackBoardController {
 					
 					writer.close();
 				} else {
-					//댓글 없음 -> 삭제(3차)
+					//댓글 없음 -> 이미지 있는지(3차)
+					has = idao.hasImage(seq);
+					
+					if (has) {
+						//이미지 있음 -> 이미지 테이블에서 삭제(4차)
+						idao.del(seq);
+					}
+					
+					//게시판 테이블에서 삭제(5차)
 					int result = dao.del(seq);
 					
 					if (result == 1) {

@@ -165,7 +165,7 @@ $(document).ready(function () {
 			data: "seq=" + $("#seq").val() + "&content=" + $("#commentContent").val(),
 			success: function(result) {
 				$(result).each(function(index, item) {
-					$("#tblComment tbody").append("<tr><td>"+ item.name +" ("+ item.id +")<input type='hidden' id='seqBlackBoardCmt' value='"+ item.seq +"'><input type='hidden' id='seqMember' value='"+ item.seqMember +"'></td><td><span class='cmtContent'>"+ item.content +"</span> <button type='button' class='btn btn-success btn-sm btnCmtEdit'>수정</button> <button type='button' class='btn btn-danger btn-sm btnCmtDel'>삭제</button></td><td>"+ item.regdate +"</td></tr>");					
+					$("#tblComment tbody").append("<tr><td>"+ item.name +" ("+ item.id +")<input type='hidden' id='seqBlackBoardCmt' value='"+ item.seq +"'><input type='hidden' id='seqMember' value='"+ item.seqMember +"'></td><td><span class='cmtContent'>"+ item.content +"</span> <button type='button' class='btn btn-danger btn-sm btnCmtDel'>삭제</button></td><td>"+ item.regdate +"</td></tr>");					
 				});
 				$("#commentContent").val("");
 				$("#commentContent").focus();

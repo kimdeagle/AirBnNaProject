@@ -118,7 +118,6 @@
 						<td>
 							<span class="cmtContent">${cmt.content}</span>
 							<c:if test="${seqMember.equals(cmt.seqMember)}">
-								<button type="button" class="btn btn-success btn-sm btnCmtEdit">수정</button>
 								<button type="button" class="btn btn-danger btn-sm btnCmtDel">삭제</button>
 							</c:if>
 						</td>

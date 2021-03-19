@@ -109,4 +109,10 @@ public class BlackBoardDAO implements IBlackBoardDAO {
 		
 	}
 	
+	@Override
+	public int editok(BlackBoardDTO dto) {
+		
+		return template.update("blackboard.editok", dto);
+	}
+	
 }

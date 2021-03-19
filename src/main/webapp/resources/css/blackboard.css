@@ -24,22 +24,22 @@ aside {
 }
 
 
-/* add, view */
-#tblAdd th, #tblView th {
+/* add, view, edit */
+#tblAdd th, #tblView th, #tblEdit th {
 	width: 150px;
 }
 
-#tblAdd td, #tblView td {
+#tblAdd td, #tblView td, #tblEdit td {
 	width: auto;
 }
 
-/* add > content */
-#tblAdd #content {
+/* add, edit > content */
+#tblAdd #content, #tblEdit #content {
 	height: 200px;
 }
 
-/* add > image attach button */
-#tblAdd #image {
+/* add, edit > image attach button */
+#tblAdd #image, #tblEdit #image {
 	display: none;
 }
 
@@ -123,6 +123,7 @@ h4.comment-title {
 
 /* cmtBtns */
 #cmtDelModal .cmtBtns {
+	margin-top: 20px;
 	text-align: center;
 }
 

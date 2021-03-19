@@ -33,4 +33,6 @@ public interface IBlackBoardDAO {
 
 	boolean hasComment(String seq);
 
+	int editok(BlackBoardDTO dto);
+
 }
