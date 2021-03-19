@@ -73,13 +73,14 @@ public class BlackBoardController {
 	} //searchmember
 	
 	@RequestMapping(value="/member/board/blackboard/add.action", method={RequestMethod.GET})
-	public String add(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String reply, String thread, String depth) {
+	public String add(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String reply, String thread, String depth, String seqParent) {
 		
 
 		req.setAttribute("reply", reply);
 		req.setAttribute("thread", thread);
 		req.setAttribute("depth", depth);
 		req.setAttribute("nowPage", page);
+		req.setAttribute("seqParent", seqParent);
 		
 		return "member.board.blackboard.add";
 	} //add
@@ -103,7 +104,7 @@ public class BlackBoardController {
 			
 		} else {
 			parentThread = Integer.parseInt(dto.getThread());
-			parentDepth = Integer.parseInt(dto.getDepth());	
+			parentDepth = Integer.parseInt(dto.getDepth());
 			//답글쓰기
 			
 			//이전 새글의 thread
@@ -195,20 +196,27 @@ public class BlackBoardController {
 								
 					} else {
 						//image add 실패 -> 이미 추가된 글 삭제 후 뒤로가기
-						dao.del(addSeqBlackBoard);
+						int result3 = dao.del(addSeqBlackBoard);
 						
-						resp.setCharacterEncoding("UTF-8");
-						
-						PrintWriter writer = resp.getWriter();
-						
-						writer.print("<html><head><meta charset='utf-8' /></head><body>");
-						writer.print("<script>");
-						writer.print("alert('글쓰기 실패..\\n이전 페이지로 이동합니다.');");
-						writer.print("history.back();");
-						writer.print("</script>");
-						writer.print("</body></html>");
-						
-						writer.close();
+						if (result3 == 1) {
+							//추가된 글 삭제 후 돌아가기
+							resp.setCharacterEncoding("UTF-8");
+							
+							PrintWriter writer = resp.getWriter();
+							
+							writer.print("<html><head><meta charset='utf-8' /></head><body>");
+							writer.print("<script>");
+							writer.print("alert('글쓰기 실패..\\n이전 페이지로 이동합니다.');");
+							writer.print("history.back();");
+							writer.print("</script>");
+							writer.print("</body></html>");
+							
+							writer.close();
+							
+						} else {
+							//추가된 글 삭제 안 됨...
+							throw new Exception();
+						}
 						
 					}
 				} else {
@@ -254,7 +262,139 @@ public class BlackBoardController {
 			System.out.println(e);
 		}
 		
-	}
+	} //addok
+	
+	
+	@RequestMapping(value="/member/board/blackboard/edit.action", method={RequestMethod.GET})
+	public String edit(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String page, String reply) {
+		
+		//DB -> select
+		BlackBoardDTO dto = dao.get(seq);
+		
+		req.setAttribute("dto", dto);
+		req.setAttribute("seq", seq);
+		req.setAttribute("reply", reply);
+		req.setAttribute("nowPage", page);
+		
+		return "member.board.blackboard.edit";
+	} //add
+	
+	@RequestMapping(value="/member/board/blackboard/editok.action", method={RequestMethod.POST})
+	public void editok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, BlackBoardDTO dto, String page, String reply) {
+		
+		//데이터 가져오기 - parameter(dto)
+		
+		//회원번호
+		dto.setSeqMember((String)session.getAttribute("seqMember"));
+		
+		//DB 위임 -> edit
+		int result = dao.editok(dto);
+		
+		try {
+			
+			if (result == 1) {
+				//edit 성공 > 이미지 수정파일 있는지 확인
+				
+				//2. 파일 저장 + 테이블에 추가할 글번호, 파일명, 원본파일명 저장
+				MultipartHttpServletRequest mreq = (MultipartHttpServletRequest)req;
+				
+				List<MultipartFile> flist = mreq.getFiles("image");
+				
+				//이미지 추가 안한 경우도 flist.size()가 1이다...
+				//실제 파일 이름을 가져와 빈문자열이면 이미지 첨부X
+				//flist.get(0).getOriginalFilename()
+				
+				if (flist.get(0).getOriginalFilename() != "") {
+					//이미지 추가한 경우만
+					
+					//1. 기존 이미지 삭제
+					idao.del(dto.getSeq());
+					
+					//2. 수정 이미지 추가
+					
+					List<BlackBoardImgDTO> ilist = new ArrayList<BlackBoardImgDTO>();
+					
+					//webapp > resources > image > board > blackboard
+					String path = req.getRealPath("resources/image/board/blackboard");
+					
+					for (MultipartFile mf : flist) {
+						BlackBoardImgDTO idto = new BlackBoardImgDTO();
+						
+						String orgimage = mf.getOriginalFilename(); //원본파일명
+						String image = getFileName(path, orgimage); //중복 검사 후 파일명 저장
+						
+						String saveImage = path + "\\" + image; //저장될 경로 + 파일명
+						
+						mf.transferTo(new File(saveImage)); //파일 저장
+
+						idto.setSeqBlackBoard(dto.getSeq());
+						idto.setImage(image);
+						idto.setOrgimage(orgimage);
+						
+						ilist.add(idto); //글번호, 파일명, 원본파일명 저장
+						
+					}
+
+					//3. 이미지 테이블에 추가하기
+					int result2 = idao.add(ilist);
+					
+					if (result2 == ilist.size()) {
+						//add 성공
+						
+						resp.setCharacterEncoding("UTF-8");
+						
+						PrintWriter writer = resp.getWriter();
+						
+						writer.print("<html><head><meta charset='utf-8' /></head><body>");
+						writer.print("<script>");
+						writer.print("alert('글수정 성공!!\\n상세 페이지로 이동합니다.');");
+						writer.print("location.href='/bnna/member/board/blackboard/view.action?seq="+ dto.getSeq() +"&page="+ page +"&reply="+ reply +"';");
+						writer.print("</script>");
+						writer.print("</body></html>");
+						
+						writer.close();
+								
+					}
+				} else {
+					//이미지 추가 안한 경우
+					//안내 후 view로 이동
+					resp.setCharacterEncoding("UTF-8");
+					
+					PrintWriter writer = resp.getWriter();
+					
+					writer.print("<html><head><meta charset='utf-8' /></head><body>");
+					writer.print("<script>");
+					writer.print("alert('글수정 성공!!\\n상세 페이지로 이동합니다.');");
+					writer.print("location.href='/bnna/member/board/blackboard/view.action?seq="+ dto.getSeq() +"&page="+ page +"&reply="+ reply +"';");
+					writer.print("</script>");
+					writer.print("</body></html>");
+					
+					writer.close();
+				}
+				
+			} else {
+				//edit 실패
+				
+				resp.setCharacterEncoding("UTF-8");
+				
+				PrintWriter writer = resp.getWriter();
+				
+				writer.print("<html><head><meta charset='utf-8' /></head><body>");
+				writer.print("<script>");
+				writer.print("alert('글수정 실패..\\n이전 페이지로 이동합니다.');");
+				writer.print("history.back();");
+				writer.print("</script>");
+				writer.print("</body></html>");
+				
+				writer.close();
+				
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+	} //editok
 	
 	@RequestMapping(value="/member/board/blackboard/view.action", method={RequestMethod.GET})
 	public String view(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String page, String reply) {
@@ -262,6 +402,12 @@ public class BlackBoardController {
 		//1. 데이터 가져오기(seq, reply)
 		//2. DB 위임 -> select
 		//3. 결과 처리
+		
+		//조회수 증가하기
+		if (session.getAttribute("readBlackBoard") == null || (boolean)session.getAttribute("readBlackBoard") == false) {
+			dao.updateReadCnt(seq);
+			session.setAttribute("readBlackBoard", true);
+		}
 		
 		//글 정보 가져오기
 		BlackBoardDTO dto = dao.get(seq);
@@ -280,6 +426,7 @@ public class BlackBoardController {
 			//엔터 -> <br /> 변환 (클라이언트로 전달을 위해)
 			cdto.setContent(cdto.getContent().replace("\r\n", "<br />"));			
 		}
+		
 		
 		req.setAttribute("seq", seq);
 		req.setAttribute("nowPage", page);
@@ -344,7 +491,7 @@ public class BlackBoardController {
 				
 				writer.print("<html><head><meta charset='utf-8' /></head><body>");
 				writer.print("<script>");
-				writer.print("alert('글쓰기 실패..\\n이전 페이지로 이동합니다.');");
+				writer.print("alert('댓글 쓰기 실패..\\n이전 페이지로 이동합니다.');");
 				writer.print("history.back();");
 				writer.print("</script>");
 				writer.print("</body></html>");
@@ -409,6 +556,9 @@ public class BlackBoardController {
 	@RequestMapping(value="/member/board/blackboard/list.action", method={RequestMethod.GET})
 	public String list(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String condition, String keyword) {
 
+		//view.action > 새로고침 조회수 증가 방지
+		session.setAttribute("readBlackBoard", false);
+		
 		//총 게시글 수 가져오기
 		int totalCount = dao.getCount();
 		
@@ -459,11 +609,104 @@ public class BlackBoardController {
 		req.setAttribute("list", list);
 		req.setAttribute("pagebar", pagebar);
 		req.setAttribute("nowPage", nowPage);
+		req.setAttribute("keyword", keyword);
 		
 		return "member.board.blackboard.list";
 	}
 	
-	///member/board/blackboard/searchList
+	@RequestMapping(value="/member/board/blackboard/del.action", method= {RequestMethod.GET})
+	public void del(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String seqParent) {
+		
+		resp.setCharacterEncoding("UTF-8");
+		
+		//1. 데이터 가져오기 - 매개변수
+		//2. DB -> delete
+		//3. 결과
+		
+		
+		try {
+			boolean has = false;
+			
+			//2.
+			// - 답글이 있는지(1차)
+			has = dao.hasReply(seq);
+			
+			if (has) {
+				//답글 있음 -> 삭제X
+				PrintWriter writer = resp.getWriter();
+				
+				writer.print("<html><head><meta charset='utf-8' /></head><body>");
+				writer.print("<script>");
+				writer.print("alert('답글 있는 게시글은 삭제할 수 없습니다.\\n이전 페이지로 이동합니다.');");
+				writer.print("history.back();");
+				writer.print("</script>");
+				writer.print("</body></html>");
+				
+				writer.close();			
+			} else {
+				//답글 없음 -> 댓글이 있는지(2차)
+				has = dao.hasComment(seq);
+				
+				if (has) {
+					//댓글 있음 -> 삭제X
+					PrintWriter writer = resp.getWriter();
+					
+					writer.print("<html><head><meta charset='utf-8' /></head><body>");
+					writer.print("<script>");
+					writer.print("alert('댓글 있는 게시글은 삭제할 수 없습니다.\\n이전 페이지로 이동합니다.');");
+					writer.print("history.back();");
+					writer.print("</script>");
+					writer.print("</body></html>");
+					
+					writer.close();
+				} else {
+					//댓글 없음 -> 이미지 있는지(3차)
+					has = idao.hasImage(seq);
+					
+					if (has) {
+						//이미지 있음 -> 이미지 테이블에서 삭제(4차)
+						idao.del(seq);
+					}
+					
+					//게시판 테이블에서 삭제(5차)
+					int result = dao.del(seq);
+					
+					if (result == 1) {
+						//삭제 성공
+						PrintWriter writer = resp.getWriter();
+						
+						writer.print("<html><head><meta charset='utf-8' /></head><body>");
+						writer.print("<script>");
+						writer.print("alert('글 삭제 성공!!\\n목록으로 이동합니다.');");
+						writer.print("location.href='/bnna/member/board/blackboard/list.action';");
+						writer.print("</script>");
+						writer.print("</body></html>");
+						
+						writer.close();
+					} else {
+						//삭제 실패
+						PrintWriter writer = resp.getWriter();
+						
+						writer.print("<html><head><meta charset='utf-8' /></head><body>");
+						writer.print("<script>");
+						writer.print("alert('글 삭제 실패..\\n이전 페이지로 이동합니다.');");
+						writer.print("history.back();");
+						writer.print("</script>");
+						writer.print("</body></html>");
+						
+						writer.close();
+					}
+					
+				}
+				
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		
+	}
 	
 	@RequestMapping(value="/member/board/blackboard/login.action", method= {RequestMethod.GET})
 	public void login(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seqMember) {

@@ -19,12 +19,20 @@ public interface IBlackBoardDAO {
 
 	String getAddSeq();
 
-	void del(String addSeqBlackBoard);
+	int del(String addSeqBlackBoard);
 
 	List<BlackBoardDTO> list(HashMap<String, String> map);
 
 	int getCount();
 
 	List<String> getSeqHasImage();
+
+	void updateReadCnt(String seq);
+
+	boolean hasReply(String seq);
+
+	boolean hasComment(String seq);
+
+	int editok(BlackBoardDTO dto);
 
 }
