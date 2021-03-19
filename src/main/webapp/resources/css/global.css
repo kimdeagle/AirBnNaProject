@@ -243,6 +243,10 @@ a h5:hover {
     color:#f05e61ff;
 }
 
+input[type=button], button {
+	outline: none !important;
+}
+
 /* 4. 리스트 점 없애기 21.02.14 추가 */
 ul {
     list-style:none;
@@ -331,9 +335,18 @@ header {
 .searcharea input {
     border: none;
     border-right: 2px solid #eee;
-    width: 200px;
+    width: 180px;
     height: 50px;
     padding: 0px 15px;
+}
+
+#location {
+    border:transparent;
+    width:180px;
+}
+
+.form-control {
+    -webkit-box-shadow: none;
 }
 
  /* header */
