@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+/**
+ * 회원 리뷰게시판 관련 비즈니스로직을 처리하는 컨트롤러입니다.
+ * @author 조아라
+ *
+ */
 @Controller
 public class ReviewController {
 	
@@ -28,6 +33,14 @@ public class ReviewController {
 	@Autowired
 	private IBookForMemberDAO bdao;
 	
+	/**
+	 * 회원 개인의 리뷰목록을 가져오는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param page
+	 * @return member/board/review/list.jsp를 호출합니다.
+	 */
 	@RequestMapping(value="/member/board/review/list.action", method={RequestMethod.GET})
 	public String listForMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page) {
 		
@@ -118,14 +131,22 @@ public class ReviewController {
 		return "member.board.review.list";
 	}
 	
+	/**
+	 * 리뷰 추가하기 화면을 호출하는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @return member/board/review/add.jsp를 호출합니다.
+	 */
 	@RequestMapping(value="/member/board/review/add.action", method={RequestMethod.GET})
 	public String addForMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
 		
 		// 1번회원 데이터 보여주기로 했으므로.
 		session.setAttribute("seq", 1);
 		
+		// 리뷰 작성시 예약번호를 선택할 수 있도록
+		// 예약했지만 아직 리뷰가 작성되지 않은 예약번호들을 가져온다.
 		String seqMember=session.getAttribute("seq").toString();
-		
 		List<BookForMemberDTO> blist=bdao.list(seqMember);
 		
 		req.setAttribute("blist", blist);
@@ -133,13 +154,21 @@ public class ReviewController {
 		return "member.board.review.add";
 	}
 	
+	/**
+	 * 추가할 리뷰정보를 받아와서 DB추가와 파일업로드 작업을 하는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param dto 추가할 리뷰정보를 담고 있는 DTO입니다.
+	 */
 	@RequestMapping(value="/member/board/review/addok.action", method={RequestMethod.POST})
 	public void addokForMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, AddReviewDTO dto) {
 
 		MultipartHttpServletRequest multi=(MultipartHttpServletRequest)req;
 		List<MultipartFile> multiList = multi.getFiles("reviewpic");
+		ArrayList<ReviewPicDTO> plist=new ArrayList<ReviewPicDTO>();
 		
-		// 파일업로드
+		// 1차작업. 파일업로드
 		if (multiList.size() == 1 && multiList.get(0).getOriginalFilename().equals("")) {
             
         } else {
@@ -147,9 +176,10 @@ public class ReviewController {
         	String filename="";
         	
         	try {
-        	
-	            for (int i = 0; i < multiList.size(); i++) {
+        		
+        		for (int i = 0; i < multiList.size(); i++) {
 	            	
+        			// 1. 중복된 이름인지 확인하고 파일업로드
 	            	String path=req.getRealPath("/resources/image/board/review/");
 	    			filename=getFileName(req, path, multiList.get(i).getOriginalFilename());
 	            	
@@ -164,55 +194,51 @@ public class ReviewController {
 	    				file=new File(path + "\\" + filename);
 	    			}
 	    			
-	    			// 이동
+	    			// 업로드 끝
 	    			multiList.get(i).transferTo(file); // renameTo()와 동일
 	    			
+	    			// 2. 업로드 완료 후 DB에 추가
+	    			ReviewPicDTO pdto=new ReviewPicDTO();
+	    			pdto.setImage(filename);
+	    			pdto.setOrgimage(multiList.get(i).getOriginalFilename());
+	    			plist.add(pdto);
+	    			
 	            }
+        		
+        		// 2차작업. 리뷰 DB에 넣는 작업
+        		// DB에 리뷰데이터 넣어주기
+    			int result=dao.add(dto);
+    			
+    			// 방금 넣은 리뷰 글번호가져와서 리뷰이미지정보에 리뷰번호 설정
+    			int seq=dao.getCurrentReviewSeq();
+    			
+    			for (int i = 0; i < plist.size(); i++) {
+    				plist.get(i).setSeqreview(seq);
+    			}
+    			
+    			// 리뷰이미지정보도 DB에 추가
+    			int fileResult=pdao.addReviewPic(plist);
+    			
+    			if (fileResult>=1) {
+    				resp.sendRedirect("/bnna/member/board/review/list.action");
+    			} else {
+    				resp.sendRedirect("/bnna/member/board/review/add.action");
+    			}
             
         	}catch (Exception e) {
             	System.out.println("FileController.addok()");
     			e.printStackTrace();
             }
         }
-		
-		// 파일업로드가 끝나면 DTO에 파일이름을 넣어준다.
-		
-		ArrayList<ReviewPicDTO> plist=new ArrayList<ReviewPicDTO>();
-		
-		for (int i = 0; i < multiList.size(); i++) {
-			ReviewPicDTO pdto=new ReviewPicDTO();
-			pdto.setImage(multiList.get(i).getOriginalFilename());
-			pdto.setOrgimage(multiList.get(i).getOriginalFilename());
-			
-			plist.add(pdto);
-		}
-		
-		try {
-			
-			// DB에 데이터 넣어주기
-			int result=dao.add(dto);
-			
-			// 방금 넣은 리뷰 글번호가져와서 리뷰사진도 DB에 넣기
-			int seq=dao.getCurrentReviewSeq();
-			
-			for (int i = 0; i < plist.size(); i++) {
-				plist.get(i).setSeqreview(seq);
-			}
-			
-			int fileResult=pdao.addReviewPic(plist);
-			
-			if (fileResult>=1) {
-				resp.sendRedirect("/bnna/member/board/review/list.action");
-			} else {
-				resp.sendRedirect("/bnna/member/board/review/add.action");
-			}
-			
-		} catch (Exception e) {
-			System.out.println("ReviewController.addok()");
-			e.printStackTrace();
-		}
 	}
 	
+	/**
+	 * 중복 파일명이 있는지 확인하고 중복된 파일명이면 '_'+숫자 를 추가하는 메서드입니다.
+	 * @param request
+	 * @param path
+	 * @param filename
+	 * @return 새로운 파일명을 반환합니다.
+	 */
 	private String getFileName(HttpServletRequest request, String path, String filename) {
 		
 		int n=1; // 인덱스
@@ -244,6 +270,14 @@ public class ReviewController {
 		}
 	}
 	
+	/**
+	 * 리뷰 수정하기 화면을 호출하는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seq
+	 * @return
+	 */
 	@RequestMapping(value="/member/board/review/edit.action", method={RequestMethod.GET})
 	public String editForSpecificMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
 		
@@ -259,6 +293,13 @@ public class ReviewController {
 		return "member.board.review.edit";
 	}
 	
+	/**
+	 * 리뷰를 수정하는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param dto 수정할 리뷰정보를 담고 있는 DTO입니다.
+	 */
 	@RequestMapping(value="/member/board/review/editok.action", method={RequestMethod.POST})
 	public void editokForSpecificMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, EditReviewDTO dto) { // 1.
 
@@ -283,6 +324,14 @@ public class ReviewController {
 		
 	}
 	
+	/**
+	 * 리뷰를 조회하는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seq 리뷰번호입니다.
+	 * @return member/board/review/view.jsp를 호출합니다.
+	 */
 	@RequestMapping(value="/member/board/review/view.action", method={RequestMethod.GET})
 	public String viewForSpecificMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
 		
@@ -298,6 +347,13 @@ public class ReviewController {
 		return "member.board.review.view";
 	}
 	
+	/**
+	 * 리뷰를 삭제하는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seq 삭제할 리뷰번호입니다.
+	 */
 	@RequestMapping(value="/member/board/review/delok.action", method={RequestMethod.GET})
 	public void delokForSpecificMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) { // 1.
 
@@ -329,6 +385,14 @@ public class ReviewController {
 		
 	}
 	
+	/**
+	 * 리뷰 수정하기 화면에서 ajax로 호출되는, 개별 리뷰이미지를 삭제하는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seq 삭제할 리뷰이미지 번호입니다.
+	 * @return 삭제 후 member/board/review/edit.jsp를 호출합니다.
+	 */
 	@RequestMapping(value="/member/board/review/delfile.action", method={RequestMethod.GET})
 	public String delFileForSpecificMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) { // 1.
 

@@ -9,6 +9,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * 리뷰DB에 접근하는 DAO입니다.
+ * @author 조아라
+ *
+ */
 @Repository
 public class ReviewDAO implements IReviewDAO {
 	
@@ -97,16 +102,13 @@ public class ReviewDAO implements IReviewDAO {
 		return deleteCnt;
 	}
 
+	/**
+	 * 리뷰를 추가하는 메서드입니다.
+	 */
 	@Override
 	public int add(AddReviewDTO dto) {
 		
 		return template.insert("review.add", dto);
-	}
-
-	@Override
-	public int addReviewPic(ArrayList<ReviewPicDTO> plist) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	/**

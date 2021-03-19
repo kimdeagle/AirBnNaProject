@@ -44,7 +44,7 @@ public class BnBSearchController {
 	 * @param req
 	 * @param resp
 	 * @param dto 검색조건정보를 담고 있는 DTO입니다.
-	 * @return member>bnbsearch>result.jsp를 호출합니다.
+	 * @return member/bnbsearch/result.jsp를 호출합니다.
 	 */
 	@RequestMapping(value="/member/bnbsearch/result.action", method={RequestMethod.GET})
 	public String result(HttpServletRequest req, HttpServletResponse resp, HttpSession session, SearchConditionDTO dto) {
@@ -81,7 +81,7 @@ public class BnBSearchController {
 	 * @param req
 	 * @param resp
 	 * @param dto 적용된 필터정보를 담고 있는 DTO입니다.
-	 * @return member>bnbsearch>result.jsp를 호출합니다.
+	 * @return member/bnbsearch/result.jsp를 호출합니다.
 	 */
 	@RequestMapping(value="/member/bnbsearch/filterresult.action", method={RequestMethod.GET})
 	public String filterresult(HttpServletRequest req, HttpServletResponse resp, HttpSession session, FilterDTO dto) {
@@ -216,6 +216,14 @@ public class BnBSearchController {
 		return list;
 	}
 	
+	/**
+	 * 검색조건으로 검색한 숙소들을 지도로 볼 수 있게 해주는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param dto 적용된 필터정보를 담고 있는 DTO입니다.
+	 * @return member/bnbsearch/map.jsp을 호출합니다.
+	 */
 	@RequestMapping(value="/member/bnbsearch/map.action", method={RequestMethod.GET})
 	public String map(HttpServletRequest req, HttpServletResponse resp, HttpSession session, SearchConditionDTO dto) {
 		
@@ -251,7 +259,7 @@ public class BnBSearchController {
 	 * @param req
 	 * @param resp
 	 * @param dto 적용된 필터정보를 담고 있는 DTO입니다.
-	 * @return member>bnbsearch>result.jsp를 호출합니다.
+	 * @return member/bnbsearch/result.jsp를 호출합니다.
 	 */
 	@RequestMapping(value="/member/bnbsearch/filtermap.action", method={RequestMethod.GET})
 	public String filterMap(HttpServletRequest req, HttpServletResponse resp, HttpSession session, FilterDTO dto) {

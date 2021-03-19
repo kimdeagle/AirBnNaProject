@@ -10,6 +10,7 @@
 	</div>
 	<hr style="margin-top: -5px;">
 	<!-- 여기까지 menu path -->
+	<h3>작성하기</h3>
 	<form method="POST" action="/bnna/member/board/review/addok.action" enctype="multipart/form-data">
 		<table class="table table-bordered" id="addtbl">
 			<tr>
@@ -45,7 +46,7 @@
 				<td colspan="3"><input type="file" class="form-control" id="reviewpic" name="reviewpic" multiple="multiple"></td>
 			</tr>
 		</table>
-		<div class="btns">
+		<div id="btns">
 			<input type="submit" class="btn-general" value="작성하기">
 		</div>
 	</form>

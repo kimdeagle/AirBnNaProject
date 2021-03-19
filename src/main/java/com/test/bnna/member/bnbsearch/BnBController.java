@@ -20,6 +20,11 @@ import com.test.bnna.member.board.review.IReviewPicDAO;
 import com.test.bnna.member.board.review.ReviewDTO;
 import com.test.bnna.member.board.review.ReviewPicDTO;
 
+/**
+ * 숙소와 관련된 비즈니스로직을 처리하는 컨트롤러입니다.
+ * @author 조아라
+ *
+ */
 @Controller
 public class BnBController {
 	

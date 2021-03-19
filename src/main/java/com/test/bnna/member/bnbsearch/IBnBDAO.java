@@ -1,6 +1,5 @@
 package com.test.bnna.member.bnbsearch;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface IBnBDAO {
