@@ -35,6 +35,13 @@ public class TripPlanController {
 		return "member.tripplanwfooter.board";
 	}
 	
+	@RequestMapping(value="/member/tripplan/result.action", method={RequestMethod.GET})
+	public String result(HttpServletRequest req, HttpServletResponse resp) {
+		
+		
+		return "member.tripplanwfooter.result";
+	}
+	
 
 	
 }
