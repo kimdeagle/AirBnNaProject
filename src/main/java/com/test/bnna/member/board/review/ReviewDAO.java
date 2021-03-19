@@ -2,6 +2,7 @@ package com.test.bnna.member.board.review;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -20,9 +21,9 @@ public class ReviewDAO implements IReviewDAO {
 	 * @return 리뷰정보를 담고 있는 DTO의 리스트를 반환합니다.
 	 */
 	@Override
-	public List<ReviewDTO> list(String seq) {
+	public List<ReviewDTO> list(HashMap<String, String> map) {
 		
-		return template.selectList("review.onelist", seq);
+		return template.selectList("review.onelist", map);
 	}
 
 	/**
@@ -48,9 +49,9 @@ public class ReviewDAO implements IReviewDAO {
 	 * 회원이 작성한 리뷰목록을 가져오는 메서드입니다.
 	 */
 	@Override
-	public List<ReviewForMemberDTO> listForMember(String seqMember) {
+	public List<ReviewForMemberDTO> listForMember(HashMap<String, String> map) {
 		
-		return template.selectList("review.listForMember", seqMember);
+		return template.selectList("review.listForMember", map);
 	}
 
 	/**
@@ -133,6 +134,15 @@ public class ReviewDAO implements IReviewDAO {
 	public String getOwner(String seq) {
 		
 		return template.selectOne("review.getOwner", seq);
+	}
+
+	/**
+	 * 회원번호로 작성된 리뷰 수를 가져오는 메서드입니다.
+	 */
+	@Override
+	public int getTotalCount(String seqMember) {
+		
+		return template.selectOne("review.getTotalCountForMember", seqMember);
 	}
 
 }

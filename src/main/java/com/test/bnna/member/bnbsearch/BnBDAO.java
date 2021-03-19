@@ -24,4 +24,10 @@ public class BnBDAO implements IBnBDAO {
 		return template.selectList("search.image", seq);
 	}
 
+	@Override
+	public int getTotalCount(String seq) {
+		
+		return template.selectOne("review.getTotalCount", seq);
+	}
+
 }

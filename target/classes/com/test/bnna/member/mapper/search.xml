@@ -48,7 +48,7 @@
 		    h.regdate as hostRegdate,
 		    (select avg(star) from tblBook bk
     			inner join tblReview r on bk.seq=r.seqbook
-            	where bk.seqbnb=1 group by bk.seqbnb) as star
+            	where bk.seqbnb=#{seq} group by bk.seqbnb) as star
 			from tblBnB bnb
 			    inner join tblBnBType bt
 			        on bt.seq=bnb.seqbnbtype
