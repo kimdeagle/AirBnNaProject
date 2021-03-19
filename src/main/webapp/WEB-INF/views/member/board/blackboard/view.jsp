@@ -87,11 +87,9 @@
 			<c:if test="${not empty seqMember}">
 				<c:if test="${dto.seqMember.equals(seqMember)}">
 					<button type="button" class="btn btn-success" onclick="location.href='/bnna/member/board/blackboard/edit.action?seq=${seq}&page=${nowPage}';">수정</button>
-					<button type="button" class="btn btn-danger" onclick="location.href='/bnna/member/board/blackboard/del.action?seq=${seq}';">삭제</button>
+					<button type="button" class="btn btn-danger" onclick="location.href='/bnna/member/board/blackboard/del.action?seq=${seq}&seqParent=${dto.seqParent}';">삭제</button>
 				</c:if>
-				<c:if test="${!dto.seqMember.equals(seqMember)}">
-					<button type="button" class="btn btn-warning" onclick="location.href='/bnna/member/board/blackboard/add.action?page=${nowPage}&reply=y&thread=${dto.thread}&depth=${dto.depth}';">답글</button>
-				</c:if>
+					<button type="button" class="btn btn-warning" onclick="location.href='/bnna/member/board/blackboard/add.action?page=${nowPage}&reply=y&thread=${dto.thread}&depth=${dto.depth}&seqParent=${seq}';">답글</button>
 			</c:if>
 			<button type="button" class="btn btn-default" onclick="location.href='/bnna/member/board/blackboard/list.action?page=${nowPage}';">목록</button>
 		</div>

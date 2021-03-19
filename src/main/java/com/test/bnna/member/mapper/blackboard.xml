@@ -4,7 +4,7 @@
 
 <mapper namespace="blackboard">
 	
-	<select id="get" parameterType="String" resultType="com.test.bnna.member.board.blackboard.BlackBoardDTO">
+	<select id="get" parameterType="String" resultType="blackboarddto">
 		select
 			bb.*,
 			(select id from tblMember where seq = bb.seqMember) as id,
@@ -15,11 +15,11 @@
 			where seq = #{seq}
 	</select>
 	
-	<select id="getImages" parameterType="String" resultType="com.test.bnna.member.board.blackboard.BlackBoardImgDTO">
+	<select id="getImages" parameterType="String" resultType="blackboardimgdto">
 		select * from tblBlackBoardImg where seqBlackBoard = #{seq}
 	</select>
 	
-	<select id="getComments" parameterType="String" resultType="com.test.bnna.member.board.blackboard.BlackBoardCmtDTO">
+	<select id="getComments" parameterType="String" resultType="blackboardcmtdto">
 		select bbc.*, (select id from tblMember where seq = bbc.seqMember) as id, (select name from tblMember where seq = bbc.seqMember) as name from tblBlackBoardCmt bbc where seqBlackBoard = #{seq}
 	</select>
 	
@@ -34,9 +34,9 @@
 		update tblBlackBoard set thread = thread - 1 where thread <![CDATA[<]]> #{parentThread} and thread <![CDATA[>]]> #{previousThread}
 	</update>
 	
-	<insert id="addok" parameterType="com.test.bnna.member.board.blackboard.BlackBoardDTO">
-		insert into tblBlackBoard(seq, seqMember, seqIssueMember, title, content, readcnt, regdate, thread, depth) 
-			values(seqBlackBoard.nextVal, #{seqMember}, #{seqIssueMember}, #{title}, #{content}, default, default, #{thread}, #{depth})
+	<insert id="addok" parameterType="blackboarddto">
+		insert into tblBlackBoard(seq, seqMember, seqIssueMember, title, content, readcnt, regdate, thread, depth, seqParent) 
+			values(seqBlackBoard.nextVal, #{seqMember}, #{seqIssueMember}, #{title}, #{content}, default, default, #{thread}, #{depth}, #{seqParent})
 	</insert>
 	
 	<select id="getAddSeq" resultType="String">
@@ -47,7 +47,7 @@
 		delete from tblBlackBoard where seq = #{addSeqBlackBoard}
 	</delete>
 	
-	<select id="list" parameterType="map" resultType="com.test.bnna.member.board.blackboard.BlackBoardDTO">
+	<select id="list" parameterType="map" resultType="blackboarddto">
 	<!-- select * from (select a.*, rownum as rnum from (select veb.* from viewEBook veb) a) where rnum between "begin" and "end" -->
 		
 		<choose>
@@ -75,6 +75,18 @@
 	
 	<select id="getSeqHasImage" resultType="String">
 		select distinct seqBlackBoard from tblBlackBoardImg
+	</select>
+	
+	<update id="updateReadCnt" parameterType="String">
+		update tblBlackBoard set readcnt = readcnt + 1 where seq = #{seq}
+	</update>
+	
+	<select id="hasReply" parameterType="String" resultType="Integer">
+		select count(*) from tblBlackBoard where seqParent = #{seq}
+	</select>
+	
+	<select id="hasComment" parameterType="String" resultType="Integer">
+		select count(*) from tblBlackBoardCmt where seqBlackBoard = #{seq}
 	</select>
 
 </mapper>

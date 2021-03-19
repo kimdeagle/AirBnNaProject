@@ -67,6 +67,7 @@
 		<input type="hidden" id="reply" name="reply" value="${reply}">
 		<input type="hidden" id="thread" name="thread" value="${thread}">
 		<input type="hidden" id="depth" name="depth" value="${depth}">
+		<input type="hidden" id="seqParent" name="seqParent" value="${seqParent}">
 		
 	</form>
 

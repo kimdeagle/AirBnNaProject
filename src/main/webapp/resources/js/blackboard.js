@@ -216,10 +216,18 @@ $(document).ready(function () {
 	var searchCondition;
 	var searchKeyword;
 	
+	$("#searchKeyword").keydown(function() {
+		if (event.keyCode == 13) {
+			search();
+		}
+	});
 	
 	//list > 검색 버튼 클릭
 	$("#btnSearchList").click(function() {
-		
+		search();
+	});
+	
+	function search() {
 		searchKeyword = $("#searchKeyword").val();
 		
 		if ($("#searchCondition").val() == "제목") {
@@ -234,8 +242,7 @@ $(document).ready(function () {
 		}
 		
 		location.href="/bnna/member/board/blackboard/list.action?condition=" + searchCondition + "&keyword=" + searchKeyword;
-		
-	});
+	}
 	
 	
 	

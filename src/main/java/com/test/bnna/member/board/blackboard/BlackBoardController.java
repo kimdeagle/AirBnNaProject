@@ -73,13 +73,14 @@ public class BlackBoardController {
 	} //searchmember
 	
 	@RequestMapping(value="/member/board/blackboard/add.action", method={RequestMethod.GET})
-	public String add(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String reply, String thread, String depth) {
+	public String add(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String reply, String thread, String depth, String seqParent) {
 		
 
 		req.setAttribute("reply", reply);
 		req.setAttribute("thread", thread);
 		req.setAttribute("depth", depth);
 		req.setAttribute("nowPage", page);
+		req.setAttribute("seqParent", seqParent);
 		
 		return "member.board.blackboard.add";
 	} //add
@@ -103,7 +104,7 @@ public class BlackBoardController {
 			
 		} else {
 			parentThread = Integer.parseInt(dto.getThread());
-			parentDepth = Integer.parseInt(dto.getDepth());	
+			parentDepth = Integer.parseInt(dto.getDepth());
 			//답글쓰기
 			
 			//이전 새글의 thread
@@ -195,20 +196,27 @@ public class BlackBoardController {
 								
 					} else {
 						//image add 실패 -> 이미 추가된 글 삭제 후 뒤로가기
-						dao.del(addSeqBlackBoard);
+						int result3 = dao.del(addSeqBlackBoard);
 						
-						resp.setCharacterEncoding("UTF-8");
-						
-						PrintWriter writer = resp.getWriter();
-						
-						writer.print("<html><head><meta charset='utf-8' /></head><body>");
-						writer.print("<script>");
-						writer.print("alert('글쓰기 실패..\\n이전 페이지로 이동합니다.');");
-						writer.print("history.back();");
-						writer.print("</script>");
-						writer.print("</body></html>");
-						
-						writer.close();
+						if (result3 == 1) {
+							//추가된 글 삭제 후 돌아가기
+							resp.setCharacterEncoding("UTF-8");
+							
+							PrintWriter writer = resp.getWriter();
+							
+							writer.print("<html><head><meta charset='utf-8' /></head><body>");
+							writer.print("<script>");
+							writer.print("alert('글쓰기 실패..\\n이전 페이지로 이동합니다.');");
+							writer.print("history.back();");
+							writer.print("</script>");
+							writer.print("</body></html>");
+							
+							writer.close();
+							
+						} else {
+							//추가된 글 삭제 안 됨...
+							throw new Exception();
+						}
 						
 					}
 				} else {
@@ -263,6 +271,12 @@ public class BlackBoardController {
 		//2. DB 위임 -> select
 		//3. 결과 처리
 		
+		//조회수 증가하기
+		if (session.getAttribute("readBlackBoard") == null || (boolean)session.getAttribute("readBlackBoard") == false) {
+			dao.updateReadCnt(seq);
+			session.setAttribute("readBlackBoard", true);
+		}
+		
 		//글 정보 가져오기
 		BlackBoardDTO dto = dao.get(seq);
 		
@@ -280,6 +294,7 @@ public class BlackBoardController {
 			//엔터 -> <br /> 변환 (클라이언트로 전달을 위해)
 			cdto.setContent(cdto.getContent().replace("\r\n", "<br />"));			
 		}
+		
 		
 		req.setAttribute("seq", seq);
 		req.setAttribute("nowPage", page);
@@ -409,6 +424,9 @@ public class BlackBoardController {
 	@RequestMapping(value="/member/board/blackboard/list.action", method={RequestMethod.GET})
 	public String list(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String condition, String keyword) {
 
+		//view.action > 새로고침 조회수 증가 방지
+		session.setAttribute("readBlackBoard", false);
+		
 		//총 게시글 수 가져오기
 		int totalCount = dao.getCount();
 		
@@ -459,11 +477,96 @@ public class BlackBoardController {
 		req.setAttribute("list", list);
 		req.setAttribute("pagebar", pagebar);
 		req.setAttribute("nowPage", nowPage);
+		req.setAttribute("keyword", keyword);
 		
 		return "member.board.blackboard.list";
 	}
 	
-	///member/board/blackboard/searchList
+	@RequestMapping(value="/member/board/blackboard/del.action", method= {RequestMethod.GET})
+	public void del(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String seqParent) {
+		
+		resp.setCharacterEncoding("UTF-8");
+		
+		//1. 데이터 가져오기 - 매개변수
+		//2. DB -> delete
+		//3. 결과
+		
+		
+		try {
+			boolean has = false;
+			
+			//2.
+			// - 답글이 있는지(1차)
+			has = dao.hasReply(seq);
+			
+			if (has) {
+				//답글 있음 -> 삭제X
+				PrintWriter writer = resp.getWriter();
+				
+				writer.print("<html><head><meta charset='utf-8' /></head><body>");
+				writer.print("<script>");
+				writer.print("alert('답글 있는 게시글은 삭제할 수 없습니다.\\n이전 페이지로 이동합니다.');");
+				writer.print("history.back();");
+				writer.print("</script>");
+				writer.print("</body></html>");
+				
+				writer.close();			
+			} else {
+				//답글 없음 -> 댓글이 있는지(2차)
+				has = dao.hasComment(seq);
+				
+				if (has) {
+					//댓글 있음 -> 삭제X
+					PrintWriter writer = resp.getWriter();
+					
+					writer.print("<html><head><meta charset='utf-8' /></head><body>");
+					writer.print("<script>");
+					writer.print("alert('댓글 있는 게시글은 삭제할 수 없습니다.\\n이전 페이지로 이동합니다.');");
+					writer.print("history.back();");
+					writer.print("</script>");
+					writer.print("</body></html>");
+					
+					writer.close();
+				} else {
+					//댓글 없음 -> 삭제(3차)
+					int result = dao.del(seq);
+					
+					if (result == 1) {
+						//삭제 성공
+						PrintWriter writer = resp.getWriter();
+						
+						writer.print("<html><head><meta charset='utf-8' /></head><body>");
+						writer.print("<script>");
+						writer.print("alert('글 삭제 성공!!\\n목록으로 이동합니다.');");
+						writer.print("location.href='/bnna/member/board/blackboard/list.action';");
+						writer.print("</script>");
+						writer.print("</body></html>");
+						
+						writer.close();
+					} else {
+						//삭제 실패
+						PrintWriter writer = resp.getWriter();
+						
+						writer.print("<html><head><meta charset='utf-8' /></head><body>");
+						writer.print("<script>");
+						writer.print("alert('글 삭제 실패..\\n이전 페이지로 이동합니다.');");
+						writer.print("history.back();");
+						writer.print("</script>");
+						writer.print("</body></html>");
+						
+						writer.close();
+					}
+					
+				}
+				
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		
+	}
 	
 	@RequestMapping(value="/member/board/blackboard/login.action", method= {RequestMethod.GET})
 	public void login(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seqMember) {
