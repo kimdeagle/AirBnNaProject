@@ -3,14 +3,21 @@
     4조
     관리자 모든 페이지에서 사용할 CSS 파일
 
-    /*
-        ==Color Table==
-        [value]  [name]
-        #F18579   Pink
-        #56342B   Brown
-        #B16359   Brown
-        #E79F75   Orange
-    */
+	/*
+	
+		==Color Table==
+		[value]		[name]
+		#F18579		Pink
+		#56342B		Brown
+		#B16359		Brown
+		#E79F75		Orange
+
+		==BookJuck Color Table==
+		#8CB369		Green
+		#F4A259		Pink
+		#BC4B51		Brown
+		
+	*/
 
 /* header */
 header {
@@ -385,4 +392,50 @@ a, button, input[type=button] {
 
 a {
     text-decoration: none;
+}
+
+
+/* + 헤더 아래 메뉴 경로 보여주는 바 menupath (21.03.13 추가)  */
+section #menupath { 
+    border-left: 3px solid #e79f75;
+    padding-left: 10px;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+section #menupath span {
+    color: #e79f75;
+    vertical-align: middle;
+}
+
+
+/* + 페이지바 구역 가운데 정렬 (21.03.13 추가)  */
+.pagearea {
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+color: black;
+float: left;
+padding: 8px 16px;
+text-decoration: none;
+}
+
+.pagination a.active {
+background-color:#e79f75;
+color: white;
+border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+background-color: #ddd;
+border-radius: 5px;
+}
+
+.pagearea {
+    text-align: center;
 }

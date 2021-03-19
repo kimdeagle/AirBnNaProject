@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Spring Board</title>
+<title>AirBnNa :: MyPage</title>
 
 <tiles:insertAttribute name="asset"></tiles:insertAttribute>
 
