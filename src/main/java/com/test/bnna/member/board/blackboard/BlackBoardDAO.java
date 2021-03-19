@@ -70,9 +70,9 @@ public class BlackBoardDAO implements IBlackBoardDAO {
 	}
 	
 	@Override
-	public int getCount() {
+	public int getCount(HashMap<String, String> map) {
 
-		return template.selectOne("blackboard.getCount");
+		return template.selectOne("blackboard.getCount", map);
 	}
 	
 	@Override

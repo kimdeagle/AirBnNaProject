@@ -58,7 +58,7 @@
 													(select a.* from
 																(select bb.*, (select id from tblMember where seq = bb.seqMember) as id, (select name from tblMember where seq = bb.seqMember) as name from tblBlackBoard bb order by bb.thread desc) a
 													where ${condition} like '%'||#{keyword}||'%') b)
-				where rnum between 1 and 10
+				where rnum between #{begin} and #{end} 
 			</when>
 			
 			<otherwise>
@@ -69,8 +69,21 @@
 		
 	</select>
 	
-	<select id="getCount" resultType="Integer">
-		select count(*) from tblBlackBoard
+	<select id="getCount" parameterType="map" resultType="Integer">
+		
+		
+		<choose>
+			
+			<when test="keyword != null and !keyword.equals('')">
+				select count(*) from (select bb.*, (select id from tblMember where seq = bb.seqMember) as id, (select name from tblMember where seq = bb.seqMember) as name from tblBlackBoard bb) where ${condition} like '%'||#{keyword}||'%'
+			</when>
+			
+			<otherwise>			
+				select count(*) from tblBlackBoard
+			</otherwise>
+		
+		</choose>
+		
 	</select>
 	
 	<select id="getSeqHasImage" resultType="String">

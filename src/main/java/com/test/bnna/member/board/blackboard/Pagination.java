@@ -1,5 +1,6 @@
 package com.test.bnna.member.board.blackboard;
 
+import java.util.HashMap;
 
 public class Pagination {
 
@@ -30,6 +31,11 @@ public class Pagination {
 		loop = 1;
 		num = ((nowPage - 1) / blockSize) * blockSize + 1;
 		
+	} //생성자
+
+	
+	public String getPagebar(HashMap<String, String> map) {
+		
 		//이전 10페이지
 		if (num == 1) {
 			pagebar += String.format("<li class='disabled'>" + 
@@ -38,11 +44,24 @@ public class Pagination {
 					"		    </a>" + 
 					"		</li>");
 		} else {
-			pagebar += String.format("<li>" + 
-					"		    <a href=\"/bnna/member/board/blackboard/list.action?page=%d\" aria-label=\"Previous\">" + 
-					"		        <span aria-hidden=\"true\">&laquo;</span>" + 
-					"		    </a>" + 
-					"		</li>", num - 1);
+			if (map.get("keyword") != null) {
+				//검색어 있는 경우
+				pagebar += String.format("<li>" + 
+						"		    <a href=\"/bnna/member/board/blackboard/list.action?page=%d&condition=%s&keyword=%s\" aria-label=\"Previous\">" + 
+						"		        <span aria-hidden=\"true\">&laquo;</span>" + 
+						"		    </a>" + 
+						"		</li>"
+						, num - 1
+						, map.get("condition")
+						, map.get("keyword"));
+			} else {
+				//검색어 없는 경우
+				pagebar += String.format("<li>" + 
+						"		    <a href=\"/bnna/member/board/blackboard/list.action?page=%d\" aria-label=\"Previous\">" + 
+						"		        <span aria-hidden=\"true\">&laquo;</span>" + 
+						"		    </a>" + 
+						"		</li>", num - 1);				
+			}
 		}
 		
 		while (!(loop > blockSize || num > totalPage)) {
@@ -53,7 +72,15 @@ public class Pagination {
 				pagebar += "<li>";
 				
 			}
-			pagebar += String.format("<a href=\"/bnna/member/board/blackboard/list.action?page=%d\">%d</a></li> ", num, num);
+			if (map.get("keyword") != null) {
+				pagebar += String.format("<a href=\"/bnna/member/board/blackboard/list.action?page=%d&condition=%s&keyword=%s\">%d</a></li> "
+						, num
+						, map.get("condition")
+						, map.get("keyword")
+						, num);
+			} else {
+				pagebar += String.format("<a href=\"/bnna/member/board/blackboard/list.action?page=%d\">%d</a></li> ", num, num);
+			}
 			
 			loop++;
 			num++;
@@ -67,20 +94,26 @@ public class Pagination {
 					"		    </a>" + 
 					"		</li>");			
 		} else {
-			pagebar += String.format("<li>" + 
-					"		    <a href=\"/bnna/member/board/blackboard/list.action?page=%d\" aria-label=\"Next\">" + 
-					"		        <span aria-hidden=\"true\">&raquo;</span>" + 
-					"		    </a>" + 
-					"		</li>", num);			
-		}		
+			if (map.get("keyword") != null) {
+				pagebar += String.format("<li>" + 
+						"		    <a href=\"/bnna/member/board/blackboard/list.action?page=%d&condition=%s&keyword=%s\" aria-label=\"Next\">" + 
+						"		        <span aria-hidden=\"true\">&raquo;</span>" + 
+						"		    </a>" + 
+						"		</li>"
+						, num
+						, map.get("condition")
+						, map.get("keyword"));			
+				
+			} else {
+				pagebar += String.format("<li>" + 
+						"		    <a href=\"/bnna/member/board/blackboard/list.action?page=%d\" aria-label=\"Next\">" + 
+						"		        <span aria-hidden=\"true\">&raquo;</span>" + 
+						"		    </a>" + 
+						"		</li>", num);			
+				
+			}
+		}	
 		
-		
-		
-		
-	} //생성자
-
-	
-	public String getPagebar() {
 		return pagebar;
 	}
 
