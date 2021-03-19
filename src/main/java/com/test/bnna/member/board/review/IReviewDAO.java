@@ -22,8 +22,6 @@ public interface IReviewDAO {
 
 	int add(AddReviewDTO dto);
 
-	int addReviewPic(ArrayList<ReviewPicDTO> plist);
-
 	int getCurrentReviewSeq();
 
 	int edit(EditReviewDTO dto);

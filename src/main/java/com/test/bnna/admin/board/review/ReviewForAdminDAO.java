@@ -8,6 +8,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * 관리자용으로 리뷰DB에 접근하는 DAO입니다.
+ * @author 조아라
+ *
+ */
 @Repository
 public class ReviewForAdminDAO implements IReviewForAdminDAO {
 	
@@ -23,6 +28,9 @@ public class ReviewForAdminDAO implements IReviewForAdminDAO {
 		return template.selectList("review.allList", map);
 	}
 
+	/**
+	 * 관리자용으로 개별 리뷰정보를 가져오는 메서드입니다.
+	 */
 	@Override
 	public ReviewForAdminDTO info(String seq) {
 		

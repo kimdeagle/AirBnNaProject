@@ -13,6 +13,11 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * AOP를 활용하여 회원 리뷰게시판에 접근시 권한을 확인하는 클래스입니다.
+ * @author 조아라
+ *
+ */
 @Aspect
 @Component
 public class ReviewAuthForMember {

@@ -13,6 +13,11 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * AOP를 활용하여 관리자 리뷰 메뉴 접근시 권한을 확인하는 클래스입니다.
+ * @author 조아라
+ *
+ */
 @Aspect
 @Component
 public class ReviewAuthForAdmin {
@@ -38,8 +43,7 @@ public class ReviewAuthForAdmin {
 		
 		// TODO 관리자 로그인 기능 만들면 없애야 함!
 		session.setAttribute("id", "admin");
-		
-		if (!session.getAttribute("id").equals("admin")) {
+		if ((session.getAttribute("id")==null) || !session.getAttribute("id").equals("admin")) {
 			try {
 				
 				response.setCharacterEncoding("UTF-8");

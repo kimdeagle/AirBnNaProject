@@ -16,6 +16,11 @@ import com.test.bnna.admin.board.review.IReviewForAdminDAO;
 import com.test.bnna.admin.board.review.ReviewForAdminDTO;
 import com.test.bnna.member.board.review.ReviewPicDTO;
 
+/**
+ * 관리자용으로 리뷰에 관련된 비즈니스로직을 처리하는 컨트롤러입니다.
+ * @author 조아라
+ *
+ */
 @Controller
 public class ReviewControllerForAdmin {
 	
@@ -25,10 +30,18 @@ public class ReviewControllerForAdmin {
 	@Autowired
 	IReviewPicForAdminDAO pdao;
 	
+	/**
+	 * 전체리뷰목록을 가져오는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param page
+	 * @return admin/board/review/list.jsp를 호출합니다.
+	 */
 	@RequestMapping(value="/admin/board/review/list.action", method={RequestMethod.GET})
 	public String listForAdmin(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page) {
 		
-		// 그 회원의 리뷰목록 찾아오기(pagination 추가)
+		// 전체리뷰목록 찾아오기(pagination 추가)
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		
@@ -111,6 +124,14 @@ public class ReviewControllerForAdmin {
 		return "admin.board.review.list";
 	}
 	
+	/**
+	 * 관리자용으로 리뷰 한 개의 상세정보를 가져오는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seq
+	 * @return admin/board/review/view.jsp를 호출합니다.
+	 */
 	@RequestMapping(value="/admin/board/review/view.action", method={RequestMethod.GET})
 	public String viewForAdmin(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
 		
@@ -125,6 +146,13 @@ public class ReviewControllerForAdmin {
 		return "admin.board.review.view";
 	}
 	
+	/**
+	 * 리뷰 및 리뷰에 첨부된 이미지파일 삭제, DB 삭제를 진행하는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seq
+	 */
 	@RequestMapping(value="/admin/board/review/delok.action", method={RequestMethod.GET})
 	public void delokForAdmin(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
 		
