@@ -17,7 +17,7 @@
 		<div style="float:right;"><a href="/bnna/member/board/qna/login.action?id=air0001&seqmember=1" class="btn-general">로그인</a></div>
 		<div style="float:right;"><a href="/bnna/member/board/qna/logout.action" class="btn-general">로그아웃</a></div>
 		<div>${empty id ? "익명" : id}</div>		
-		<div>${empty seqmember ? "익명" : seqmember}</div>		
+		<%-- <div>${empty seqmember ? "익명" : seqmember}</div>		 --%>
 		
 		<table class="table table-bordered">
 			<tr>
