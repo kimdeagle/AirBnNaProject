@@ -23,7 +23,7 @@ public interface IBlackBoardDAO {
 
 	List<BlackBoardDTO> list(HashMap<String, String> map);
 
-	int getCount();
+	int getCount(HashMap<String, String> map);
 
 	List<String> getSeqHasImage();
 

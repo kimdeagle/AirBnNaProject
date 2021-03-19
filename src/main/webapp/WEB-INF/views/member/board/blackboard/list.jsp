@@ -32,8 +32,9 @@
 	</div>	
 	
 	<c:if test="${not empty keyword}">
-		<div>
+		<div class="searchResult">
 			<h6>검색 결과 : ${list.size()}건</h6>
+			<button type="button" class="btn btn-warning btn-sm" onclick="location.href='/bnna/member/board/blackboard/list.action';">초기화</button>
 		</div>
 	</c:if>
 	
