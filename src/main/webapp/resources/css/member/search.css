@@ -214,3 +214,8 @@ section:last-child {
 #reviewtbl th, #reviewtbl td {
 	text-align:center;
 }
+
+/* 숙소상세조회 리뷰게시판 pagination */
+.pagebar {
+	text-align:center;
+}

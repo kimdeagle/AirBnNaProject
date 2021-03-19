@@ -163,6 +163,9 @@
 			</tr>
 		</c:if>
 	</table>
+	
+	${pagebar}
+	
 </section>
 
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

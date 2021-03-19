@@ -28,21 +28,10 @@
 			</c:forEach>
 		</table>
 	
-		<div class=pagearea>
-		    <div class="pagination">
-		        <a href="#">&laquo;</a>
-		        <a href="#">1</a>
-		        <a href="#" class="active">2</a>
-		        <a href="#">3</a>
-		        <a href="#">4</a>
-		        <a href="#">5</a>
-		        <a href="#">6</a>
-		        <a href="#">&raquo;</a>
-		    </div>
-		</div>
+   	${pagebar}
 		
-		<div id="btns">
-			<button type="button" class="btn-general" onclick="location.href='/bnna/member/board/review/add.action'">작성하기</button>
-		</div>
+	<div id="btns">
+		<button type="button" class="btn-general" onclick="location.href='/bnna/member/board/review/add.action'">작성하기</button>
+	</div>
 
 </section>

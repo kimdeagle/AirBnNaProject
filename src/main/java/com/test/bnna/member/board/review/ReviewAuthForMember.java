@@ -41,6 +41,10 @@ public class ReviewAuthForMember {
 		HttpSession session=(HttpSession) args[2];
 		HttpServletResponse response=(HttpServletResponse) args[1];
 		
+		// TODO 우선 동작해야하므로 세션에 id값을 넣어준다.
+		session.setAttribute("id", "air0001");
+		
+		
 		if (session.getAttribute("id")==null) {
 			try {
 				

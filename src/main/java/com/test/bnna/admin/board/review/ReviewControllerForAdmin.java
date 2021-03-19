@@ -1,5 +1,6 @@
 package com.test.bnna.admin.board.review;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,12 +26,87 @@ public class ReviewControllerForAdmin {
 	IReviewPicForAdminDAO pdao;
 	
 	@RequestMapping(value="/admin/board/review/list.action", method={RequestMethod.GET})
-	public String listForAdmin(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+	public String listForAdmin(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page) {
+		
+		// 그 회원의 리뷰목록 찾아오기(pagination 추가)
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		
+		//페이징
+		int nowPage = 0;		//현재 페이지 번호
+		int totalCount = 0;		//총 게시물 수
+		int pageSize = 6;		//한페이지 당 출력 개수
+		int totalPage = 0;		//총 페이지 수
+		int begin = 0;			//rnum 시작 번호
+		int end = 0;			//rnum 끝 번호
+		int n = 0;				//페이지바 관련 변수
+		int loop = 0;			//페이지바 관련 변수
+		int blockSize = 10;		//페이지바 관련 변수
+		
+		if (page == null || page == "") {
+			//기본 -> page = 1
+			nowPage = 1;
+		} else {
+			nowPage = Integer.parseInt(page);
+		}
+		
+		begin = ((nowPage - 1) * pageSize) + 1;
+		end = begin + pageSize - 1;
+		
+		
+		System.out.println(begin); // 1
+		System.out.println(end); // 6
+		
+		map.put("begin", begin + "");
+		map.put("end", end + "");
 		
 		// 리뷰를 전부 가져온다.
-		List<ReviewForAdminDTO> list=dao.list();
+		List<ReviewForAdminDTO> list=dao.list(map);
+		
+		totalCount = dao.getTotalCount(); //총 게시물 수
+		
+		totalPage = (int)Math.ceil((double)totalCount / pageSize); //총 페이지 수
+		
+		String pagebar = "";
+		loop=1;
+		n = ((nowPage - 1) / blockSize) * blockSize + 1;
+		
+		if (n == 1) {
+			pagebar += String.format("<div class='pagearea'>\n" + 
+					"		    <div class=\"pagination\">\n" + 
+					"		        <a>&laquo;</a>");
+		} else {
+			pagebar += String.format("<div class=pagearea>\n" + 
+					"		    <div class=\"pagination\">\n" + 
+					"		        <a href=\"/bnna/admin/board/review/list.action?page=%d\">&laquo;</a>", n - 1);
+		}
+		
+		while (!(loop > blockSize || n > totalPage)) {
+			
+			if (nowPage == n) {
+				pagebar += String.format("<a href=\'/bnna/admin/board/review/list.action?page=%d\' class=\'active\'>%d</a>", n , n);
+			} else {
+				pagebar += String.format("<a href=\'/bnna/admin/board/review/list.action?page=%d\'>%d</a>", n, n);
+			}
+			
+			loop++;
+			n++;
+		}
+		
+		//다음 10페이지로 이동
+		if (n > totalPage) {
+			pagebar += String.format("<a>&raquo;</a>\n" + 
+					"		    </div>\n" + 
+					"		</div>");
+		} else {
+			pagebar += String.format("<a href=\'/bnna/admin/board/review/list.action?page=%d\'>&raquo;</a>\n" + 
+					"		    </div>\n" + 
+					"		</div>", n);
+		}
 		
 		req.setAttribute("list", list);
+		req.setAttribute("pagebar", pagebar);
+		req.setAttribute("nowPage", nowPage);
 		
 		return "admin.board.review.list";
 	}
