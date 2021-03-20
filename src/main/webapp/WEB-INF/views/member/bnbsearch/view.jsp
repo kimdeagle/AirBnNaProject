@@ -164,7 +164,9 @@
 		</c:if>
 	</table>
 	
+	<c:if test="${rlist.size()!=0}">
 	${pagebar}
+	</c:if>
 	
 </section>
 

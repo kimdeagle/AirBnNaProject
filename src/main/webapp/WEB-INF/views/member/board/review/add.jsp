@@ -48,6 +48,7 @@
 		</table>
 		<div id="btns">
 			<input type="submit" class="btn-general" value="작성하기">
+					<button type="button" class="btn-general" onclick="location.href='/bnna/member/board/review/list.action'">뒤로가기</button>
 		</div>
 	</form>
 </section>
