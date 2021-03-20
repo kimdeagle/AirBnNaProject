@@ -163,28 +163,27 @@ public class ReviewController {
 	 */
 	@RequestMapping(value="/member/board/review/addok.action", method={RequestMethod.POST})
 	public void addokForMember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, AddReviewDTO dto) {
-
+		
 		MultipartHttpServletRequest multi=(MultipartHttpServletRequest)req;
 		List<MultipartFile> multiList = multi.getFiles("reviewpic");
 		ArrayList<ReviewPicDTO> plist=new ArrayList<ReviewPicDTO>();
 		
-		// 1차작업. 파일업로드
+		// 파일업로드
 		if (multiList.size() == 1 && multiList.get(0).getOriginalFilename().equals("")) {
-            
+
         } else {
-        	
+
         	String filename="";
-        	
+
         	try {
-        		
-        		for (int i = 0; i < multiList.size(); i++) {
-	            	
-        			// 1. 중복된 이름인지 확인하고 파일업로드
+
+	            for (int i = 0; i < multiList.size(); i++) {
+
 	            	String path=req.getRealPath("/resources/image/board/review/");
 	    			filename=getFileName(req, path, multiList.get(i).getOriginalFilename());
-	            	
+
 	    			File file;
-	    			
+
 	    			// 맥 OS일 때는 경로를 다르게 입력해줘야 한다.
 	    			if (req.getHeader("user-agent").indexOf("Mac OS")!=0) {
 	    				// 이동시킬 최종 경로 + 파일명
@@ -193,43 +192,57 @@ public class ReviewController {
 	    				// 이동시킬 최종 경로 + 파일명
 	    				file=new File(path + "\\" + filename);
 	    			}
-	    			
-	    			// 업로드 끝
+
+	    			// 이동
 	    			multiList.get(i).transferTo(file); // renameTo()와 동일
-	    			
-	    			// 2. 업로드 완료 후 DB에 추가
+
+	    			// 리뷰이미지DTO를 만들어서 파일이름을 넣고 리스트에 담는다.
 	    			ReviewPicDTO pdto=new ReviewPicDTO();
 	    			pdto.setImage(filename);
 	    			pdto.setOrgimage(multiList.get(i).getOriginalFilename());
+
 	    			plist.add(pdto);
-	    			
+
 	            }
-        		
-        		// 2차작업. 리뷰 DB에 넣는 작업
-        		// DB에 리뷰데이터 넣어주기
-    			int result=dao.add(dto);
-    			
-    			// 방금 넣은 리뷰 글번호가져와서 리뷰이미지정보에 리뷰번호 설정
-    			int seq=dao.getCurrentReviewSeq();
-    			
-    			for (int i = 0; i < plist.size(); i++) {
-    				plist.get(i).setSeqreview(seq);
-    			}
-    			
-    			// 리뷰이미지정보도 DB에 추가
-    			int fileResult=pdao.addReviewPic(plist);
-    			
-    			if (fileResult>=1) {
-    				resp.sendRedirect("/bnna/member/board/review/list.action");
-    			} else {
-    				resp.sendRedirect("/bnna/member/board/review/add.action");
-    			}
-            
+
         	}catch (Exception e) {
-            	System.out.println("FileController.addok()");
+            	System.out.println("ReviewController.addok()");
     			e.printStackTrace();
             }
         }
+
+		try {
+
+			// DB에 데이터 넣어주기
+			int result=dao.add(dto);
+
+			if (plist.size()!=0) {
+				// 방금 넣은 리뷰 글번호가져와서 리뷰사진도 DB에 넣기
+				int seq=dao.getCurrentReviewSeq();
+	
+				for (int i = 0; i < plist.size(); i++) {
+					plist.get(i).setSeqreview(seq);
+				}
+	
+				int fileResult=pdao.addReviewPic(plist);
+	
+				if (fileResult>=1) {
+					resp.sendRedirect("/bnna/member/board/review/list.action");
+				} else {
+					resp.sendRedirect("/bnna/member/board/review/add.action");
+				}
+			}
+			
+			if (result>=1) {
+				resp.sendRedirect("/bnna/member/board/review/list.action");
+			} else {
+				resp.sendRedirect("/bnna/member/board/review/add.action");
+			}
+
+		} catch (Exception e) {
+			System.out.println("ReviewController.addok()");
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -337,6 +350,9 @@ public class ReviewController {
 		
 		// 리뷰번호로 전체정보가져오기
 		ReviewForMemberDTO dto=dao.info(seq);
+		
+		// 엔터처리
+		dto.setContent(dto.getContent().replace("\r\n", "<br>"));
 		
 		// 리뷰번호로 이미지가져오기
 		List<ReviewPicDTO> plist=pdao.list(seq);
