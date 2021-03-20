@@ -53,7 +53,7 @@
 
 		<div id="planBody">
 			<div id="planDetail">
-				<!--                         
+					<!--                         
                      <div class="scheduleItem">
                          <div class="imgbox">
                              <div class="item_number">1</div>
@@ -121,13 +121,14 @@
 		</div>
 
 		<div id="searchResult" class="searchRow">
+			<img src="/bnna/resources/image/sorry.png" style="width: 220px;">
 			<!-- resultItem -->
-			<div class="resultItem">
+			<!-- <div class="resultItem">
 				<div class="img_box">
 					<img src="/image/tripplan/1.jpg" alt="">
 					<div class="item_number" style="display: none;"></div>
 				</div>
-				<div class="content_box">
+			    <div class="content_box">
 					<p class="content_name">장소이름</p>
 					<p class="content_type">자연</p>
 				</div>
@@ -139,14 +140,13 @@
 						data-target="#detailCommonInfo" value="정보보기"> <input
 						type="button" class="btn btn-default addScheduleItem" value="일정추가">
 				</div>
-			</div>
+			</div> -->
 
 		</div>
 		<!-- paging -->
 		<div id="paging">
 			<nav aria-label="Page navigation">
-				<ul id="pagination" class="pagination">페이징구간
-				</ul>
+				<ul id="pagination" class="pagination"></ul>
 			</nav>
 		</div>
 	</div>

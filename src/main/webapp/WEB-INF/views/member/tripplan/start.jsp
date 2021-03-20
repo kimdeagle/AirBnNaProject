@@ -6,7 +6,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
- 
+    
+    <!-- DateRangePicker -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="/bnna/resources/js/moment-with-locales.js"></script> <!-- 언어파일 -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
    
         <section class="mainsection">
         
@@ -201,5 +206,80 @@
             </div>
 
 		<script src="/bnna/resources/js/tripplan/tpstart.js"></script>
+		
+		
+		<!-- 날짜 선택 하기 Modal -->
+		<div class="modal fade" id="pickDate" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="pickDateBody">여행일자 선택</h4>
+					</div>
+					<div class="modal-body" id="pickDateBody" style="text-align:center;">
+						
+						<input type="text" name="daterange" id="date" style="width: 200px;">
+						
+						<input type="hidden" class="citybox" data-name="">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-danger" id="btnMake">여행일정 만들기</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        </section>    
+	<script>
+	
+	
+		moment.locale('ko'); //언어를 한국어로 설정함!
+
+		$('#date').daterangepicker({
+			timePicker : false,
+			timePicker24Hour : true,
+			timePickerSeconds : true,
+			singleDatePicker : false,
+			locale : {
+				format : 'YYYY-MM-DD',
+				separator : ' ~ ',
+				applyLabel : "적용",
+				cancelLabel : "닫기"
+			},
+		});
+
+		
+		
+		$(".city").click(function() {
+
+			$(this).attr('data-toggle', 'modal');
+			$(this).attr('data-target', '#pickDate');
+
+			let city = $(this).data('name');
+			
+			$('.citybox').val(city);
+		});
+
+		
+		
+		$("#btnMake").click(function() {
+			
+			let city = $('.citybox').val();
+			
+			let date = $('#pickDateBody #date').val();
+			
+			let startDate = date.substring(0, 10); 	//여행 시작일
+			let endDate = date.substring(13, 23);	//여행 끝일
+			
+			location.href="/bnna/member/tripplan/make.action?city=" + city + "&startDate=" + startDate + "&endDate=" + endDate;
+			
+		});
+		
+		
+	</script>
+
+</section>    

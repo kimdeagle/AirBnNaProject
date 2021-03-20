@@ -51,12 +51,16 @@ function doShow3() {
 
 
 //city div 클릭시 make page로 이동
-$(".city").click( function() {
-	
-	let city = $(this).data('name');
-	location.href="/bnna/member/tripplan/make.action?city=" + city;
-	
-});
+//$(".city").click( function() {
+//	
+//	$(this).attr('data-toggle','modal');
+//	$(this).attr('data-target','#pickDate');
+//	
+//	let city = $(this).data('name');
+//	//location.href="/bnna/member/tripplan/make.action?city=" + city;
+//
+//	
+//});
 
 
 
