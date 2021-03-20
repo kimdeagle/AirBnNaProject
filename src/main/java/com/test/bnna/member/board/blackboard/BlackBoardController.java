@@ -147,15 +147,8 @@ public class BlackBoardController {
 					
 					List<BlackBoardImgDTO> ilist = new ArrayList<BlackBoardImgDTO>();
 					
-					//webapp > resources > image > board > blackboard
-					String path = req.getRealPath("resources/image/board/blackboard");
-					
-					System.out.println("contextPath : " + req.getContextPath());
-					System.out.println("servletPath : " + req.getServletPath());				
-					
-					//TODO path test
 					//path : D:\class\spring\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\AirBnNa\resources\image\board\blackboard
-					System.out.println("path : " + path);
+					String path = req.getRealPath("resources/image/board/blackboard");
 					
 					for (MultipartFile mf : flist) {
 						BlackBoardImgDTO idto = new BlackBoardImgDTO();

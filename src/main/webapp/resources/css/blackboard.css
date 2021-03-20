@@ -119,10 +119,11 @@ h4.comment-title {
 	clear: both;
 }
 
-/* view > cmtDelModal */
+/* view > delModalBtns */
 
-/* cmtBtns */
-#cmtDelModal .cmtBtns {
+/* delModalBtns */
+#delModal .delModalBtns,
+#cmtDelModal .delModalBtns {
 	margin-top: 20px;
 	text-align: center;
 }
