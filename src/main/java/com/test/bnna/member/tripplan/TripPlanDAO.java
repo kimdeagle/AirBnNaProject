@@ -46,7 +46,16 @@ public class TripPlanDAO implements ITripPlanDAO {
 		
 		map.put("where", where); //검색어 포함한 where 구문 담기
 		
-		return template.selectList("tripplan.list", map);
+		//정렬 (인기순 : likecnt / 신규순 : regdate)
+		String order = map.get("order");
+		
+		if (order.equals("n")) {
+			map.put("order", "regdate");
+		} else if (order.equals("p")) {
+			map.put("order", "likecnt");
+		}
+		
+		return template.selectList("tripplan.list", map);			
 	}
 
 }

@@ -21,7 +21,7 @@
 		            rownum as rnum 
 		        from ( select tp.*, m.id from tbltripplan tp
 						inner join tblMember m
-						    on m.seq = tp.seqMember ${where} order by tp.seq desc ) a)
+						    on m.seq = tp.seqMember ${where} order by tp.${order} desc ) a)
 		where rnum between #{begin} and #{end}
 	</select>
 

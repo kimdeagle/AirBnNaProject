@@ -197,6 +197,8 @@
 #articles .article .title {
     font-size: 1.5em;
     text-align: left;
+    height: 32px;
+    overflow: hidden;
 }
 
 .article .txtbox .city {

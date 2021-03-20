@@ -46,6 +46,10 @@ public class TripPlanController {
 		//검색
 		String search = req.getParameter("search");
 		
+		//정렬
+		String order = req.getParameter("order");
+		map.put("order", order);
+		
 		if (!(search == null || search.equals(""))) {
 			map.put("search", search);
 		}
@@ -97,9 +101,9 @@ public class TripPlanController {
 						+ "                &laquo;"
 						+ "            </a>");
 		} else {
-			pagebar += String.format("<a href=\"/bnna/admin/board/tripinfo/list.action?page=%d\" aria-label=\"Previous\">"
+			pagebar += String.format("<a href=\"/bnna/member/tripplan/board.action?order=%s&page=%d\" aria-label=\"Previous\">"
 						+ "                &laquo;"
-						+ "            </a>", n - 1);			
+						+ "            </a>", order, n - 1);			
 		}
 		
 		
@@ -111,7 +115,7 @@ public class TripPlanController {
 			} else {
 				pagebar += "<a ";
 			}
-			pagebar += String.format("href=\"/bnna/admin/board/tripinfo/list.action?page=%d\">%d</a>", n, n);
+			pagebar += String.format("href=\"/bnna/member/tripplan/board.action?order=%s&page=%d\">%d</a>", order, n, n);
 
 			loop++;
 			n++;
@@ -126,9 +130,9 @@ public class TripPlanController {
 						+ "            </a>");
 			//a href = "#" 본인 페이지 항상 위, "#!" 위로 올라가는 현상 사라짐
 		} else {
-			pagebar += String.format("<a href=\"/bnna/admin/board/tripinfo/list.action?page=%d\" aria-label=\"Next\">"
+			pagebar += String.format("<a href=\"/bnna/member/tripplan/board.action?order=%s&page=%d\" aria-label=\"Next\">"
 					+ "                &raquo;"
-					+ "            </a>", n);
+					+ "            </a>" ,order ,n);
 		}
 		
 		
@@ -137,6 +141,7 @@ public class TripPlanController {
 		req.setAttribute("search", search);
 		req.setAttribute("pagebar", pagebar);
 		req.setAttribute("nowPage", nowPage);
+		req.setAttribute("order", order);
 		
 		return "member.tripplanwfooter.board";
 	}
