@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="/bnna/resources/css/admin/event.css">
 <section class="evtsection">
-	<h2><a href="/bnna/admin/board/eventboard/list.action">이벤트 게시판</a></h2>
+	<h2 onclick="location.href='/bnna/admin/board/eventboard/list.action';" style="cursor: pointer;">이벤트 게시판</h2>
 <!-- 	<h2>이벤트 게시판</h2> -->
 	
 	<form id="searchForm" method="GET" action="/bnna/admin/board/eventboard/list.action">

@@ -3,6 +3,11 @@ package com.test.bnna.admin.board.event;
 import lombok.Data;
 
 @Data
+/**
+ * 이벤트 게시판 DTO
+ * @author 오수경
+ *
+ */
 public class EventBoardDTO {
 	
 	private String seq;

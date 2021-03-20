@@ -13,13 +13,7 @@ public class EventBoardDAO implements IEventBoardDAO {
 	@Autowired
 	private SqlSessionTemplate template;
 
-//	@Override
-//	public List<EventBoardDTO> list() {
-//		
-//		return template.selectList("eventboard.list");
-//	}
-
-		@Override
+	@Override
 	public List<EventBoardDTO> list(HashMap<String, String> map) {
 		
 		return template.selectList("eventboard.list", map);

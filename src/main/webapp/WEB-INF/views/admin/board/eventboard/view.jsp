@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="/bnna/resources/css/admin/event.css">
 <section class="evtsection content">
-	<h2>이벤트 게시판</h2>
+	<h2 onclick="location.href='/bnna/admin/board/eventboard/list.action';" style="cursor: pointer;">이벤트 게시판</h2>
 	<div>
 		<table class="table table-bordered view">
 			<tr>
@@ -56,6 +56,6 @@
 		var chk = confirm("정말 삭제하시겠습니까?");
 		if (chk){
 			location.href = '/bnna/admin/board/eventboard/delok.action?seq='+seq;
-		}
+		}zja
 	}
 </script>
