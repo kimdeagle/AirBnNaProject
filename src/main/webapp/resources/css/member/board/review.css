@@ -10,6 +10,11 @@
 	text-align:center;
 }
 
+/* 리뷰 목록 pagination */
+.pagebar {
+	text-align:center;
+}
+
 /* 고객용) 리뷰 상세 조회(view.jsp) */
 
 #viewtbl {

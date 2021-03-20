@@ -25,6 +25,7 @@
 				<th class="col-md-1">조회수</th>
 				<th class="col-md-1">추천수</th>
 			</tr>
+			<c:if test="${list.size()!=0}">
 			<c:forEach items="${list}" var="dto">
 			<tr>
 				<td>${dto.seq}</td>
@@ -37,19 +38,16 @@
 				<td>${dto.recommendcnt}</td>
 			</tr>
 			</c:forEach>
+			</c:if>
+			<c:if test="${list.size()==0}">
+				<tr>
+					<td colspan="8">작성된 리뷰가 없습니다.</td>
+				</tr>
+			</c:if>
 		</table>
 
-		<div class=pagearea>
-		    <div class="pagination">
-		        <a href="#">&laquo;</a>
-		        <a href="#">1</a>
-		        <a href="#" class="active">2</a>
-		        <a href="#">3</a>
-		        <a href="#">4</a>
-		        <a href="#">5</a>
-		        <a href="#">6</a>
-		        <a href="#">&raquo;</a>
-		    </div>
-		</div>
+		<c:if test="${list.size()!=0}">
+			${pagebar}
+		</c:if>
 
 </section>

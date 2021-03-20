@@ -8,18 +8,29 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * 리뷰이미지DB에 접근하는 DAO입니다.
+ * @author 조아라
+ *
+ */
 @Repository
 public class ReviewPicDAO implements IReviewPicDAO {
 	
 	@Autowired
 	private SqlSessionTemplate template;
 
+	/**
+	 * 리뷰번호에 따라 그 리뷰에 첨부된 이미지들을 가져오는 메서드입니다.
+	 */
 	@Override
 	public List<ReviewPicDTO> list(String seq) {
 		
 		return template.selectList("review.plist", seq);
 	}
 
+	/**
+	 * 리뷰이미지정보를 DB에 추가하는 메서드입니다.
+	 */
 	@Override
 	public int addReviewPic(ArrayList<ReviewPicDTO> plist) {
 		
@@ -31,6 +42,9 @@ public class ReviewPicDAO implements IReviewPicDAO {
 		return result;
 	}
 
+	/**
+	 * 리뷰이미지를 삭제하는 메서드입니다.
+	 */
 	@Override
 	public void del(String path, String seq) {
 		

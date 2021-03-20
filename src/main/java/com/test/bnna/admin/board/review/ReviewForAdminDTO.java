@@ -15,7 +15,7 @@ public class ReviewForAdminDTO {
 	private String title;    // 리뷰제목
 	private String content;  // 리뷰내용
 	private String star;	 // 별점
-	private String id;	 // 작성자 ID
+	private String id;	 	 // 작성자 ID
 	private String bookdate; // 예약일
 	private int readcnt;	 // 조회수
 	private int recommendcnt;// 추천수

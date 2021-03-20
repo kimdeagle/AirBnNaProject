@@ -147,15 +147,8 @@ public class BlackBoardController {
 					
 					List<BlackBoardImgDTO> ilist = new ArrayList<BlackBoardImgDTO>();
 					
-					//webapp > resources > image > board > blackboard
-					String path = req.getRealPath("resources/image/board/blackboard");
-					
-					System.out.println("contextPath : " + req.getContextPath());
-					System.out.println("servletPath : " + req.getServletPath());				
-					
-					//TODO path test
 					//path : D:\class\spring\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\AirBnNa\resources\image\board\blackboard
-					System.out.println("path : " + path);
+					String path = req.getRealPath("resources/image/board/blackboard");
 					
 					for (MultipartFile mf : flist) {
 						BlackBoardImgDTO idto = new BlackBoardImgDTO();
@@ -559,26 +552,28 @@ public class BlackBoardController {
 		//view.action > 새로고침 조회수 증가 방지
 		session.setAttribute("readBlackBoard", false);
 		
-		//총 게시글 수 가져오기
-		int totalCount = dao.getCount();
+		//조건에 맞는 총 게시글 수에 필요한 세팅
+		HashMap<String, String> map = new HashMap<String, String>();
 		
-		//페이지바 만들기
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		//조건에 맞는 총 게시글 수 가져오기
+		int totalCount = dao.getCount(map);
+		
+		//페이지바 세팅하기
 		Pagination pagination = new Pagination(page, totalCount);
 		
-		//페이지바 가져오기
-		String pagebar = pagination.getPagebar();
+		//페이지바 만들기 + 가져오기
+		String pagebar = pagination.getPagebar(map);
 		
 		//페이지 번호 가져오기
 		int nowPage = pagination.getNowPage();
 
-		//페이지 세팅하기
-		HashMap<String, String> map = new HashMap<String, String>();
-		
+		//rownum 세팅하기
 		map.put("begin", pagination.getBegin() + "");
 		map.put("end", pagination.getEnd() + "");
 		
-		map.put("condition", condition);
-		map.put("keyword", keyword);
 		
 		//페이지에 해당하는 게시글 가져오기
 		List<BlackBoardDTO> list = dao.list(map);

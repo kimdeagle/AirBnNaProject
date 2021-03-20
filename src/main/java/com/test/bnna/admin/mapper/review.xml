@@ -5,8 +5,8 @@
 <mapper namespace="review">
 
 	<!-- 관리자용으로 모든 리뷰를 가져오는 쿼리 -->
-	<select id="allList" resultType="com.test.bnna.admin.board.review.ReviewForAdminDTO">
-		select r.seq,
+	<select id="allList" parameterType="hashMap" resultType="com.test.bnna.admin.board.review.ReviewForAdminDTO">
+		select * from (select a.*, rownum as rnum from (select r.seq,
 		    r.seqbook,
 		    r.title,
 		    r.content,
@@ -21,7 +21,11 @@
 		    inner join tblBook b
 		        on b.seq=r.seqbook
 		            inner join tblMember m
-		                on m.seq=b.seqmember
+		                on m.seq=b.seqmember) a) where rnum between #{begin} and #{end}
+	</select>
+	
+	<select id="getTotalCountForAdmin" resultType="Integer">
+		select count(*) from tblReview
 	</select>
 	
 	<!-- 관리자용으로 리뷰 한 개를 가져오는 쿼리 -->

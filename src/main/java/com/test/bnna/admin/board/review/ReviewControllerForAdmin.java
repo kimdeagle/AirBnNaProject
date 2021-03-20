@@ -1,5 +1,6 @@
 package com.test.bnna.admin.board.review;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,11 @@ import com.test.bnna.admin.board.review.IReviewForAdminDAO;
 import com.test.bnna.admin.board.review.ReviewForAdminDTO;
 import com.test.bnna.member.board.review.ReviewPicDTO;
 
+/**
+ * 관리자용으로 리뷰에 관련된 비즈니스로직을 처리하는 컨트롤러입니다.
+ * @author 조아라
+ *
+ */
 @Controller
 public class ReviewControllerForAdmin {
 	
@@ -24,17 +30,108 @@ public class ReviewControllerForAdmin {
 	@Autowired
 	IReviewPicForAdminDAO pdao;
 	
+	/**
+	 * 전체리뷰목록을 가져오는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param page
+	 * @return admin/board/review/list.jsp를 호출합니다.
+	 */
 	@RequestMapping(value="/admin/board/review/list.action", method={RequestMethod.GET})
-	public String listForAdmin(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+	public String listForAdmin(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page) {
+		
+		// 전체리뷰목록 찾아오기(pagination 추가)
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		
+		//페이징
+		int nowPage = 0;		//현재 페이지 번호
+		int totalCount = 0;		//총 게시물 수
+		int pageSize = 6;		//한페이지 당 출력 개수
+		int totalPage = 0;		//총 페이지 수
+		int begin = 0;			//rnum 시작 번호
+		int end = 0;			//rnum 끝 번호
+		int n = 0;				//페이지바 관련 변수
+		int loop = 0;			//페이지바 관련 변수
+		int blockSize = 10;		//페이지바 관련 변수
+		
+		if (page == null || page == "") {
+			//기본 -> page = 1
+			nowPage = 1;
+		} else {
+			nowPage = Integer.parseInt(page);
+		}
+		
+		begin = ((nowPage - 1) * pageSize) + 1;
+		end = begin + pageSize - 1;
+		
+		
+		System.out.println(begin); // 1
+		System.out.println(end); // 6
+		
+		map.put("begin", begin + "");
+		map.put("end", end + "");
 		
 		// 리뷰를 전부 가져온다.
-		List<ReviewForAdminDTO> list=dao.list();
+		List<ReviewForAdminDTO> list=dao.list(map);
+		
+		totalCount = dao.getTotalCount(); //총 게시물 수
+		
+		totalPage = (int)Math.ceil((double)totalCount / pageSize); //총 페이지 수
+		
+		String pagebar = "";
+		loop=1;
+		n = ((nowPage - 1) / blockSize) * blockSize + 1;
+		
+		if (n == 1) {
+			pagebar += String.format("<div class='pagearea'>\n" + 
+					"		    <div class=\"pagination\">\n" + 
+					"		        <a>&laquo;</a>");
+		} else {
+			pagebar += String.format("<div class=pagearea>\n" + 
+					"		    <div class=\"pagination\">\n" + 
+					"		        <a href=\"/bnna/admin/board/review/list.action?page=%d\">&laquo;</a>", n - 1);
+		}
+		
+		while (!(loop > blockSize || n > totalPage)) {
+			
+			if (nowPage == n) {
+				pagebar += String.format("<a href=\'/bnna/admin/board/review/list.action?page=%d\' class=\'active\'>%d</a>", n , n);
+			} else {
+				pagebar += String.format("<a href=\'/bnna/admin/board/review/list.action?page=%d\'>%d</a>", n, n);
+			}
+			
+			loop++;
+			n++;
+		}
+		
+		//다음 10페이지로 이동
+		if (n > totalPage) {
+			pagebar += String.format("<a>&raquo;</a>\n" + 
+					"		    </div>\n" + 
+					"		</div>");
+		} else {
+			pagebar += String.format("<a href=\'/bnna/admin/board/review/list.action?page=%d\'>&raquo;</a>\n" + 
+					"		    </div>\n" + 
+					"		</div>", n);
+		}
 		
 		req.setAttribute("list", list);
+		req.setAttribute("pagebar", pagebar);
+		req.setAttribute("nowPage", nowPage);
 		
 		return "admin.board.review.list";
 	}
 	
+	/**
+	 * 관리자용으로 리뷰 한 개의 상세정보를 가져오는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seq
+	 * @return admin/board/review/view.jsp를 호출합니다.
+	 */
 	@RequestMapping(value="/admin/board/review/view.action", method={RequestMethod.GET})
 	public String viewForAdmin(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
 		
@@ -49,6 +146,13 @@ public class ReviewControllerForAdmin {
 		return "admin.board.review.view";
 	}
 	
+	/**
+	 * 리뷰 및 리뷰에 첨부된 이미지파일 삭제, DB 삭제를 진행하는 메서드입니다.
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seq
+	 */
 	@RequestMapping(value="/admin/board/review/delok.action", method={RequestMethod.GET})
 	public void delokForAdmin(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq) {
 		

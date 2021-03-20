@@ -146,6 +146,22 @@ $(document).ready(function () {
 		}
 	});
 	
+	var seqBlackBoard;
+	var seqParent;
+	
+	//view > 삭제 버튼 클릭
+	$("#btnDel").click(function() {
+		//delModal open
+		$("#delModal").modal('show');
+	});
+	
+	//view > 삭제모달에서 삭제버튼 클릭
+	$("#btnDelOk").click(function() {
+		seqBlackBoard = $("#seqBlackBoard").val();
+		seqParent = $("#seqParent").val();
+		location.href="/bnna/member/board/blackboard/del.action?seq="+ seqBlackBoard +"&seqParent=" + seqParent;		
+	});
+	
 	//view > 댓글 추가
 	$("#addcmt").click(function() {
 		
@@ -181,7 +197,10 @@ $(document).ready(function () {
 	
 	//댓글 삭제 클릭
 	
+	/*
+	글 삭제 모달 위에서 선언
 	var seqBlackBoard;
+	*/
 	var seqBlackBoardCmt;
 	var nowPage;
 	var reply;
@@ -218,16 +237,13 @@ $(document).ready(function () {
 	
 	$("#searchKeyword").keydown(function() {
 		if (event.keyCode == 13) {
-			search();
+			$("#btnSearchList").click();
 		}
 	});
 	
 	//list > 검색 버튼 클릭
 	$("#btnSearchList").click(function() {
-		search();
-	});
-	
-	function search() {
+		
 		searchKeyword = $("#searchKeyword").val();
 		
 		if ($("#searchCondition").val() == "제목") {
@@ -242,8 +258,7 @@ $(document).ready(function () {
 		}
 		
 		location.href="/bnna/member/board/blackboard/list.action?condition=" + searchCondition + "&keyword=" + searchKeyword;
-	}
-	
+	});	
 	
 	
 });

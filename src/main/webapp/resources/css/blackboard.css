@@ -119,15 +119,35 @@ h4.comment-title {
 	clear: both;
 }
 
-/* view > cmtDelModal */
+/* view > delModalBtns */
 
-/* cmtBtns */
-#cmtDelModal .cmtBtns {
+/* delModalBtns */
+#delModal .delModalBtns,
+#cmtDelModal .delModalBtns {
 	margin-top: 20px;
 	text-align: center;
 }
 
 /* list */
+
+/* 검색 결과 텍스트 */
+.searchResult h6 {
+	float: left;
+}
+
+/* 초기화 버튼 */
+.searchResult button {
+	float: left;
+	margin-left: 20px;
+}
+
+.searchResult::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+/* 목록 테이블 */
 #tblList th:nth-child(1) { width: auto; }
 #tblList th:nth-child(2) { width: 180px; }
 #tblList th:nth-child(3) { width: 120px; }
