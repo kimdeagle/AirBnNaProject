@@ -18,8 +18,8 @@
            
            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                <ul>
-                   <li><a class="dropdown-item" href="#">홈으로</a></li>
-                   <li><a class="dropdown-item" href="/bnna/member/tripplan/start.action">새 일정 만들기</a></li>
+                   <li><a class="dropdown-item" href="/bnna/member/tripplan/start.action">홈으로</a></li>
+                   <li><a class="dropdown-item" href="/bnna/member/tripplan/start.action#tpstart">새 일정 만들기</a></li>
                    <li><a class="dropdown-item" href="/bnna/member/tripplan/board.action?order=p">일정 구경 하기</a></li>
                    <li><a class="dropdown-item" href="/bnna/member/tripplan/result.action">일정 확인 하기</a></li>
                </ul>
@@ -28,4 +28,4 @@
        <div style="clear: both;"></div>
 
 
-   </header>  
+   </header>

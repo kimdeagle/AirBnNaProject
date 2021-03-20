@@ -2,10 +2,42 @@
     pageEncoding="UTF-8"%>
 
    <link rel="stylesheet" href="/bnna/resources/css/tripplan/tpstart.css">
+    <!-- Slick 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
+ 
    
         <section class="mainsection">
-            
-            <div class="tp-start">
+        
+        	<!-- home 메인 첫 페이지 -->
+			<div id="tphome">
+
+                <div id="txt">
+                    <div>에어비앤나를 통해 숙소를 구하셨나요.</div>
+                    <div style="font-size: 1.2em; margin-top: 5px;">이제 여행 일정을 짜러 가보실까요?</div>
+                </div>
+                
+                <button id="btnStart" class="btn-general"><div>AirBnNa와 함께</div>여행 일정 만들기</button>
+
+                <!-- slick -->
+                <div id="slickarea">
+                    <div id="slider-div">
+                        <div class="crop"><img src="/bnna/resources/image/tripplan/homepic/home1.jpg" alt=""></div>
+                        <div class="crop"><img src="/bnna/resources/image/tripplan/homepic/home2.jpg" alt=""></div>
+                        <div class="crop"><img src="/bnna/resources/image/tripplan/homepic/home3.jpg" alt=""></div>
+                        <div class="crop"><img src="/bnna/resources/image/tripplan/homepic/home4.jpg" alt=""></div>
+                        <div class="crop"><img src="/bnna/resources/image/tripplan/homepic/home5.jpg" alt=""></div>
+                    </div>
+                    <div class="black"></div>
+                </div>
+
+            </div>
+        
+        	<hr>
+        	
+            <!-- 일정 만들기 시작 페이지 -->
+            <div class="tp-start" id="tpstart">
                 <div class="title">여행지</div>
                 <div class="intro">원하시는 여행지를 목록에서 선택해주세요.</div>
 
@@ -168,47 +200,6 @@
 
             </div>
 
-            <script>
-
-                //전체 보여주기
-                function doShowAll() { 
-                    $('.city').show();
-                } 
-
-                //수도권 보여주기
-                function doShow1() { 
-                    $('.type2').hide();
-                    $('.type3').hide();
-                    $('.type1').show();
-                } 
-
-                //특별.광역시 보여주기
-                function doShow2() { 
-                    $('.type1').hide();
-                    $('.type3').hide();
-                    $('.type2').show();
-                } 
-
-                //지방 보여주기
-                function doShow3() { 
-                    $('.type1').hide();
-                    $('.type2').hide();
-                    $('.type3').show();
-                } 
-                
-                
-                //city div 클릭시 make page로 이동
-                $(".city").click( function() {
-					
-          			let city = $(this).data('name');
-                	location.href="/bnna/member/tripplan/make.action?city=" + city;
-                	
-            	});
-
-            </script>
-
-
-                   
-            
+		<script src="/bnna/resources/js/tripplan/tpstart.js"></script>
 
         </section>    
