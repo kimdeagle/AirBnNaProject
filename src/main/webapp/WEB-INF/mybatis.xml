@@ -8,6 +8,7 @@
 
 	<!-- ############### 다은 #################3 -->
 	<typeAliases>
+	
 		<!-- trip info -->
 		<typeAlias type="com.test.bnna.admin.board.tripinfo.TripInfoDTO" alias="TripInfoDTO"/>
 		<typeAlias type="com.test.bnna.admin.board.tripinfo.TripInfoImgDTO" alias="TripInfoImgDTO"/>
@@ -18,6 +19,9 @@
 		<typeAlias type="com.test.bnna.member.dibs.DibsDTO" alias="DibsDTO"/>
 	
 		<!-- trip plan -->
+		<typeAlias type="com.test.bnna.member.tripplan.TripPlanDTO" alias="TripPlanDTO"/>
+		<typeAlias type="com.test.bnna.member.tripplan.PlanDetailDTO" alias="PlanDetailDTO"/>
+		
 	</typeAliases>
 
 	

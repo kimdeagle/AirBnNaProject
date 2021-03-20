@@ -73,3 +73,32 @@ function setMarker(mapx, mapy, title) {
 	infowindow.open(map, marker);
 
 }
+
+
+
+
+
+
+//---------------------2.기본 js
+$("#daysection .all").css('background-color', '#666');
+$("#daysection .all").css('color', 'white');
+$("#daysection .all").css('font-weight', 'bold');
+
+$(document).on('click', '#daysection .day', function() {
+
+    $("#bodysection").css('width', '235px');
+    $("#daysection .all").css('background-color', 'white');
+    $("#daysection .all").css('color', '#666');
+    $("#daysection .all").css('font-weight', 'normal');
+    $("#mapsection").css('padding-left', '327px')
+
+});
+
+$(document).on('click', '#daysection .all', function() {
+
+    $("#bodysection").css('width', '702px');
+    $("#daysection .all").css('background-color', '#666');
+    $("#daysection .all").css('color', 'white');
+    $("#daysection .all").css('font-weight', 'bold');
+
+});
