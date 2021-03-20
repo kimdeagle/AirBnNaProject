@@ -47,18 +47,6 @@
                     <th>조회수</th>
                     <th>작성일</th>
                 </tr>
-                <tr>
-                    <td>0</td>
-                    <td>
-                        <span class="glyphicon glyphicon-share-alt"></span>
-                        <a href="#">제목입니다.</a>
-                        <span class="badge">댓글수</span>
-                        <span class="label label-danger">new</span>
-                        <span class="glyphicon glyphicon-floppy-disk"></span>
-                    </td>
-                    <td>10</td>
-                    <td>2021-02-02</td>
-                </tr>
                 
                 <c:forEach items="${list}" var="dto">
                 <tr>

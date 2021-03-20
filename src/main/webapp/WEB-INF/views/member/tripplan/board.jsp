@@ -58,94 +58,43 @@
                 <hr>
 
                 <div class="btns">
-                    <button class="btn-general popular menu-active">인기</button>
-                    <button class="btn-general new">신규</button>
+                    <button class="btn-general popular menu-active" onclick="location.href='/bnna/member/tripplan/board.action?order=p';">인기</button>
+                    <button class="btn-general new" onclick="location.href='/bnna/member/tripplan/board.action?order=n';">신규</button>
                 </div>
 
+				<form method="GET" action="/bnna/admin/board/tripplan/board.action">
                 <div class="searcharea">
-                    <input type="text" id="search" name="search" class="form-control">
+                    <input type="text" id="search" name="search" required value="${search}" class="form-control">
                     <button class="btn btn-default" type="submit"><span>검색</span></button>
                 </div>
+                </form>
 
-				
 
                 <div id="articles">
 
-                    <div class="article">
-                        <div class="crop">
-                            <img src="/bnna/resources/image/tripplan/board/1.jpg" alt="">
-                        </div>
-                        <div class="onimg">
-                            <span class="startdate">2021-03-18</span>
-                            <span class="days">3DAYS</span>
-                        </div>
-                        <div class="txtbox">
-                            <div class="title">나 홀로 떠나는 여행</div>
-                            <div class="city">제주</div>
-                            <div class="id">test123</div>
-                            <div class="cnts">
-                                <span class="readcnt">👀 39</span>
-                                <span class="likecnt">💗 5</span>
-                            </div>
-                        </div>
-                    </div>
 
+					<c:forEach items="${list}" var="dto">
                     <div class="article">
                         <div class="crop">
-                            <img src="/bnna/resources/image/tripplan/board/2.jpg" alt="">
+                            <img src="/bnna/resources/image/tripplan/board/${dto.img}" alt="">
                         </div>
                         <div class="onimg">
-                            <span class="startdate">2021-03-18</span>
-                            <span class="days">3DAYS</span>
+                            <span class="startdate">${dto.startDate.substring(0,10)}</span>
+                            <span class="days">${dto.totalDate}DAYS</span>
                         </div>
                         <div class="txtbox">
-                            <div class="title">나 홀로 떠나는 여행</div>
+                            <div class="title">${dto.title}</div>
                             <div class="city">제주</div>
-                            <div class="id">test123</div>
+                            <div class="id">${dto.id}</div>
                             <div class="cnts">
-                                <span class="readcnt">👀 39</span>
-                                <span class="likecnt">💗 5</span>
+                                <span class="readcnt">👀 ${dto.readcnt}</span>
+                                <span class="likecnt">💗 ${dto.likecnt}</span>
                             </div>
                         </div>
                     </div>
+                    </c:forEach>
 
-                    <div class="article">
-                        <div class="crop">
-                            <img src="/bnna/resources/image/tripplan/board/3.jpg" alt="">
-                        </div>
-                        <div class="onimg">
-                            <span class="startdate">2021-03-18</span>
-                            <span class="days">3DAYS</span>
-                        </div>
-                        <div class="txtbox">
-                            <div class="title">나 홀로 떠나는 여행</div>
-                            <div class="city">제주</div>
-                            <div class="id">test123</div>
-                            <div class="cnts">
-                                <span class="readcnt">👀 39</span>
-                                <span class="likecnt">💗 5</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="article">
-                        <div class="crop">
-                            <img src="/bnna/resources/image/tripplan/board/4.jpg" alt="">
-                        </div>
-                        <div class="onimg">
-                            <span class="startdate">2021-03-18</span>
-                            <span class="days">3DAYS</span>
-                        </div>
-                        <div class="txtbox">
-                            <div class="title">나 홀로 떠나는 여행</div>
-                            <div class="city">제주</div>
-                            <div class="id">test123</div>
-                            <div class="cnts">
-                                <span class="readcnt">👀 39</span>
-                                <span class="likecnt">💗 5</span>
-                            </div>
-                        </div>
-                    </div>
+                 
 
 
                 </div>
@@ -155,14 +104,7 @@
 
                 <div class=pagearea>
                     <div class="pagination">
-                        <a href="#">&laquo;</a>
-                        <a href="#">1</a>
-                        <a href="#" class="active">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#">6</a>
-                        <a href="#">&raquo;</a>
+						${pagebar}
                     </div>
                 </div>
 

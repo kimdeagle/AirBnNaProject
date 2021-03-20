@@ -2,10 +2,42 @@
     pageEncoding="UTF-8"%>
 
    <link rel="stylesheet" href="/bnna/resources/css/tripplan/tpstart.css">
+    <!-- Slick 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
+ 
    
         <section class="mainsection">
-            
-            <div class="tp-start">
+        
+        	<!-- home 메인 첫 페이지 -->
+			<div id="tphome">
+
+                <div id="txt">
+                    <div>에어비앤나를 통해 숙소를 구하셨나요.</div>
+                    <div style="font-size: 1.2em; margin-top: 5px;">이제 여행 일정을 짜러 가보실까요?</div>
+                </div>
+                
+                <button id="btnStart" class="btn-general"><div>AirBnNa와 함께</div>여행 일정 만들기</button>
+
+                <!-- slick -->
+                <div id="slickarea">
+                    <div id="slider-div">
+                        <div class="crop"><img src="/bnna/resources/image/tripplan/homepic/home1.jpg" alt=""></div>
+                        <div class="crop"><img src="/bnna/resources/image/tripplan/homepic/home2.jpg" alt=""></div>
+                        <div class="crop"><img src="/bnna/resources/image/tripplan/homepic/home3.jpg" alt=""></div>
+                        <div class="crop"><img src="/bnna/resources/image/tripplan/homepic/home4.jpg" alt=""></div>
+                        <div class="crop"><img src="/bnna/resources/image/tripplan/homepic/home5.jpg" alt=""></div>
+                    </div>
+                    <div class="black"></div>
+                </div>
+
+            </div>
+        
+        	<hr>
+        	
+            <!-- 일정 만들기 시작 페이지 -->
+            <div class="tp-start" id="tpstart">
                 <div class="title">여행지</div>
                 <div class="intro">원하시는 여행지를 목록에서 선택해주세요.</div>
 
@@ -20,7 +52,7 @@
 
                 <div id="citylist">
 
-                    <div class="city type1 type2">
+                    <div class="city type1 type2" data-name="서울">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/서울.jpg">
                         </div>
@@ -31,7 +63,7 @@
                         </div>
                     </div>
 
-                    <div class="city type1 type2">
+                    <div class="city type1 type2" data-name="인천">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/인천.jpg">
                         </div>
@@ -42,7 +74,7 @@
                         </div>
                     </div>
 
-                    <div class="city type2 type3">
+                    <div class="city type2 type3" data-name="대전">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/대전.jpg">
                         </div>
@@ -53,7 +85,7 @@
                         </div>
                     </div>
 
-                    <div class="city type2 type3">
+                    <div class="city type2 type3" data-name="대구">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/대구.jpg">
                         </div>
@@ -64,7 +96,7 @@
                         </div>
                     </div>
 
-                    <div class="city type2 type3">
+                    <div class="city type2 type3" data-name="광주">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/광주.jpg">
                         </div>
@@ -75,7 +107,7 @@
                         </div>
                     </div>
 
-                    <div class="city type2 type3">
+                    <div class="city type2 type3" data-name="부산">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/부산.jpg">
                         </div>
@@ -86,7 +118,7 @@
                         </div>
                     </div>
 
-                    <div class="city type2 type3">
+                    <div class="city type2 type3" data-name="울산">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/울산.jpg">
                         </div>
@@ -97,7 +129,7 @@
                         </div>
                     </div>
 
-                    <div class="city type1">
+                    <div class="city type1" data-name="경기">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/경기도.jpg">
                         </div>
@@ -108,7 +140,7 @@
                         </div>
                     </div>
 
-                    <div class="city type3">
+                    <div class="city type3" data-name="강원">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/강원도.jpg">
                         </div>
@@ -119,7 +151,7 @@
                         </div>
                     </div>
 
-                    <div class="city type3">
+                    <div class="city type3" data-name="충청">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/충청도.jpg">
                         </div>
@@ -130,7 +162,7 @@
                         </div>
                     </div>
 
-                    <div class="city type3">
+                    <div class="city type3" data-name="전라">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/전라도.jpg">
                         </div>
@@ -141,7 +173,7 @@
                         </div>
                     </div>
 
-                    <div class="city type3">
+                    <div class="city type3" data-name="경상">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/경상도.jpg">
                         </div>
@@ -152,7 +184,7 @@
                         </div>
                     </div>
 
-                    <div class="city type2 type3">
+                    <div class="city type2 type3" data-name="제주">
                         <div class="crop">
                         <img src="/bnna/resources/image/tripplan/city/제주도.jpg">
                         </div>
@@ -168,38 +200,6 @@
 
             </div>
 
-            <script>
-
-                //전체 보여주기
-                function doShowAll() { 
-                    $('.city').show();
-                } 
-
-                //수도권 보여주기
-                function doShow1() { 
-                    $('.type2').hide();
-                    $('.type3').hide();
-                    $('.type1').show();
-                } 
-
-                //특별.광역시 보여주기
-                function doShow2() { 
-                    $('.type1').hide();
-                    $('.type3').hide();
-                    $('.type2').show();
-                } 
-
-                //지방 보여주기
-                function doShow3() { 
-                    $('.type1').hide();
-                    $('.type2').hide();
-                    $('.type3').show();
-                } 
-
-            </script>
-
-
-                   
-            
+		<script src="/bnna/resources/js/tripplan/tpstart.js"></script>
 
         </section>    
