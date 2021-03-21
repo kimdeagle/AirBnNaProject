@@ -3,8 +3,13 @@
 
     1. tripinfo list
     2. tripinfo view
+    3. tripinfo write
 
 */
+.mainsection {
+	width: 100%;
+}
+
 
 /*   1. tripinfo list   */
 /* list table */
@@ -50,14 +55,31 @@
 
 
 /* 검색창 및 버튼 */
+.boardhead {
+    padding: 15px 0px 10px;
+}
+
 .searcharea {
     display: inline-block;
-	padding-bottom: 20px;
+}
+
+.searcharea .boardsearch {
+    width: 300px;
+    float: left;
+    margin-left: 605px;
+}
+
+.searcharea .btn {
+    float: left;
+    background-color: #f1a979ff;
+}
+
+.searcharea .btn span {
+    color: white;
 }
 
 .btns {
-    display: inline-block;
-    margin-left: 500px;
+    float: left;
 }
 
 .btns::after {
@@ -69,8 +91,8 @@
 .btns .btn-thumbnail {
     background-color:#e79f75;
     color: white;
-    
 }
+
 
 
 
@@ -80,7 +102,7 @@
 /* 제목 + 상위버튼 영역 */
 .viewarea .subject {
     font-weight: bold;
-    font-size: 1.6em;
+    font-size: 1.8em;
     margin-top: 10px;
 }
 
@@ -97,6 +119,10 @@
     border-radius: 10px;
     padding: 20px;
     margin: 10px 0px;
+}
+
+.viewarea .imgarea img {
+	width: 500px;
 }
 
 .viewarea .imgarea span {
@@ -152,14 +178,14 @@
 }
 
 .viewarea .cmtarea .tbl-cmt .crop {
-    width: 80px;
-    height: 80px;
-    border-radius: 40px;
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
     overflow: hidden;
 }
 
 .viewarea .cmtarea .tbl-cmt img {
-    width: 80px;
+    width: 64px;
 }
 
 .viewarea .cmtarea .tbl-cmt .pic {
@@ -178,13 +204,34 @@
 /* 댓글남기기 영역 */
 .viewarea .cmtarea .cmt-write {
     display: inline-block;
-    width: 1070px;
+    width: 93%;
 }
 
 .viewarea .cmtarea .btn-cmt {
     height: 110px;
-    width: 60px;
+    width: 6%;
     margin-top: -130px;
     background-color: #ee9968;
     color: white;
+}
+
+
+
+
+
+/* 3. tripinfo write */
+.writearea  .subject, .writearea  .content {
+    margin-bottom: 10px;
+}
+
+.writearea  .subject {
+	text-weight: bold;
+}
+
+.writearea .file {
+    margin-bottom: 5px;
+}
+
+.right {
+    text-align: right;
 }

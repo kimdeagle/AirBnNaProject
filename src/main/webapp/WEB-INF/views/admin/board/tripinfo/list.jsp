@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<link rel="stylesheet" href="/bnna/resources/css/admin-tripinfo.css">
+<link rel="stylesheet" href="/bnna/resources/css/tripinfo/admin-tripinfo.css">
 
 <section class="mainsection">
 
@@ -17,14 +17,27 @@
 
         <h1>여행정보 게시판</h1>
 
-        <div class="searcharea">
-            여기가 검색창
-        </div>
+        <div class="boardhead">
+        
+        	<!-- 검색은 주로 GET방식 이용 : 상태유지를 위해 -->
+            <div class="searchform searcharea">
+            	<form method="GET" action="/bnna/admin/board/tripinfo/list.action">
+                <input type="text" class="form-control boardsearch" id="search" name="search" required value="${search}">
+                <button id="searchBtn" class="btn" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                </form>
+            </div>
 
-        <div class="btns">
-            <button class="btn btn-thumbnail">썸네일보기</button>
-            <button class="btn btn-write">새글쓰기</button>
+            <div class="btns">
+                <button class="btn btn-thumbnail">썸네일보기</button>
+                <button class="btn btn-write" onclick="location.href='/bnna/admin/board/tripinfo/write.action?reply=n'">새글쓰기</button>
+            </div>
         </div>
+        
+		<c:if test="${not empty search}">
+		<div class="message well well-sm" >
+		   '${search}'(으)로 ${list.size()}건의 게시물을 검색했습니다.
+		</div>
+		</c:if>
 
         <div class="admin-listarea">
             <table class="tbl-tripinfo table table-bordered">
@@ -33,18 +46,6 @@
                     <th>제목</th>
                     <th>조회수</th>
                     <th>작성일</th>
-                </tr>
-                <tr>
-                    <td>0</td>
-                    <td>
-                        <span class="glyphicon glyphicon-share-alt"></span>
-                        <a href="#">제목입니다.</a>
-                        <span class="badge">댓글수</span>
-                        <span class="label label-danger">new</span>
-                        <span class="glyphicon glyphicon-floppy-disk"></span>
-                    </td>
-                    <td>10</td>
-                    <td>2021-02-02</td>
                 </tr>
                 
                 <c:forEach items="${list}" var="dto">
@@ -76,15 +77,8 @@
 
             <div class=pagearea>
                 <div class="pagination">
-                    <a href="#">&laquo;</a>
-                    <a href="#">1</a>
-                    <a href="#" class="active">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">6</a>
-                    <a href="#">&raquo;</a>
-                </div>
+					${pagebar}
+				</div>
             </div>
         </div>
 

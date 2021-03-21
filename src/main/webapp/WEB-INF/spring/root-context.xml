@@ -33,7 +33,6 @@
 		<constructor-arg ref="sessionfactory"></constructor-arg>
 	</bean>
 	
-
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

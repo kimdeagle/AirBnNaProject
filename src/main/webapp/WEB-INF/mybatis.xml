@@ -8,6 +8,23 @@
 		<typeAlias type="com.test.bnna.admin.board.event.EventBoardDTO" alias="eventBoarddto"/>
 		<typeAlias type="com.test.bnna.admin.board.event.EventCmtDTO" alias="eventCmtdto"/>
 
+	<!-- ############### 다은 #################3 -->
+
+	
+		<!-- trip info -->
+		<typeAlias type="com.test.bnna.admin.board.tripinfo.TripInfoDTO" alias="TripInfoDTO"/>
+		<typeAlias type="com.test.bnna.admin.board.tripinfo.TripInfoImgDTO" alias="TripInfoImgDTO"/>
+		<typeAlias type="com.test.bnna.admin.board.tripinfo.TripInfoCmtDTO" alias="TripInfoCmtDTO"/>
+		
+		<!-- my page -->
+		<typeAlias type="com.test.bnna.member.mileage.MileageDTO" alias="MileageDTO"/>
+		<typeAlias type="com.test.bnna.member.dibs.DibsDTO" alias="DibsDTO"/>
+	
+		<!-- trip plan -->
+		<typeAlias type="com.test.bnna.member.tripplan.TripPlanDTO" alias="TripPlanDTO"/>
+		<typeAlias type="com.test.bnna.member.tripplan.PlanDetailDTO" alias="PlanDetailDTO"/>
+
+
 		<!-- ############ 주혁 시작 -->
 		<!-- 회원 > 신고게시판 -->
 		<typeAlias type="com.test.bnna.member.board.blackboard.BlackBoardDTO" alias="blackboarddto"/>
