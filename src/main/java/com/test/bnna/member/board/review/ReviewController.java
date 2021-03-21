@@ -124,6 +124,7 @@ public class ReviewController {
 					"		</div>", n);
 		}
 		
+
 		req.setAttribute("list", list);
 		req.setAttribute("pagebar", pagebar);
 		req.setAttribute("nowPage", nowPage);
