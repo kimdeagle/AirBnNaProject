@@ -53,7 +53,8 @@
 						이미지가 없습니다.
 					</c:if>
 					<c:forEach items="${ilist}" var="image">
-						<a href="/bnna/resources/image/board/blackboard/${image.image}" class="imgname" title="다운로드" download>${image.orgimage}</a>					
+						<a href="/bnna/resources/image/board/blackboard/${image.image}" title="다운로드" download>${image.orgimage}</a>
+						<br>					
 					</c:forEach>
 					
 				</td>
@@ -86,7 +87,7 @@
 		<div class="btns">
 			<c:if test="${not empty seqMember}">
 				<c:if test="${dto.seqMember.equals(seqMember)}">
-					<button type="button" class="btn btn-success" onclick="location.href='/bnna/member/board/blackboard/edit.action?seq=${seq}&page=${nowPage}';">수정</button>
+					<button type="button" class="btn btn-success" onclick="location.href='/bnna/member/board/blackboard/edit.action?seq=${seq}&page=${nowPage}&reply=${reply}';">수정</button>
 					<button type="button" id="btnDel" class="btn btn-danger">삭제</button>
 				</c:if>
 					<button type="button" class="btn btn-warning" onclick="location.href='/bnna/member/board/blackboard/add.action?page=${nowPage}&reply=y&thread=${dto.thread}&depth=${dto.depth}&seqParent=${seq}';">답글</button>

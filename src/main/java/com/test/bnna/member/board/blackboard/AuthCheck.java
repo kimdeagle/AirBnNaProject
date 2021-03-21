@@ -12,6 +12,11 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * 회원 여부 및 본인 여부 체크
+ * @author 김주혁
+ *
+ */
 @Aspect
 @Component
 public class AuthCheck {
@@ -37,6 +42,10 @@ public class AuthCheck {
 		
 	}
 	
+	/**
+	 * 회원 여부 체크 메서드
+	 * @param joinPoint
+	 */
 	@Before("pcMember()")
 	public void authCheck(JoinPoint joinPoint) {
 		
@@ -48,6 +57,7 @@ public class AuthCheck {
 		if (session.getAttribute("seqMember") == null) {
 			//로그인 안한사람 내보내기
 			try {
+				
 				resp.setCharacterEncoding("UTF-8");
 				
 				PrintWriter writer = resp.getWriter();
@@ -59,15 +69,21 @@ public class AuthCheck {
 				writer.print("</script>");
 				writer.print("</body></html>");
 				
-				writer.close();
+				writer.close();				
 				
 			} catch (Exception e) {
-				
+				System.out.println("AuthCheck.authCheck()");
+				e.printStackTrace();
 			}
+
 		}
 		
-	}
+	} //authCheck
 	
+	/**
+	 * 본인 글 여부 체크 메서드
+	 * @param joinPoint
+	 */
 	@Before("pcOwner()")
 	public void ownerCheck(JoinPoint joinPoint) {
 		
@@ -100,16 +116,21 @@ public class AuthCheck {
 				writer.print("</script>");
 				writer.print("</body></html>");
 				
-				writer.close();
+				writer.close();				
 				
 			} catch (Exception e) {
-				
+				System.out.println("AuthCheck.ownerCheck()");
+				e.printStackTrace();
 			}
 			
 		}
 		
-	}
+	} //ownerCheck
 	
+	/**
+	 * 본인 댓글 여부 체크 메서드
+	 * @param joinPoint
+	 */
 	@Before("pcCmtOwner()")
 	public void cmtOwnerCheck(JoinPoint joinPoint) {
 		
@@ -142,13 +163,15 @@ public class AuthCheck {
 				writer.print("</script>");
 				writer.print("</body></html>");
 				
-				writer.close();
+				writer.close();				
 				
 			} catch (Exception e) {
-				
+				System.out.println("AuthCheck.cmtOwnerCheck()");
+				e.printStackTrace();
 			}
 			
 		}
-	}
+		
+	} //cmtOwnerCheck
 	
 }

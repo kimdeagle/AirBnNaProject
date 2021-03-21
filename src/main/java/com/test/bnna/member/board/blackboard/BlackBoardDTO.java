@@ -2,6 +2,11 @@ package com.test.bnna.member.board.blackboard;
 
 import lombok.Data;
 
+/**
+ * 블랙리스트 신고게시판 DTO
+ * @author 김주혁
+ *
+ */
 @Data
 public class BlackBoardDTO {
 
