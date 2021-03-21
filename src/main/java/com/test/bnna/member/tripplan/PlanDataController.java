@@ -59,7 +59,7 @@ public class PlanDataController {
 		parameter = parameter + "&" + "contentTypeId=";
 		parameter = parameter + "&" + "areaCode=";
 		parameter = parameter + "&" + "sigunguCode=";
-		parameter = parameter + "&" + "cat1=";
+		parameter = parameter + "&" + "cat1=" + cat1;
 		parameter = parameter + "&" + "listYN=Y";
 		parameter = parameter + "&" + "MobileOS=ETC";
 		parameter = parameter + "&" + "MobileApp=TourAPI3.0_Guide";
@@ -95,5 +95,72 @@ public class PlanDataController {
 //	      JSONObject json = new JSONObject();
 //	      json.put("data", data);
 	}
+	
+	
+		// 상세정보 조회 Ajax
+	   @RequestMapping(value = "/member/tripplan/detaildata.action", method = { RequestMethod.GET })
+	   protected void detailCommonData(HttpServletRequest request, HttpServletResponse response)
+	         throws ServletException, IOException {
+
+	      request.setCharacterEncoding("utf-8");
+
+	      String contentid = request.getParameter("contentid");
+	      String contenttypeid = request.getParameter("contenttypeid");
+
+	      System.out.println(contentid);
+	      System.out.println(contenttypeid);
+
+	      // contentid = "2607436";
+	      // contenttypeid = "32";
+
+	      response.setContentType("application/json; charset=utf-8");
+//	      response.setContentType("text/html; charset=utf-8");
+
+	      String addr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=";
+	      String serviceKey = "B8kGgQr6Ra%2F9lAcm2NmuR7Reod7526trWkpqj63J2noCq%2B1qs7sPhlErLpbqvHA%2BnFwSIw9VeSjWCouiiuVeEg%3D%3D";
+	      String parameter = "";
+//	      serviceKey = URLEncoder.encode(serviceKey,"utf-8");
+	      PrintWriter out = response.getWriter();
+	      parameter = parameter + "&" + "contentTypeId=" + contenttypeid;
+	      parameter = parameter + "&" + "contentId=" + contentid;
+	      parameter = parameter + "&" + "MobileOS=ETC";
+	      parameter = parameter + "&" + "MobileApp=TourAPI3.0_Guide";
+	      parameter = parameter + "&" + "defaultYN=Y";
+	      parameter = parameter + "&" + "firstImageYN=Y";
+	      parameter = parameter + "&" + "areacodeYN=Y";
+	      parameter = parameter + "&" + "catcodeYN=Y";
+	      parameter = parameter + "&" + "addrinfoYN=Y";
+	      parameter = parameter + "&" + "mapinfoYN=Y";
+	      parameter = parameter + "&" + "overviewYN=Y";
+	      parameter = parameter + "&" + "transGuideYN=Y";
+	      parameter = parameter + "&" + "_type=json";
+
+	      /*
+	       * http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?
+	       * ServiceKey=인증키 &contentTypeId=32 &contentId=2607436 &MobileOS=ETC
+	       * &MobileApp=TourAPI3.0_Guide &defaultYN=Y &firstImageYN=Y &areacodeYN=Y
+	       * &catcodeYN=Y &addrinfoYN=Y &mapinfoYN=Y &overviewYN=Y &transGuideYN=Y
+	       */
+
+	      addr = addr + serviceKey + parameter;
+	      URL url = new URL(addr);
+
+	      InputStream in = url.openStream();
+	      CachedOutputStream bos = new CachedOutputStream();
+	      IOUtils.copy(in, bos);
+	      in.close();
+	      bos.close();
+
+	      // out.println(addr);
+
+	      String data = bos.getOut().toString();
+	      out.println(data);
+	      out.close();
+
+	      // JSONObject json = new JSONObject();
+	      // json.put("data", data);
+	   }	
+	
+	
 
 }

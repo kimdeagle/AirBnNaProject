@@ -8,8 +8,21 @@
 
  */
 
+//관광정보 검색 테마
+let thememap = new Map();
+
+thememap.set('A01', '자연');
+thememap.set('A02', '관광');
+thememap.set('A03', '레포츠');
+thememap.set('A04', '쇼핑');
+thememap.set('A05', '음식');
+
 
 // ------------------- 1. CSS 관련 -----------------------
+
+
+
+
 // 일정 선택 CSS
 $(document).on('click', '#dayContent .selectAble', function() {
 
@@ -171,6 +184,7 @@ function rearrangeItem() {
 
 // ------------------- 2. 관광정보 관련 -----------------------
 
+
 /*
  * API 데이터 리스트를 받아오는 메서드
  */
@@ -178,11 +192,19 @@ function rearrangeItem() {
 // 검색어를 저장해둘 전역변수
 let keyword = "";
 
-function getData(number) {
+function getData(number, cat) {
 	let searchText = document.getElementById('searchText');
 	let content = document.getElementById('searchResult');
 	let pagination = document.getElementById('pagination');
 	let areaCode = document.getElementById('areaCode');
+	let cat1;
+	
+	//category 선택 안했을땐 공백, 하면 그 선택지로 검색
+	if (cat == undefined) {
+		cat1 = "";
+	} else {
+		cat1 = cat;
+	}
 
 	// 검색어가 있으면 keyword 변수에 검색어를 넣는다
 	if (searchText.value != "") {
@@ -196,74 +218,69 @@ function getData(number) {
 		number = 1;
 	}
 
-//	console.log('매개변수 number :' + number);
-
-	$
-			.ajax({
+		$.ajax({
 				url : 'plandata.action',
 				type : 'GET',
 				dataType : 'json',
-				// data : 'pageNo='+number,
-				 data : 'pageNo='+number+'&keyword='+keyword,
-				//data : 'pageNo=' + number + '&keyword=' + keyword
-				//		+ '&areaCode=' + areaCode.value,
+				data : 'pageNo='+number+'&keyword='+keyword+'&cat1='+cat1,
 				success : function(data) {
 					console.log(data);
-//					console.log(data.response.body.items.item);
 					myItem = data.response.body.items.item;
 					itemInfo = data.response.body;
+					
+					console.log(myItem);
 
 					// 페이징 관련 변수
 					// ==================================================
 					var totalCount = itemInfo.totalCount; // 총 게시물 수
 					var pageSize = itemInfo.numOfRows; // 한페이지당 출력 개수
 					var nowPage = number; // 현재 페이지 번호
-//					console.log('nowPage :' + nowPage);
 					var totalPage = 0;
 					var n = 0;
 					var loop = 0;
 					var blockSize = 5; // 페이지바 개수
 
 					// ====================================================================
-
-					// console.log(itemInfo);
-					// console.log(itemInfo.totalCount);
-					// content.innerHTML += '<h2>전체 데이터 수 : ' + totalCount +
-					// '</h2>';
-					// content.innerHTML += '<h2>목록 글 개수 : ' + pageSize +
-					// '</h2>';
-					// content.innerHTML += '<h2>현재 페이지 : ' + nowPage + '</h2>';
+					
+					
+					$(".resultnum").html(totalCount);
+					
 
 					// 페이징 관련 코드
 					// ==================================================
 					var pagebar = "";
 					totalPage = Math.ceil(totalCount / pageSize);
-//					console.log('totalPage :' + totalPage);
 					loop = 1;
 					n = parseInt((nowPage - 1) / blockSize) * blockSize + 1;
-//					console.log(parseInt((nowPage - 1) / blockSize));
-//					console.log('n : ' + n);
-
+					
 					// 이전 페이지로 이동
+//					if (n == 1) {
+//						pagebar += '<li class="disabled"><a href=\"#!\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+//
+//					} else {
+//						pagebar += '<li><a onclick="getData('
+//								+ (n - 1)
+//								+ ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+//					}
 					if (n == 1) {
-						pagebar += '<li class="disabled"><a href=\"#!\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
-
+						pagebar += '<a class="disabled" href=\"#!\" aria-label=\"Previous\">&laquo;</a>';
+						
 					} else {
-						pagebar += '<li><a onclick="getData('
-								+ (n - 1)
-								+ ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+						pagebar += '<a onclick="getData('
+							+ (n - 1)
+							+ ')" aria-label=\"Previous\">&laquo;</a>';
 					}
 
 					// 페이지바 코드 동적 생성
 					while (!(loop > blockSize || n > totalPage)) {
 
 						if (nowPage == n) {
-							pagebar += "<li class='active'>";
+							pagebar += "<a class='active' ";
 						} else {
-							pagebar += "<li>";
+							pagebar += "<a ";
 						}
-						pagebar += '<a onclick="getData(' + n + ')">' + n
-								+ '</a></li>';
+						pagebar += 'onclick="getData(' + n + ')">' + n
+								+ '</a>';
 
 						loop++;
 						n++;
@@ -271,52 +288,34 @@ function getData(number) {
 					}
 
 					// 다음 10페이지로 이동
+//					if (n > totalPage) {
+//						pagebar += '<li class="disabled"><a href=\"#!\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
+//
+//					} else {
+//						pagebar += '<li><a onclick="getData('
+//								+ n
+//								+ ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
+//					}
+					
 					if (n > totalPage) {
-						pagebar += '<li class="disabled"><a href=\"#!\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
-
+						pagebar += "<a class='disabled' href=\"#!\" aria-label=\"Next\">&raquo;</a>";
+						
 					} else {
-						pagebar += '<li><a onclick="getData('
-								+ n
-								+ ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
+						pagebar += '<a href="getData('
+							+ n
+							+ ')" aria-label=\"Next\">&raquo;</a>';
 					}
 
 					// ===================================================================
 
 					for (var i = 0; i < myItem.length ; i++) {
 						var output = '';
-						// console.log(myItem.length);
-						// output += '<input type="button"
-						// class="btnShowDetailCommon" data-toggle="modal"
-						// data-target="#detailCommonInfo" data-contentid = "' +
-						// myItem[i].contentid + '" data-contenttypeid = "' +
-						// myItem[i].contenttypeid + '"value="' + i + '번째
-						// 상세보기">';
-						// output += '<input type="button" class="btn
-						// btn-default" onclick="setMarker('+ myItem[i].mapy +
-						// ',' + myItem[i].mapx + ',\'' + myItem[i].title +
-						// '\');" value="지도에 표시">';
-						// output += '<h4>' + myItem[i].title + '</h4>';
-						// output += '<h4>' + myItem[i].addr1 + '</h4>';
-						// output += '<h4>' + myItem[i].mapx + '</h4>';
-						// output += '<h4>' + myItem[i].mapy + '</h4>';
-						// if (myItem[i].firstimage == undefined) {
-						// console.log(myItem[i].firstimage);
-						// output += '<img
-						// src="/naman/resources/images/schedule/noImage.gif">'
-						// } else {
-						// output += '<img src="' + myItem[i].firstimage + '">'
-						// }
 
-						// ======================= 수정본
-						// ====================================================
-						output += '<div class="resultItem">';
-						// onclick="setMarker('+ myItem[i].mapy + ',' +
-						// myItem[i].mapx + ',\'' + myItem[i].title + '\');">
+						output += '<div class="resultItem" data-contentid="'+myItem[i].contentid+'" data-contenttypeid="'+myItem[i].contenttypeid+'">';
 						output += '<div class="img_box">';
 
 						if (myItem[i].firstimage == undefined) {
-							// console.log(myItem[i].firstimage);
-							output += '<img src="/naman/resources/images/schedule/noImage.gif">';
+							output += '<img src="/bnna/resources/image/tripplan/noimage.jpg">';
 						} else {
 							output += '<img src="' + myItem[i].firstimage
 									+ '">';
@@ -324,14 +323,25 @@ function getData(number) {
 						output += '<div class="item_number" style="display: none;"></div>';
 						output += '</div>';
 						output += '<div class="content_box">';
+						
+						let title = '';
+						
+						if (myItem[i].title.length >= 10) {
+							title = myItem[i].title.substring(0, 10) + '..';
+						} else {
+							title = myItem[i].title;
+						}
+						
 						output += '<p class="content_name" ondragstart="return false" onselectstart="return false">'
-								+ myItem[i].title.substring(0, 10) + '..'
+								+ title
 								+ '</p>';
-						output += '<p class="content_type" ondragstart="return false" onselectstart="return false">자연</p>';
+						output += '<p class="content_type" ondragstart="return false" onselectstart="return false">'
+								+ thememap.get(myItem[i].cat1)
+								+ '</p>';
 						output += '</div>';
-						output += '<div class="btn_del" style="display: none;">';
-						output += '<span class="glyphicon glyphicon-trash deleteScheduleItem"></span>';
-						output += '</div>';
+						output += '<button class="btn_del btn" style="display: none;">';
+						output += '<span class="glyphicon glyphicon-remove deleteScheduleItem"></span>';
+						output += '</button>';
 						output += '<div class="btn_box">';
 						output += '<input type="button" class="btn btn-default" data-toggle="modal" data-target="#detailCommonInfo" value="정보보기">';
 						output += '<input type="button" class="btn btn-default addScheduleItem" value="일정추가">';
@@ -365,6 +375,58 @@ function getData(number) {
 
 
 
+//검색 테마 버튼 CSS
+$('.theme_area').children().on('click', function() {
+
+	$('.theme').html($(this).data('theme'));
+	
+	let cat = thememap.get($(this).data('theme'));
+	
+	getData(1, cat);
+	
+});
+
+
+
+//장소 정보보기 - ajax로 api 데이터 받아오기 *********************************
+$('#detailCommonInfo').on('show.bs.modal', function (e) {
+   console.log('call show.bs.modal event');
+   
+   $('#commonInfoTitle').html("");
+   $('#commonInfoBody .image').html("");
+   $('#commonInfoBody .category').html("");
+   $('#commonInfoBody .tel').html("");
+   $('#commonInfoBody .overview').html("");
+   
+   let contentid = $(e.relatedTarget).parent().parent().data('contentid');
+   let contenttypeid = $(e.relatedTarget).parent().parent().data('contenttypeid');
+   
+   $.ajax({
+      url : '/bnna/member/tripplan/detaildata.action',
+      type : 'GET',
+      data : "contentid=" + contentid + "&contenttypeid="+ contenttypeid,
+      dataType : 'json',
+      success : function(data) {
+         console.log(data);
+         console.log(data.response.body.items.item);
+         let commonData = data.response.body.items.item;
+         
+         let image;
+          if (commonData.firstimage == undefined) {
+             image = "/bnna/resources/image/tripplan/noimage.jpg";
+          } else {
+             image = commonData.firstimage;
+          }
+
+         $('#commonInfoTitle').html(commonData.title);
+         $('#commonInfoBody .image').html('<img src="'+image+'">');
+         $('#commonInfoBody .category').append(commonData.addr1);
+         $('#commonInfoBody .tel').append(commonData.tel);
+         $('#commonInfoBody .overview').append(commonData.overview);
+      }
+   });
+
+});
 
 
 

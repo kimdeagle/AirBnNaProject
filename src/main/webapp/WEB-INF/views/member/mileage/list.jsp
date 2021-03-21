@@ -21,7 +21,8 @@
 				<h1>마일리지</h1>
 		
 				<div class="infobox">
-					<div class="crop">
+					<%--
+ 					<div class="crop">
 						<img src="/bnna/resources/image/mempic/${dto.pic}" alt="${dto.pic}">
 					</div>
 		
@@ -30,6 +31,17 @@
 							${dto.name}<span> &nbsp;${dto.id}</span>
 						</h4>
 						가입일 : ${dto.regdate.substring(0, 10)}
+					</div> 
+					--%>
+					<div class="crop">
+						<img src="/bnna/resources/image/mempic/f1.png" alt="${dto.pic}">
+					</div>
+		
+					<div class="basicinfo">
+						<h4>
+							이한나<span> &nbsp;hannah123</span>
+						</h4>
+						가입일 : 2019-02-19
 					</div>
 
 		
@@ -63,11 +75,11 @@
 				<div class="mbox">
 					<div class="now inline-block">
 						현재 마일리지
-						<div>6,500 M</div>
+						<div>203,000 M</div>
 					</div>
 					<div class="thismonth inline-block">
 						이번달 마일리지
-						<div>1,500 M</div>
+						<div>9,000 M</div>
 					</div>
 		
 					<div class="minfo">
