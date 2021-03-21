@@ -32,7 +32,7 @@
 }
 
 .mainsection #planarea {
-    width: 200px;
+    width: 210px;
     position: relative;
     z-index: 10;
     background-color: white;
@@ -155,8 +155,8 @@
 }
 
 
-/* 
-#dayarea .day-add {
+
+#dayarea .savePlan {
     background-color: #f18579ff;
     color: white;
     font-weight: bold;
@@ -168,11 +168,11 @@
     margin-top: 10px;
 }
 
-#dayarea .day-add:hover {
+#dayarea .savePlan:hover {
     background-color: rgb(238, 84, 87);
     cursor: pointer;
 } 
-*/
+
 
 
 
@@ -206,6 +206,12 @@
 
 
 /* plan body */
+.plan-placeholder {
+	background-color: #EEE;	
+	height: 95px;
+	border-radius: 6px;
+}
+
 #planarea #planBody{
     margin-top: 5px;
 }
@@ -269,6 +275,7 @@
 #planDetail .resultItem .content_box .content_name{
     margin-top: 10px;
     font-size: 12px;
+    width: 200px;
 }
 
 #planDetail .resultItem .content_box .content_type{
@@ -279,7 +286,7 @@
 
 #planDetail .resultItem .btn_del {
     position: relative;
-    left: 170px;
+    left: 180px;
     top: -73px;
     z-index: 1;
     background-color: transparent;
@@ -461,3 +468,39 @@
     padding-right: 7px;
     outline: none;
 }
+
+#paging {
+	text-align: center;
+}
+
+
+
+/* 세부정보 modal */
+.modal-body {
+    text-align: center;
+}
+
+.modal-body .image {
+    width: 500px;
+    height: 300px;
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.modal-body .image img {
+    width: 500px;
+}
+
+.modal-body .content {
+    text-align: left;
+}
+
+.modal-body .content div {
+    font-weight: bold;
+}
+
+.modal-body .content div span {
+    font-weight: normal;
+}
+

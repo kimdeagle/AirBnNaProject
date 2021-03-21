@@ -241,7 +241,10 @@ function getData(number, cat) {
 					var blockSize = 5; // 페이지바 개수
 
 					// ====================================================================
-
+					
+					
+					$(".resultnum").html(totalCount);
+					
 
 					// 페이징 관련 코드
 					// ==================================================
@@ -251,25 +254,33 @@ function getData(number, cat) {
 					n = parseInt((nowPage - 1) / blockSize) * blockSize + 1;
 					
 					// 이전 페이지로 이동
+//					if (n == 1) {
+//						pagebar += '<li class="disabled"><a href=\"#!\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+//
+//					} else {
+//						pagebar += '<li><a onclick="getData('
+//								+ (n - 1)
+//								+ ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+//					}
 					if (n == 1) {
-						pagebar += '<li class="disabled"><a href=\"#!\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
-
+						pagebar += '<a class="disabled" href=\"#!\" aria-label=\"Previous\">&laquo;</a>';
+						
 					} else {
-						pagebar += '<li><a onclick="getData('
-								+ (n - 1)
-								+ ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+						pagebar += '<a onclick="getData('
+							+ (n - 1)
+							+ ')" aria-label=\"Previous\">&laquo;</a>';
 					}
 
 					// 페이지바 코드 동적 생성
 					while (!(loop > blockSize || n > totalPage)) {
 
 						if (nowPage == n) {
-							pagebar += "<li class='active'>";
+							pagebar += "<a class='active' ";
 						} else {
-							pagebar += "<li>";
+							pagebar += "<a ";
 						}
-						pagebar += '<a onclick="getData(' + n + ')">' + n
-								+ '</a></li>';
+						pagebar += 'onclick="getData(' + n + ')">' + n
+								+ '</a>';
 
 						loop++;
 						n++;
@@ -277,13 +288,22 @@ function getData(number, cat) {
 					}
 
 					// 다음 10페이지로 이동
+//					if (n > totalPage) {
+//						pagebar += '<li class="disabled"><a href=\"#!\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
+//
+//					} else {
+//						pagebar += '<li><a onclick="getData('
+//								+ n
+//								+ ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
+//					}
+					
 					if (n > totalPage) {
-						pagebar += '<li class="disabled"><a href=\"#!\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
-
+						pagebar += "<a class='disabled' href=\"#!\" aria-label=\"Next\">&raquo;</a>";
+						
 					} else {
-						pagebar += '<li><a onclick="getData('
-								+ n
-								+ ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
+						pagebar += '<a href="getData('
+							+ n
+							+ ')" aria-label=\"Next\">&raquo;</a>';
 					}
 
 					// ===================================================================
@@ -291,7 +311,7 @@ function getData(number, cat) {
 					for (var i = 0; i < myItem.length ; i++) {
 						var output = '';
 
-						output += '<div class="resultItem">';
+						output += '<div class="resultItem" data-contentid="'+myItem[i].contentid+'" data-contenttypeid="'+myItem[i].contenttypeid+'">';
 						output += '<div class="img_box">';
 
 						if (myItem[i].firstimage == undefined) {
@@ -306,8 +326,8 @@ function getData(number, cat) {
 						
 						let title = '';
 						
-						if (myItem[i].title.length >= 8) {
-							title = myItem[i].title.substring(0, 8) + '..';
+						if (myItem[i].title.length >= 10) {
+							title = myItem[i].title.substring(0, 10) + '..';
 						} else {
 							title = myItem[i].title;
 						}
@@ -316,7 +336,7 @@ function getData(number, cat) {
 								+ title
 								+ '</p>';
 						output += '<p class="content_type" ondragstart="return false" onselectstart="return false">'
-								+ cat1
+								+ thememap.get(myItem[i].cat1)
 								+ '</p>';
 						output += '</div>';
 						output += '<button class="btn_del btn" style="display: none;">';
@@ -362,9 +382,52 @@ $('.theme_area').children().on('click', function() {
 	
 	let cat = thememap.get($(this).data('theme'));
 	
-	getData(number, cat);
+	getData(1, cat);
 	
 });
+
+
+
+//장소 정보보기 - ajax로 api 데이터 받아오기 *********************************
+$('#detailCommonInfo').on('show.bs.modal', function (e) {
+   console.log('call show.bs.modal event');
+   
+   $('#commonInfoTitle').html("");
+   $('#commonInfoBody .image').html("");
+   $('#commonInfoBody .category').html("");
+   $('#commonInfoBody .tel').html("");
+   $('#commonInfoBody .overview').html("");
+   
+   let contentid = $(e.relatedTarget).parent().parent().data('contentid');
+   let contenttypeid = $(e.relatedTarget).parent().parent().data('contenttypeid');
+   
+   $.ajax({
+      url : '/bnna/member/tripplan/detaildata.action',
+      type : 'GET',
+      data : "contentid=" + contentid + "&contenttypeid="+ contenttypeid,
+      dataType : 'json',
+      success : function(data) {
+         console.log(data);
+         console.log(data.response.body.items.item);
+         let commonData = data.response.body.items.item;
+         
+         let image;
+          if (commonData.firstimage == undefined) {
+             image = "/bnna/resources/image/tripplan/noimage.jpg";
+          } else {
+             image = commonData.firstimage;
+          }
+
+         $('#commonInfoTitle').html(commonData.title);
+         $('#commonInfoBody .image').html('<img src="'+image+'">');
+         $('#commonInfoBody .category').append(commonData.addr1);
+         $('#commonInfoBody .tel').append(commonData.tel);
+         $('#commonInfoBody .overview').append(commonData.overview);
+      }
+   });
+
+});
+
 
 
 

@@ -42,7 +42,7 @@
 				
 			</div>
 
-			<!-- <div class="day-add">DAY 추가</div> -->
+			<div class="savePlan">일정 저장</div>
 		</div>
 
 
@@ -210,34 +210,49 @@
 		</div>
 		<!-- paging -->
 		<div id="paging">
+<!-- 
 			<nav aria-label="Page navigation">
 				<ul id="pagination" class="pagination"></ul>
-			</nav>
+			</nav> 
+			-->
+			<div class="pagination" id="pagination">
+			
+			</div>
 		</div>
 	</div>
 
 
 
 
-	<!-- 장소 정보보기 Modal -->
+    <!-- 장소 정보보기 Modal -->
 	<div class="modal fade" id="detailCommonInfo" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="commonInfoTitle">세부 정보</h4>
-				</div>
-				<div class="modal-body" id="commonInfoBody"></div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
-				</div>
-			</div>
-		</div>
+	   role="dialog" aria-labelledby="myModalLabel">
+	   <div class="modal-dialog" role="document">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal"
+	               aria-label="Close">
+	               <span aria-hidden="true">&times;</span>
+	            </button>
+	            <h4 class="modal-title" id="commonInfoTitle">장소제목</h4>
+	         </div>
+	         <div class="modal-body" id="commonInfoBody">
+	            <div class="image">
+	               <img src="/bnna/resources/image/tripplan/noimage.jpg" alt="">
+	            </div>
+	            <div class="content">
+	               <div>주소 : <span class="category"></span></div>
+	               <div class="makeLine">전화번호 : <span class="tel"></span></div>
+	               <hr style="margin: 4px 0px;">
+	               <div class="pdtop"><span class="overview"></span></div>
+	            </div>
+	               
+	         </div>
+	         <div class="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	         </div>
+	      </div>
+	   </div>
 	</div>
 
 	<script src="/bnna/resources/js/tripplan/tpmake.js"></script>
