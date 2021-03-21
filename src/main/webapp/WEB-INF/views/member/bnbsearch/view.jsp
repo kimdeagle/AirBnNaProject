@@ -163,6 +163,11 @@
 			</tr>
 		</c:if>
 	</table>
+	
+	<c:if test="${rlist.size()!=0}">
+	${pagebar}
+	</c:if>
+	
 </section>
 
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

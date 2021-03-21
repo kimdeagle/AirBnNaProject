@@ -19,30 +19,28 @@
 				<th>제목</th>
 				<th>예약일</th>
 			</tr>
-			<c:forEach items="${list}" var="dto">
+			<c:if test="${list.size()!=0}">
+				<c:forEach items="${list}" var="dto">
+				<tr>
+					<td>${dto.seq}</td>
+				<td><a href="/bnna/member/board/review/view.action?seq=${dto.seq}">${dto.title}</a></td>
+				<td>${dto.bookdate.substring(0, 10)}</td>
+				</tr>
+				</c:forEach>
+			</c:if>
+			<c:if test="${list.size()==0}">
 			<tr>
-				<td>${dto.seq}</td>
-			<td><a href="/bnna/member/board/review/view.action?seq=${dto.seq}">${dto.title}</a></td>
-			<td>${dto.bookdate.substring(0, 10)}</td>
+				<td colspan="3">작성된 리뷰가 없습니다.</td>
 			</tr>
-			</c:forEach>
+			</c:if>
 		</table>
 	
-		<div class=pagearea>
-		    <div class="pagination">
-		        <a href="#">&laquo;</a>
-		        <a href="#">1</a>
-		        <a href="#" class="active">2</a>
-		        <a href="#">3</a>
-		        <a href="#">4</a>
-		        <a href="#">5</a>
-		        <a href="#">6</a>
-		        <a href="#">&raquo;</a>
-		    </div>
-		</div>
+	<c:if test="${list.size()!=0}">
+   		${pagebar}
+   	</c:if>
 		
-		<div id="btns">
-			<button type="button" class="btn-general" onclick="location.href='/bnna/member/board/review/add.action'">작성하기</button>
-		</div>
+	<div id="btns">
+		<button type="button" class="btn-general" onclick="location.href='/bnna/member/board/review/add.action'">작성하기</button>
+	</div>
 
 </section>

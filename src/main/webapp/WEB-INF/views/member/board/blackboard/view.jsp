@@ -87,11 +87,9 @@
 			<c:if test="${not empty seqMember}">
 				<c:if test="${dto.seqMember.equals(seqMember)}">
 					<button type="button" class="btn btn-success" onclick="location.href='/bnna/member/board/blackboard/edit.action?seq=${seq}&page=${nowPage}';">수정</button>
-					<button type="button" class="btn btn-danger" onclick="location.href='/bnna/member/board/blackboard/del.action?seq=${seq}';">삭제</button>
+					<button type="button" id="btnDel" class="btn btn-danger">삭제</button>
 				</c:if>
-				<c:if test="${!dto.seqMember.equals(seqMember)}">
-					<button type="button" class="btn btn-warning" onclick="location.href='/bnna/member/board/blackboard/add.action?page=${nowPage}&reply=y&thread=${dto.thread}&depth=${dto.depth}';">답글</button>
-				</c:if>
+					<button type="button" class="btn btn-warning" onclick="location.href='/bnna/member/board/blackboard/add.action?page=${nowPage}&reply=y&thread=${dto.thread}&depth=${dto.depth}&seqParent=${seq}';">답글</button>
 			</c:if>
 			<button type="button" class="btn btn-default" onclick="location.href='/bnna/member/board/blackboard/list.action?page=${nowPage}';">목록</button>
 		</div>
@@ -120,7 +118,6 @@
 						<td>
 							<span class="cmtContent">${cmt.content}</span>
 							<c:if test="${seqMember.equals(cmt.seqMember)}">
-								<button type="button" class="btn btn-success btn-sm btnCmtEdit">수정</button>
 								<button type="button" class="btn btn-danger btn-sm btnCmtDel">삭제</button>
 							</c:if>
 						</td>
@@ -140,6 +137,27 @@
 			<input type="hidden" id="seq" name="seq" value="${seq}">	
 		</c:if>
 
+		<!-- delModal -->
+		<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="delModalLabel">글 삭제</h4>
+					</div>
+					<div class="modal-body">
+						삭제하시겠습니까?
+						<div class="delModalBtns">
+							<button type="button" id="btnDelOk" class="btn btn-danger">삭제</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>						
+						</div>
+						<input type="hidden" id="seqBlackBoard" value="${seq}">
+						<input type="hidden" id="seqParent" value="${dto.seqParent}">
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- cmtDelModal -->
 		<div class="modal fade" id="cmtDelModal" tabindex="-1" role="dialog" aria-labelledby="cmtDelModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-sm">
@@ -150,11 +168,14 @@
 					</div>
 					<div class="modal-body">
 						삭제하시겠습니까?
-						<div class="cmtBtns">
+						<div class="delModalBtns">
 							<button type="button" id="btnCmtDel" class="btn btn-danger">삭제</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>						
 						</div>
+						<%--
+						글 삭제 모달에서 가져옴
 						<input type="hidden" id="seqBlackBoard" value="${seq}">
+						--%>
 						<input type="hidden" id="nowPage" value="${nowPage}">
 						<input type="hidden" id="reply" value="${reply}">
 					</div>

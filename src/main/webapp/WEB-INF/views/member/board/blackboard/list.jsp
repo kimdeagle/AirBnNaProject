@@ -13,8 +13,6 @@
 		게시판
 		<span class="glyphicon glyphicon-menu-right" style="position: static; z-index: -1;"></span>
 		신고게시판
-		<span class="glyphicon glyphicon-menu-right" style="position: static; z-index: -1;"></span>
-		상세
 	</div>
 	<hr style="margin-top: -5px;">
 	<!-- 여기까지 menu path -->
@@ -33,6 +31,14 @@
 		<div style="clear: both;"></div>
 	</div>	
 	
+	<c:if test="${not empty keyword}">
+		<div class="searchResult">
+			<h6>검색 결과 : ${list.size()}건</h6>
+			<button type="button" class="btn btn-warning btn-sm" onclick="location.href='/bnna/member/board/blackboard/list.action';">초기화</button>
+		</div>
+	</c:if>
+	
+	<!-- list -->
 	<table id="tblList" class="table table-bordered">
 		<thead>
 			<tr>
@@ -65,6 +71,8 @@
 		</tbody>
 	</table>
 	
+	
+	<!-- search -->
 	<div id="searchbar" class="form-inline">
 		<select class="form-control" id="searchCondition">
 			<option>제목</option>

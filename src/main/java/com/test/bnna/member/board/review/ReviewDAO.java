@@ -2,12 +2,18 @@ package com.test.bnna.member.board.review;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * 리뷰DB에 접근하는 DAO입니다.
+ * @author 조아라
+ *
+ */
 @Repository
 public class ReviewDAO implements IReviewDAO {
 	
@@ -20,9 +26,9 @@ public class ReviewDAO implements IReviewDAO {
 	 * @return 리뷰정보를 담고 있는 DTO의 리스트를 반환합니다.
 	 */
 	@Override
-	public List<ReviewDTO> list(String seq) {
+	public List<ReviewDTO> list(HashMap<String, String> map) {
 		
-		return template.selectList("review.onelist", seq);
+		return template.selectList("review.onelist", map);
 	}
 
 	/**
@@ -48,9 +54,9 @@ public class ReviewDAO implements IReviewDAO {
 	 * 회원이 작성한 리뷰목록을 가져오는 메서드입니다.
 	 */
 	@Override
-	public List<ReviewForMemberDTO> listForMember(String seqMember) {
+	public List<ReviewForMemberDTO> listForMember(HashMap<String, String> map) {
 		
-		return template.selectList("review.listForMember", seqMember);
+		return template.selectList("review.listForMember", map);
 	}
 
 	/**
@@ -96,16 +102,13 @@ public class ReviewDAO implements IReviewDAO {
 		return deleteCnt;
 	}
 
+	/**
+	 * 리뷰를 추가하는 메서드입니다.
+	 */
 	@Override
 	public int add(AddReviewDTO dto) {
 		
 		return template.insert("review.add", dto);
-	}
-
-	@Override
-	public int addReviewPic(ArrayList<ReviewPicDTO> plist) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	/**
@@ -116,11 +119,32 @@ public class ReviewDAO implements IReviewDAO {
 		
 		return template.selectOne("review.getCurrentReviewSeq");
 	}
-
+	
+	/**
+	 * 리뷰를 수정하는 메서드입니다.
+	 */
 	@Override
 	public int edit(EditReviewDTO dto) {
 		
 		return template.update("review.edit", dto);
+	}
+
+	/**
+	 * 리뷰번호로 리뷰를 작성한 사람의 ID를 가져오는 메서드입니다.
+	 */
+	@Override
+	public String getOwner(String seq) {
+		
+		return template.selectOne("review.getOwner", seq);
+	}
+
+	/**
+	 * 회원번호로 작성된 리뷰 수를 가져오는 메서드입니다.
+	 */
+	@Override
+	public int getTotalCount(String seqMember) {
+		
+		return template.selectOne("review.getTotalCountForMember", seqMember);
 	}
 
 }

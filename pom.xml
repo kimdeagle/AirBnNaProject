@@ -216,13 +216,14 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.0.1</version>
-		</dependency>
-		
+		</dependency> 
+
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.2</version>
-		</dependency>
+		</dependency> 
+
 		
 		<!-- 숙소상세조회에서 리뷰상세모달창의 이미지 가져올 때 필요!!!! 삭제 XXX -->
 		<dependency>
@@ -230,6 +231,7 @@
 			<artifactId>gson</artifactId>
 			<version>2.8.5</version>
 		</dependency>
+
 		
 	</dependencies>
     <build>

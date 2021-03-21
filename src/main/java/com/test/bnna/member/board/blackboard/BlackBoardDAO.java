@@ -57,9 +57,9 @@ public class BlackBoardDAO implements IBlackBoardDAO {
 	}
 	
 	@Override
-	public void del(String addSeqBlackBoard) {
+	public int del(String addSeqBlackBoard) {
 		
-		template.delete("blackboard.del", addSeqBlackBoard);
+		return template.delete("blackboard.del", addSeqBlackBoard);
 		
 	}
 	
@@ -70,15 +70,49 @@ public class BlackBoardDAO implements IBlackBoardDAO {
 	}
 	
 	@Override
-	public int getCount() {
+	public int getCount(HashMap<String, String> map) {
 
-		return template.selectOne("blackboard.getCount");
+		return template.selectOne("blackboard.getCount", map);
 	}
 	
 	@Override
 	public List<String> getSeqHasImage() {
 
 		return template.selectList("blackboard.getSeqHasImage");
+	}
+	
+	@Override
+	public void updateReadCnt(String seq) {
+		
+		template.update("blackboard.updateReadCnt", seq);
+	}
+	
+	@Override
+	public boolean hasReply(String seq) {
+		
+		if ((int)template.selectOne("blackboard.hasReply", seq) != 0) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	@Override
+	public boolean hasComment(String seq) {
+		
+		if ((int)template.selectOne("blackboard.hasComment", seq) != 0) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	@Override
+	public int editok(BlackBoardDTO dto) {
+		
+		return template.update("blackboard.editok", dto);
 	}
 	
 }

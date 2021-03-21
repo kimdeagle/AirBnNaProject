@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- * 숙소사진 DB에 접근하는 DAO입니다.
- * @author ara
+ * 숙소이미지DB에 접근하는 DAO입니다.
+ * @author 조아라
  *
  */
 @Repository

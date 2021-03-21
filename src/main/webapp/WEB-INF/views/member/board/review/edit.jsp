@@ -10,6 +10,7 @@
 	</div>
 	<hr style="margin-top: -5px;">
 	<!-- 여기까지 menu path -->
+	<h3>수정하기</h3>
 	<form method="POST" action="/bnna/member/board/review/editok.action" enctype="multipart/form-data">
 		<table class="table table-bordered" id="addtbl">
 			<tr>

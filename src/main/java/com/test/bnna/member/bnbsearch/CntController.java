@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.test.bnna.member.board.review.IReviewDAO;
 
+/**
+ * ajax로 호출되어 조회수, 추천수에 관한 로직을 처리하는 컨트롤러입니다.
+ * @author 조아라
+ *
+ */
 @Controller
 public class CntController {
 	
@@ -33,7 +38,7 @@ public class CntController {
 	 * ajax로 호출된, 추천수를 올리는 메서드입니다.
 	 * @param req
 	 * @param resp
-	 * @param seq
+	 * @param seq 리뷰번호입니다.
 	 */
 	@RequestMapping(value="/member/bnbsearch/recommendcntup.action", method={RequestMethod.GET})
 	public void recommendCountUp(HttpServletRequest req, HttpServletResponse resp, String seq) {

@@ -146,6 +146,22 @@ $(document).ready(function () {
 		}
 	});
 	
+	var seqBlackBoard;
+	var seqParent;
+	
+	//view > 삭제 버튼 클릭
+	$("#btnDel").click(function() {
+		//delModal open
+		$("#delModal").modal('show');
+	});
+	
+	//view > 삭제모달에서 삭제버튼 클릭
+	$("#btnDelOk").click(function() {
+		seqBlackBoard = $("#seqBlackBoard").val();
+		seqParent = $("#seqParent").val();
+		location.href="/bnna/member/board/blackboard/del.action?seq="+ seqBlackBoard +"&seqParent=" + seqParent;		
+	});
+	
 	//view > 댓글 추가
 	$("#addcmt").click(function() {
 		
@@ -165,7 +181,7 @@ $(document).ready(function () {
 			data: "seq=" + $("#seq").val() + "&content=" + $("#commentContent").val(),
 			success: function(result) {
 				$(result).each(function(index, item) {
-					$("#tblComment tbody").append("<tr><td>"+ item.name +" ("+ item.id +")<input type='hidden' id='seqBlackBoardCmt' value='"+ item.seq +"'><input type='hidden' id='seqMember' value='"+ item.seqMember +"'></td><td><span class='cmtContent'>"+ item.content +"</span> <button type='button' class='btn btn-success btn-sm btnCmtEdit'>수정</button> <button type='button' class='btn btn-danger btn-sm btnCmtDel'>삭제</button></td><td>"+ item.regdate +"</td></tr>");					
+					$("#tblComment tbody").append("<tr><td>"+ item.name +" ("+ item.id +")<input type='hidden' id='seqBlackBoardCmt' value='"+ item.seq +"'><input type='hidden' id='seqMember' value='"+ item.seqMember +"'></td><td><span class='cmtContent'>"+ item.content +"</span> <button type='button' class='btn btn-danger btn-sm btnCmtDel'>삭제</button></td><td>"+ item.regdate +"</td></tr>");					
 				});
 				$("#commentContent").val("");
 				$("#commentContent").focus();
@@ -181,7 +197,10 @@ $(document).ready(function () {
 	
 	//댓글 삭제 클릭
 	
+	/*
+	글 삭제 모달 위에서 선언
 	var seqBlackBoard;
+	*/
 	var seqBlackBoardCmt;
 	var nowPage;
 	var reply;
@@ -216,6 +235,11 @@ $(document).ready(function () {
 	var searchCondition;
 	var searchKeyword;
 	
+	$("#searchKeyword").keydown(function() {
+		if (event.keyCode == 13) {
+			$("#btnSearchList").click();
+		}
+	});
 	
 	//list > 검색 버튼 클릭
 	$("#btnSearchList").click(function() {
@@ -234,9 +258,7 @@ $(document).ready(function () {
 		}
 		
 		location.href="/bnna/member/board/blackboard/list.action?condition=" + searchCondition + "&keyword=" + searchKeyword;
-		
-	});
-	
+	});	
 	
 	
 });

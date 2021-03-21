@@ -24,4 +24,21 @@ public class BlackBoardImgDAO implements IBlackBoardImgDAO {
 		return result;
 	}
 	
+	@Override
+	public void del(String seq) {
+
+		template.delete("blackboardimg.del", seq);		
+	}
+	
+	@Override
+	public boolean hasImage(String seq) {
+		
+		if ((int)template.selectOne("blackboardimg.hasImage", seq) != 0) {
+			return true;
+		} else {
+			return false;			
+		}
+		
+	}
+	
 }

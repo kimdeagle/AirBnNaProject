@@ -10,11 +10,12 @@
 	</div>
 	<hr style="margin-top: -5px;">
 	<!-- 여기까지 menu path -->
+	<h3>작성하기</h3>
 	<form method="POST" action="/bnna/member/board/review/addok.action" enctype="multipart/form-data">
 		<table class="table table-bordered" id="addtbl">
 			<tr>
 				<th>제목</th>
-				<td colspan="3"><input type="text" class="form-control" id="title" name="title"></td>
+				<td colspan="3"><input type="text" class="form-control" id="title" name="title" required></td>
 			</tr>
 			<tr>
 				<th>예약번호</th>
@@ -38,13 +39,16 @@
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td colspan="3"><textarea class="form-control" id="content" name="content"></textarea></td>
+				<td colspan="3"><textarea class="form-control" id="content" name="content" required></textarea></td>
 			</tr>
 			<tr>
 				<th>리뷰사진</th>
 				<td colspan="3"><input type="file" class="form-control" id="reviewpic" name="reviewpic" multiple="multiple"></td>
 			</tr>
 		</table>
-		<input type="submit" class="btn-general" value="작성하기">
+		<div id="btns">
+			<input type="submit" class="btn-general" value="작성하기">
+					<button type="button" class="btn-general" onclick="location.href='/bnna/member/board/review/list.action'">뒤로가기</button>
+		</div>
 	</form>
 </section>

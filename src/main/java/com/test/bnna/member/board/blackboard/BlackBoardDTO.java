@@ -25,4 +25,6 @@ public class BlackBoardDTO {
 	
 	private boolean hasImage;
 	
+	private String seqParent;
+	
 }

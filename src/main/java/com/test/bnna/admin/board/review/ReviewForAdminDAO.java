@@ -1,14 +1,18 @@
 package com.test.bnna.admin.board.review;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.test.bnna.member.board.review.ReviewPicDTO;
-
+/**
+ * 관리자용으로 리뷰DB에 접근하는 DAO입니다.
+ * @author 조아라
+ *
+ */
 @Repository
 public class ReviewForAdminDAO implements IReviewForAdminDAO {
 	
@@ -19,11 +23,14 @@ public class ReviewForAdminDAO implements IReviewForAdminDAO {
 	 *  관리자용으로 전체 리뷰를 가져오는 메서드입니다.
 	 */
 	@Override
-	public List<ReviewForAdminDTO> list() {
+	public List<ReviewForAdminDTO> list(HashMap<String, String> map) {
 		
-		return template.selectList("review.allList");
+		return template.selectList("review.allList", map);
 	}
 
+	/**
+	 * 관리자용으로 개별 리뷰정보를 가져오는 메서드입니다.
+	 */
 	@Override
 	public ReviewForAdminDTO info(String seq) {
 		
@@ -63,5 +70,14 @@ public class ReviewForAdminDAO implements IReviewForAdminDAO {
 		}
 		
 		return deleteCnt;
+	}
+
+	/**
+	 * 리뷰 전체 글수를 가져오는 메서드입니다.
+	 */
+	@Override
+	public int getTotalCount() {
+		
+		return template.selectOne("review.getTotalCountForAdmin");
 	}
 }

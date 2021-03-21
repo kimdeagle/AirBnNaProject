@@ -8,4 +8,6 @@ public interface IBnBDAO {
 
 	List<BnBPicDTO> getPic(String seq);
 
+	int getTotalCount(String seq);
+
 }
