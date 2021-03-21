@@ -16,18 +16,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+/**
+ * 관리자 이벤트 게시판
+ * @author 오수경
+ *
+ */
 @Controller
 public class EventController {
 	
 	@Autowired
 	private IEventBoardDAO dao;
 	
+	/**
+	 * 이벤트 게시판 리스트
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param search 검색어
+	 * @return 글 목록 반환
+	 */
 	@RequestMapping(value="/admin/board/eventboard/list.action", method = {RequestMethod.GET})
 	public String list(HttpServletRequest request, HttpServletResponse response, HttpSession session, String search) {
 		
 		//1. DB 위임 -> select
 		//2. jsp 호출
-//		System.out.println(search+"==============================");
+
 		HashMap<String,String> map = new HashMap<String, String>();
 		
 		if(search == null || search.equals("")) {
@@ -37,7 +50,7 @@ public class EventController {
 		map.put("search",search);
 		System.out.println(search);
 		List<EventBoardDTO> list = dao.list(map);
-//		List<EventBoardDTO> list = dao.list();
+		
 		
 		request.setAttribute("list", list);
 		request.setAttribute("search", search);
@@ -45,6 +58,14 @@ public class EventController {
 		return "admin.board.eventboard.list";
 	}
 
+	/**
+	 * 이벤트 게시판 글 보기
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param seq 선택한 글 번호
+	 * @return 글 반환
+	 */
 	@RequestMapping(value="/admin/board/eventboard/view.action", method = {RequestMethod.GET})
 	public String view(HttpServletRequest request, HttpServletResponse response, HttpSession session, String seq) {
 		
@@ -64,12 +85,27 @@ public class EventController {
 	}
 
 
+	/**
+	 * 이벤트 게시판 글 작성 페이지
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return 글 작성 페이지
+	 */
 	@RequestMapping(value="/admin/board/eventboard/add.action", method = {RequestMethod.GET})
 	public String admin_add(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		
 		return "admin.board.eventboard.add";
 	}
 	
+	/**
+	 * 이벤트 게시판 글 작성
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param dto 관리자 정보, 글 정보 dto
+	 * @return 글 작성 페이지
+	 */
 	@RequestMapping(value="/admin/board/eventboard/addok.action", method = {RequestMethod.POST})
 	public String admin_addok(HttpServletRequest request, HttpServletResponse response, HttpSession session, EventBoardDTO dto) {
 		
@@ -136,6 +172,12 @@ public class EventController {
 		return "admin.board.eventboard.add";
 	}
 	
+	/**
+	 * 업로드 할 파일 이름 지정
+	 * @param path 저장될 파일 주소
+	 * @param filename 원본파일 명
+	 * @return 원본 파일 명 or 넘버링 된 파일명 
+	 */
 	private String getFileName(String path, String filename) {
 		
 		int n = 1; // 인덱스 숫자
@@ -159,6 +201,14 @@ public class EventController {
 		}
 	}
 
+	/**
+	 * 이벤트 게시판 글 수정
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param seq 글 번호
+	 * @return 글 수정 페이지
+	 */
 	@RequestMapping(value="/admin/board/eventboard/edit.action", method = {RequestMethod.GET})
 	public String admin_owner_edit(HttpServletRequest request, HttpServletResponse response, HttpSession session, String seq) {
 		
@@ -174,6 +224,13 @@ public class EventController {
 		return "admin.board.eventboard.edit";
 	}
 	
+	/**
+	 * 이벤트 게시판 글 수정
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param dto 작성자 정보, 글 정보 dto
+	 */
 	@RequestMapping(value="/admin/board/eventboard/editok.action", method = {RequestMethod.POST})
 	public void admin_owner_editok(HttpServletRequest request, HttpServletResponse response, HttpSession session, EventBoardDTO dto) {
 		
@@ -202,6 +259,14 @@ public class EventController {
 		
 	}
 	
+	/**
+	 * 이벤트 게시판 글 삭제
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param seq 글 번호
+	 * @return 글 삭제 페이지
+	 */
 	@RequestMapping(value="/admin/board/eventboard/del.action", method = {RequestMethod.GET})
 	public String admin_owner_del(HttpServletRequest request, HttpServletResponse response, HttpSession session, String seq) {
 		
@@ -212,6 +277,13 @@ public class EventController {
 		return "admin.board.eventboard.del";
 	}
 	
+	/**
+	 * 이벤트 게시판 글 삭제
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param seq 글 번호
+	 */
 	@RequestMapping(value="/admin/board/eventboard/delok.action", method = {RequestMethod.GET})
 	public void admin_owner_delok(HttpServletRequest request, HttpServletResponse response, HttpSession session, String seq) {
 		
@@ -237,6 +309,14 @@ public class EventController {
 		
 	}
 	
+	/**
+	 * 이벤트 게시판 댓글 삭제
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param seq 댓글 번호
+	 * @param bseq 글 번호
+	 */
 	@RequestMapping(value="/admin/board/eventboard/delcommentok.action", method = {RequestMethod.GET})
 	public void admin_owner_delcommentok(HttpServletRequest request, HttpServletResponse response, HttpSession session, String seq, String bseq) {
 		

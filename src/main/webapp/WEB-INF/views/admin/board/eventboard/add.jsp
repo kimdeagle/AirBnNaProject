@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="/bnna/resources/css/admin/event.css">
 <section>
 
-	<h2>이벤트 게시판  <small>글 쓰기</small></h2>
+	<h2 onclick="location.href='/bnna/admin/board/eventboard/list.action';" style="cursor: pointer;">이벤트 게시판  <small>글 쓰기</small></h2>
 
 	<form method="POST" action="/bnna/admin/board/eventboard/addok.action" enctype="multipart/form-data">
 		<table class="table table-bordered evtboard">
