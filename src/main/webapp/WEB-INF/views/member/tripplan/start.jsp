@@ -275,7 +275,14 @@
 			let startDate = date.substring(0, 10); 	//여행 시작일
 			let endDate = date.substring(13, 23);	//여행 끝일
 			
-			location.href="/bnna/member/tripplan/make.action?city=" + city + "&startDate=" + startDate + "&endDate=" + endDate;
+			let sdt = new Date(startDate);
+			let edt = new Date(endDate);
+			
+			//여행이 총 며칠인지 계산
+			var dateDiff = Math.ceil((edt.getTime()-sdt.getTime())/(1000*3600*24) + 1);
+			
+			
+			location.href="/bnna/member/tripplan/make.action?city=" + city + "&startDate=" + startDate + "&endDate=" + endDate + "&dateDiff=" + dateDiff;
 			
 		});
 		

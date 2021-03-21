@@ -1,6 +1,9 @@
 package com.test.bnna.member.tripplan;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,7 +24,7 @@ public class TripPlanController {
 	@Autowired
 	private ITripPlanDAO dao;
 	
-	
+
 	@RequestMapping(value="/member/tripplan/start.action", method={RequestMethod.GET})
 	public String start(HttpServletRequest req, HttpServletResponse resp) {
 		
@@ -31,11 +34,42 @@ public class TripPlanController {
 	
 
 	@RequestMapping(value="/member/tripplan/make.action", method={RequestMethod.GET})
-	public String make(HttpServletRequest req, HttpServletResponse resp) {
+	public String make(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		
+		String city = req.getParameter("city");
+		String startDate = req.getParameter("startDate");
+		String endDate = req.getParameter("endDate");
+		String dateDiff = req.getParameter("dateDiff");
+		
+		//시작일, 끝일 데이터 가공 (yyyy-mm-dd -> mm.dd)
+		String startY = startDate.substring(0, 4);
+		String startM = startDate.substring(5, 7);
+		String startD = startDate.substring(8, 10);
 
+		String endY = endDate.substring(0, 4);
+		String endM = endDate.substring(5, 7);
+		String endD = endDate.substring(8, 10);
+
+		String startDate2 = startM + "." + startD;
+		String endDate2 = endM + "." + endD;
+		
+
+
+		req.setAttribute("city", city);
+		
+		req.setAttribute("startDate", startDate);	//yyyy-mm-dd
+		req.setAttribute("endDate", endDate);
+		
+		req.setAttribute("startDate2", startDate2);	//mm.dd
+		req.setAttribute("endDate2", endDate2);
+		
+		req.setAttribute("dateDiff", dateDiff);		//총 며칠인지 계산
 		
 		return "member.tripplan.make";
 	}
+	
+	 
+
 	
 	@RequestMapping(value="/member/tripplan/board.action", method={RequestMethod.GET})
 	public String board(HttpServletRequest req, HttpServletResponse resp) {
@@ -153,6 +187,26 @@ public class TripPlanController {
 		return "member.tripplanwfooter.result";
 	}
 	
+
+	
+	
+	
+	//날짜 계산
+	public static String AddDate(String strDate, int year, int month, int day) throws Exception {
+		
+		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy.MM.dd");
+		Calendar cal = Calendar.getInstance();
+		Date dt = dtFormat.parse(strDate);
+		cal.setTime(dt);
+		cal.add(Calendar.YEAR, year);
+		cal.add(Calendar.MONTH, month);
+		cal.add(Calendar.DATE, day);
+		return dtFormat.format(cal.getTime());
+	}
+	
+	
+	
+
 
 	
 }

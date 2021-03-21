@@ -32,7 +32,7 @@
 }
 
 .mainsection #planarea {
-    width: 180px;
+    width: 200px;
     position: relative;
     z-index: 10;
     background-color: white;
@@ -119,6 +119,7 @@
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 18%);
     background-color: white;
     padding-bottom: 5px;
+    border-radius: 7px;
 }
 
 #dayarea #dayList .dayitem .num {
@@ -132,6 +133,29 @@
     font-size: 1.1em;
 }
 
+
+.selectAble {
+	cursor: pointer;
+}
+
+#dayarea #dayList .selected {
+	background-color: rgb(248, 109, 112);
+	box-shadow:inset 3px 3px 8px 2px rgb(161, 70, 70); 
+	color: white;
+}
+
+#dayarea #dayContent #dayList .selected .day-date,
+#dayarea #dayContent #dayList .selected .day-day,
+#dayarea #dayContent #dayList .selected .day-num {
+	color: #333;
+}
+
+#dayarea #dayContent #dayList .selected .num {
+	color: white;
+}
+
+
+/* 
 #dayarea .day-add {
     background-color: #f18579ff;
     color: white;
@@ -147,7 +171,8 @@
 #dayarea .day-add:hover {
     background-color: rgb(238, 84, 87);
     cursor: pointer;
-}
+} 
+*/
 
 
 
@@ -212,7 +237,7 @@
     height: 60px;
     margin-top: 15px;
     margin-left: 15px;
-    border: 1px solid black;
+    border: 1px solid #DDD;
 }
 
 
@@ -236,26 +261,26 @@
 }
 
 #planDetail .resultItem .content_box {
-    width: 90px;
+    width: 100px;
     margin-top: -63px;
     margin-left: 80px;
 }
 
 #planDetail .resultItem .content_box .content_name{
-    margin-top: 8px;
-    font-size: 14px;
+    margin-top: 10px;
+    font-size: 12px;
 }
 
 #planDetail .resultItem .content_box .content_type{
     margin-top: 5px;
-    font-size: 11px;
+    font-size: 8px;
     color: #999;
 }
 
 #planDetail .resultItem .btn_del {
     position: relative;
-    left: 152px;
-    top: -77px;
+    left: 170px;
+    top: -73px;
     z-index: 1;
     background-color: transparent;
     line-height: 19px;
@@ -413,19 +438,19 @@
 }
 
 #searchResult .resultItem .content_box .content_name{
-    margin-top: 5px;
-    font-size: 14px;
+    margin-top: 9px;
+    font-size: 12px;
 }
 
 #searchResult .resultItem .content_box .content_type{
     margin-top: 5px;
-    font-size: 11px;
+    font-size: 8px;
     color: #999;
 }
 
 #searchResult .resultItem .btn_box {
     width: 50px;
-    margin-top: -70px;
+    margin-top: -65px;
     margin-left: 183px;
 }
 

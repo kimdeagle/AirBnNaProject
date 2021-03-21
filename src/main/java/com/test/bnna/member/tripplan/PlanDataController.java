@@ -59,7 +59,7 @@ public class PlanDataController {
 		parameter = parameter + "&" + "contentTypeId=";
 		parameter = parameter + "&" + "areaCode=";
 		parameter = parameter + "&" + "sigunguCode=";
-		parameter = parameter + "&" + "cat1=";
+		parameter = parameter + "&" + "cat1=" + cat1;
 		parameter = parameter + "&" + "listYN=Y";
 		parameter = parameter + "&" + "MobileOS=ETC";
 		parameter = parameter + "&" + "MobileApp=TourAPI3.0_Guide";
