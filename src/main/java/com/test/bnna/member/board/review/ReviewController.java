@@ -37,7 +37,7 @@ public class ReviewController {
 		String seqMember=req.getAttribute("seq").toString();
 		// 그 회원의 리뷰목록 찾아오기
 		List<ReviewForMemberDTO> list=dao.listForMember(seqMember);
-		
+		 
 		req.setAttribute("list", list);
 		
 		return "member.board.review.list";
