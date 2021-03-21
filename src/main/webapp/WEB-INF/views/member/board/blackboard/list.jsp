@@ -23,7 +23,14 @@
 		
 		<!-- 로그인/로그아웃 임시 -->
 		<c:if test="${empty seqMember}">
-			<button type="button" class="btn btn-default" style="float: right; margin-top: 20px;" onclick="location.href='/bnna/member/board/blackboard/login.action?seqMember=1';">로그인</button>
+			<form method="GET" action="/bnna/member/board/blackboard/login.action">
+				<button type="submit" class="btn btn-default" style="float: right; margin-top: 20px;">2번 로그인</button>
+				<input type="hidden" id="seqMember" name="seqMember" value="2">
+			</form>
+			<form method="GET" action="/bnna/member/board/blackboard/login.action">
+				<button type="submit" class="btn btn-default" style="float: right; margin-top: 20px; margin-right: 10px;">1번 로그인</button>
+				<input type="hidden" id="seqMember" name="seqMember" value="1">
+			</form>
 		</c:if>
 		<c:if test="${not empty seqMember}">
 			<button type="button" class="btn btn-default" style="float: right; margin-top: 20px;" onclick="location.href='/bnna/member/board/blackboard/logout.action';">로그아웃</button>
@@ -31,9 +38,13 @@
 		<div style="clear: both;"></div>
 	</div>	
 	
+	<c:if test="${empty keyword}">
+		<h6>총 게시글 : ${totalCount}건</h6>
+	</c:if>
+	
 	<c:if test="${not empty keyword}">
 		<div class="searchResult">
-			<h6>검색 결과 : ${list.size()}건</h6>
+			<h6>검색 결과 : ${totalCount}건</h6>
 			<button type="button" class="btn btn-warning btn-sm" onclick="location.href='/bnna/member/board/blackboard/list.action';">초기화</button>
 		</div>
 	</c:if>

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+/**
+ * 블랙리스트 신고게시판 관련 업무를 담당하는 Controller
+ * @author 김주혁
+ *
+ */
 @Controller
 public class BlackBoardController {
 
@@ -34,11 +38,19 @@ public class BlackBoardController {
 	@Autowired
 	private IBlackBoardCmtDAO cdao;
 	
-	
+	/**
+	 * 신고대상회원 검색 메서드
+	 * JSON 형식의 데이터 반환
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param condition 검색조건
+	 * @param keyword 검색어
+	 */
 	@RequestMapping(value="/member/board/blackboard/searchmember.action", method={RequestMethod.GET})
 	public void searchmember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String condition, String keyword) {
 		
-		resp.setCharacterEncoding("UTF-8"); //돌아갈 때 한글 안깨짐
+		resp.setCharacterEncoding("UTF-8"); //인코딩
 		resp.setContentType("application/json"); //*****JSON
 		
 		//검색 결과 받아오기
@@ -65,17 +77,29 @@ public class BlackBoardController {
 			writer.print("]");
 			
 			writer.close();
-			
-		} catch (IOException e) {
+		} catch (Exception e) {
+			System.out.println("BlackBoardController.searchmember()");
 			e.printStackTrace();
 		}
 		
 	} //searchmember
 	
+	/**
+	 * 게시글 작성 화면 호출 메서드
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param page 페이지번호
+	 * @param reply 답글여부
+	 * @param thread 답글작성시 부모글 thread
+	 * @param depth 답글작성시 부모글 depth
+	 * @param seqParent 부모글번호
+	 * @return member/board/blackboard/add.jsp
+	 */
 	@RequestMapping(value="/member/board/blackboard/add.action", method={RequestMethod.GET})
-	public String add(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String reply, String thread, String depth, String seqParent) {
+	public String member_add(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String reply, String thread, String depth, String seqParent) {
 		
-
+		//데이터 전달
 		req.setAttribute("reply", reply);
 		req.setAttribute("thread", thread);
 		req.setAttribute("depth", depth);
@@ -83,12 +107,19 @@ public class BlackBoardController {
 		req.setAttribute("seqParent", seqParent);
 		
 		return "member.board.blackboard.add";
-	} //add
+	} //member_add
 	
+	/**
+	 * 게시글 작성 메서드
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param dto 추가할 정보를 담은 dto
+	 * @param page 페이지번호
+	 * @param reply 답글여부
+	 */
 	@RequestMapping(value="/member/board/blackboard/addok.action", method={RequestMethod.POST})
-	public void addok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, BlackBoardDTO dto, String page, String reply) {
-		
-		//데이터 가져오기 - parameter(dto)
+	public void member_addok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, BlackBoardDTO dto, String page, String reply) {
 		
 		//회원번호
 		dto.setSeqMember((String)session.getAttribute("seqMember"));
@@ -249,17 +280,27 @@ public class BlackBoardController {
 				
 				writer.close();
 				
-			}
+			}			
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("BlackBoardController.member_addok()");
+			e.printStackTrace();
 		}
 		
-	} //addok
+	} //member_addok
 	
-	
+	/**
+	 * 게시글 수정 화면 호출 메서드
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seq
+	 * @param page
+	 * @param reply
+	 * @return member/board/blackboard/edit.jsp
+	 */
 	@RequestMapping(value="/member/board/blackboard/edit.action", method={RequestMethod.GET})
-	public String edit(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String page, String reply) {
+	public String member_owner_edit(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String page, String reply) {
 		
 		//DB -> select
 		BlackBoardDTO dto = dao.get(seq);
@@ -270,10 +311,19 @@ public class BlackBoardController {
 		req.setAttribute("nowPage", page);
 		
 		return "member.board.blackboard.edit";
-	} //add
+	} //member_owner_edit
 	
+	/**
+	 * 게시글 수정 메서드
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param dto 수정할 정보를 담은 dto
+	 * @param page 페이지번호
+	 * @param reply 답글여부
+	 */
 	@RequestMapping(value="/member/board/blackboard/editok.action", method={RequestMethod.POST})
-	public void editok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, BlackBoardDTO dto, String page, String reply) {
+	public void member_owner_editok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, BlackBoardDTO dto, String page, String reply) {
 		
 		//데이터 가져오기 - parameter(dto)
 		
@@ -381,14 +431,25 @@ public class BlackBoardController {
 				
 				writer.close();
 				
-			}
+			}			
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("BlackBoardController.member_owner_editok()");
+			e.printStackTrace();
 		}
 		
-	} //editok
+	} //member_owner_editok
 	
+	/**
+	 * 게시글 조회 화면 호출 메서드
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seq 게시글번호
+	 * @param page 페이지번호
+	 * @param reply 답글여부
+	 * @return member/board/blackboard/view.jsp
+	 */
 	@RequestMapping(value="/member/board/blackboard/view.action", method={RequestMethod.GET})
 	public String view(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String page, String reply) {
 		
@@ -429,10 +490,19 @@ public class BlackBoardController {
 		req.setAttribute("clist", clist);
 		
 		return "member.board.blackboard.view";
-	}
+	} //view
 	
+	/**
+	 * 댓글 추가 메서드
+	 * JSON 형식의 데이터 반환
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seq 게시글번호
+	 * @param content 댓글내용
+	 */
 	@RequestMapping(value="/member/board/blackboard/addcmt.action", method={RequestMethod.GET})
-	public void addcmt(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String content) {
+	public void member_addcmt(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String content) {
 		
 		//1. 데이터 가져오기(seq, content)
 		//2. DB 위임 -> insert
@@ -493,14 +563,24 @@ public class BlackBoardController {
 			}			
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("BlackBoardController.member_addcmt()");
+			e.printStackTrace();
 		}
 
-	}
+	} //member_addcmt
 	
-	
+	/**
+	 * 댓글 삭제 메서드
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seqBlackBoardCmt 댓글번호
+	 * @param seqBlackBoard 게시글번호
+	 * @param page 페이지번호
+	 * @param reply 답글여부
+	 */
 	@RequestMapping(value="/member/board/blackboard/delComment.action", method={RequestMethod.GET})
-	public void delComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String seqBlackBoard, String seqBlackBoardCmt, String reply) {
+	public void member_cmt_owner_delComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seqBlackBoardCmt, String seqBlackBoard, String page, String reply) {
 		
 		resp.setCharacterEncoding("UTF-8");
 		
@@ -511,7 +591,7 @@ public class BlackBoardController {
 
 		//결과 처리
 		try {
-
+			
 			if (result == 1) {
 				//삭제 성공
 				PrintWriter writer = resp.getWriter();
@@ -537,15 +617,25 @@ public class BlackBoardController {
 				writer.print("</body></html>");
 				
 				writer.close();
-			}
+			}			
 			
 		} catch (Exception e) {
-			System.out.println(e);
-		}	
+			System.out.println("BlackBoardController.member_cmt_owner_delComment()");
+			e.printStackTrace();
+		}
 
-	}	
+	} //member_cmt_owner_delComment
 	
-	
+	/**
+	 * 게시글 목록 조회 메서드
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param page 페이지번호
+	 * @param condition 검색조건
+	 * @param keyword 검색어
+	 * @return member/board/blackboard/list.jsp
+	 */
 	@RequestMapping(value="/member/board/blackboard/list.action", method={RequestMethod.GET})
 	public String list(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String condition, String keyword) {
 
@@ -601,16 +691,25 @@ public class BlackBoardController {
 		}
 		
 		//결과 처리
+		req.setAttribute("totalCount", totalCount);
 		req.setAttribute("list", list);
 		req.setAttribute("pagebar", pagebar);
 		req.setAttribute("nowPage", nowPage);
 		req.setAttribute("keyword", keyword);
 		
 		return "member.board.blackboard.list";
-	}
+	} //list
 	
+	/**
+	 * 게시글 삭제 메서드
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seq 게시글번호
+	 * @param seqParent 부모글번호
+	 */
 	@RequestMapping(value="/member/board/blackboard/del.action", method= {RequestMethod.GET})
-	public void del(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String seqParent) {
+	public void member_owner_del(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String seqParent) {
 		
 		resp.setCharacterEncoding("UTF-8");
 		
@@ -618,8 +717,8 @@ public class BlackBoardController {
 		//2. DB -> delete
 		//3. 결과
 		
-		
 		try {
+			
 			boolean has = false;
 			
 			//2.
@@ -694,15 +793,23 @@ public class BlackBoardController {
 					
 				}
 				
-			}
+			}			
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("BlackBoardController.member_owner_del()");
+			e.printStackTrace();
 		}
 		
 		
-	}
+	} //member_owner_del
 	
+	/**
+	 * 임시로 생성한 로그인 메서드
+	 * @param req
+	 * @param resp
+	 * @param session
+	 * @param seqMember 회원번호
+	 */
 	@RequestMapping(value="/member/board/blackboard/login.action", method= {RequestMethod.GET})
 	public void login(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seqMember) {
 		
@@ -716,12 +823,19 @@ public class BlackBoardController {
 		//3.
 		try {
 			resp.sendRedirect("/bnna/member/board/blackboard/list.action");
-		} catch (IOException e) {
+		} catch (Exception e) {
+			System.out.println("BlackBoardController.login()");
 			e.printStackTrace();
 		}
 		
-	}	
+	} //login
 	
+	/**
+	 * 로그아웃 메서드
+	 * @param req
+	 * @param resp
+	 * @param session
+	 */
 	@RequestMapping(value="/member/board/blackboard/logout.action", method= {RequestMethod.GET})
 	public void logout(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
 		
@@ -734,14 +848,19 @@ public class BlackBoardController {
 		//2.
 		try {
 			resp.sendRedirect("/bnna/member/board/blackboard/list.action");
-		} catch (IOException e) {
+		} catch (Exception e) {
+			System.out.println("BlackBoardController.logout()");
 			e.printStackTrace();
 		}
 		
-	}		
+	} //logout
 	
-	
-
+	/**
+	 * 이미지 파일명 중복 검사 메서드
+	 * @param path 경로
+	 * @param filename 파일명
+	 * @return 중복검사 후 파일명
+	 */
 	private String getFileName(String path, String filename) {
 		
 		//return System.currentTimeMillis() + "_" + filename;
@@ -769,6 +888,6 @@ public class BlackBoardController {
 			}
 		}
 		
-	} //getFileName()	
+	} //getFileName	
 	
 }

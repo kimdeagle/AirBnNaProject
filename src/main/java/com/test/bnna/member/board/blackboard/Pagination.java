@@ -2,6 +2,11 @@ package com.test.bnna.member.board.blackboard;
 
 import java.util.HashMap;
 
+/**
+ * 페이징 작업 클래스
+ * @author 김주혁
+ *
+ */
 public class Pagination {
 
 	private int nowPage;		//현재 페이지 번호
@@ -15,6 +20,11 @@ public class Pagination {
 	
 	private String pagebar = "";
 	
+	/**
+	 * Pagination Constructor
+	 * @param page 페이지번호
+	 * @param totalCount 총 게시글 수
+	 */
 	public Pagination(String page, int totalCount) {
 		
 		if (page == null || page == "") {
@@ -33,7 +43,11 @@ public class Pagination {
 		
 	} //생성자
 
-	
+	/**
+	 * 페이지바 만드는 메서드
+	 * @param map 검색조건과 검색어를 담은 객체
+	 * @return 동적으로 생성된 페이지바
+	 */
 	public String getPagebar(HashMap<String, String> map) {
 		
 		//이전 10페이지

@@ -49,7 +49,7 @@
 			<tr>
 				<th>이미지</th>
 				<td>
-					<button type="button" class="btn btn-success" onclick="$('#image').click();">파일 선택</button>
+					<button type="button" class="btn btn-warning" onclick="$('#image').click();">파일 선택</button>
 					<span class="upload-help">*** 다중 이미지 선택이 가능합니다.</span>
 					<input type="file" id="image" name="image" multiple="multiple">
 					<div id="imagename"></div>

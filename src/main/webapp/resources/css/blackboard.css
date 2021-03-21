@@ -45,11 +45,6 @@ aside {
 
 /* view */
 
-/* view > imgname */
-#tblView .imgname {
-	display: block;
-}
-
 /* view > images(div) */
 #tblView .images {
 	margin-bottom: 20px;
