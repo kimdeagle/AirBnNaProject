@@ -15,5 +15,9 @@
 	<delete id="del" parameterType="String">
 		delete from tblBlackBoardCmt where seq = #{seqBlackBoardCmt}
 	</delete>
+	
+	<select id="get" parameterType="String" resultType="blackboardcmtdto">
+		select * from tblBlackBoardCmt where seq = #{seq}
+	</select>
 
 </mapper>

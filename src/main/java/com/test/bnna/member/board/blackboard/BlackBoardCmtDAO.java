@@ -28,4 +28,10 @@ public class BlackBoardCmtDAO implements IBlackBoardCmtDAO {
 		return template.delete("blackboardcmt.del", seqBlackBoardCmt);
 	}
 	
+	@Override
+	public BlackBoardCmtDTO get(String seq) {
+		
+		return template.selectOne("blackboardcmt.get", seq);
+	}
+	
 }

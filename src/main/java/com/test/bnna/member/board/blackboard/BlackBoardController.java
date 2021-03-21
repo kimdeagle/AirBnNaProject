@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +37,7 @@ public class BlackBoardController {
 	@RequestMapping(value="/member/board/blackboard/searchmember.action", method={RequestMethod.GET})
 	public void searchmember(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String condition, String keyword) {
 		
-		resp.setCharacterEncoding("UTF-8"); //돌아갈 때 한글 안깨짐
+		resp.setCharacterEncoding("UTF-8"); //인코딩
 		resp.setContentType("application/json"); //*****JSON
 		
 		//검색 결과 받아오기
@@ -73,9 +72,9 @@ public class BlackBoardController {
 	} //searchmember
 	
 	@RequestMapping(value="/member/board/blackboard/add.action", method={RequestMethod.GET})
-	public String add(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String reply, String thread, String depth, String seqParent) {
+	public String member_add(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String reply, String thread, String depth, String seqParent) {
 		
-
+		//데이터 전달
 		req.setAttribute("reply", reply);
 		req.setAttribute("thread", thread);
 		req.setAttribute("depth", depth);
@@ -86,9 +85,7 @@ public class BlackBoardController {
 	} //add
 	
 	@RequestMapping(value="/member/board/blackboard/addok.action", method={RequestMethod.POST})
-	public void addok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, BlackBoardDTO dto, String page, String reply) {
-		
-		//데이터 가져오기 - parameter(dto)
+	public void member_addok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, BlackBoardDTO dto, String page, String reply) {
 		
 		//회원번호
 		dto.setSeqMember((String)session.getAttribute("seqMember"));
@@ -259,7 +256,7 @@ public class BlackBoardController {
 	
 	
 	@RequestMapping(value="/member/board/blackboard/edit.action", method={RequestMethod.GET})
-	public String edit(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String page, String reply) {
+	public String member_owner_edit(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String page, String reply) {
 		
 		//DB -> select
 		BlackBoardDTO dto = dao.get(seq);
@@ -273,7 +270,7 @@ public class BlackBoardController {
 	} //add
 	
 	@RequestMapping(value="/member/board/blackboard/editok.action", method={RequestMethod.POST})
-	public void editok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, BlackBoardDTO dto, String page, String reply) {
+	public void member_owner_editok(HttpServletRequest req, HttpServletResponse resp, HttpSession session, BlackBoardDTO dto, String page, String reply) {
 		
 		//데이터 가져오기 - parameter(dto)
 		
@@ -432,7 +429,7 @@ public class BlackBoardController {
 	}
 	
 	@RequestMapping(value="/member/board/blackboard/addcmt.action", method={RequestMethod.GET})
-	public void addcmt(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String content) {
+	public void member_addcmt(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String content) {
 		
 		//1. 데이터 가져오기(seq, content)
 		//2. DB 위임 -> insert
@@ -500,7 +497,7 @@ public class BlackBoardController {
 	
 	
 	@RequestMapping(value="/member/board/blackboard/delComment.action", method={RequestMethod.GET})
-	public void delComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String page, String seqBlackBoard, String seqBlackBoardCmt, String reply) {
+	public void member_cmt_owner_delComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seqBlackBoardCmt, String seqBlackBoard, String page, String reply) {
 		
 		resp.setCharacterEncoding("UTF-8");
 		
@@ -601,6 +598,7 @@ public class BlackBoardController {
 		}
 		
 		//결과 처리
+		req.setAttribute("totalCount", totalCount);
 		req.setAttribute("list", list);
 		req.setAttribute("pagebar", pagebar);
 		req.setAttribute("nowPage", nowPage);
@@ -610,7 +608,7 @@ public class BlackBoardController {
 	}
 	
 	@RequestMapping(value="/member/board/blackboard/del.action", method= {RequestMethod.GET})
-	public void del(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String seqParent) {
+	public void member_owner_del(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String seq, String seqParent) {
 		
 		resp.setCharacterEncoding("UTF-8");
 		

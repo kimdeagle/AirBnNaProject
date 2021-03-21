@@ -8,4 +8,6 @@ public interface IBlackBoardCmtDAO {
 
 	int del(String seqBlackBoardCmt);
 
+	BlackBoardCmtDTO get(String seq);
+
 }
