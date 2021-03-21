@@ -27,8 +27,6 @@ public class FreeController {
 	@Autowired
 	private IFreeDAO dao;
 	
-//	@Autowired
-//	private IFreeCmtDAO cdao;
 	
 	
 	
@@ -47,7 +45,8 @@ public class FreeController {
 		
 		//TODO 1번 회원 세션으로 고정
 		session.setAttribute("seq", 1);
-		System.out.println("페이지: "+page);
+		session.setAttribute("id", "air0001");
+		
 		HashMap<String, String> map = new HashMap<String, String>();
 		
 		//검색

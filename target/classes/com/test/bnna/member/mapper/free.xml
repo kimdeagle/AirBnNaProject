@@ -44,7 +44,17 @@
 
 
 	<select id="get" parameterType="Integer" resultType="com.test.bnna.member.board.free.FreeDTO">
-		select * from vwFreeBoard where seq = #{seq}	
+		select * from(
+				select
+				    rownum  rnum,
+				    mb.id as id,
+				    mb.name as name,
+				    fr.*,
+					(select count(*) from tblFree) as cnt
+				from tblmember mb
+				    INNER JOIN tblfree fr
+				    on mb.seq = fr.seqmember)
+				    	where seq = #{seq}		
 	</select>
 	
 	<insert id="add">

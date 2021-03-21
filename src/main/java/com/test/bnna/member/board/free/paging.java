@@ -1,5 +1,10 @@
 package com.test.bnna.member.board.free;
 
+/**
+ * 자유 게시판 페이징
+ * @author 최진영
+ *
+ */
 public class paging {
 	
 	

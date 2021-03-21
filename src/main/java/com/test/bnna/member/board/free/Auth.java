@@ -89,8 +89,8 @@ public class Auth {
 		FreeDTO dto = dao.get(seq);
 				
 		System.out.println("게시판 번호:  "+ seq);
-		System.out.println(session.getAttribute("id"));
-		System.out.println(dto.getId());
+		System.out.println("세션 아이디: " + session.getAttribute("id"));
+		System.out.println("게시판 아이디: "+dto.getId());
 		
 		if(!session.getAttribute("id").equals(dto.getId())) {
 			
@@ -101,7 +101,7 @@ public class Auth {
 				PrintWriter writer = response.getWriter();
 				writer.print("<html><head><meta charset='utf-8'></head><body>");
 				writer.print("<script>");
-				writer.print("alert('failed'); history.back()");
+				writer.print("alert('아이디가 일치하지 않습니다.'); history.back()");
 				writer.print("</script>");
 				writer.print("</body></html>");
 				
