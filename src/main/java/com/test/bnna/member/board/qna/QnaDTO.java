@@ -2,6 +2,11 @@ package com.test.bnna.member.board.qna;
 
 import lombok.Data;
 
+/**
+ * 
+ * QNA 게시판 DTO
+ *
+ */
 @Data
 public class QnaDTO {
 	

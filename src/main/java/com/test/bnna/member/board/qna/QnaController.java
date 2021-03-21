@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 
-
+/**
+ * 
+ * Q&A 게시판 컨트롤러
+ *
+ */
 @Controller
 public class QnaController {
 	

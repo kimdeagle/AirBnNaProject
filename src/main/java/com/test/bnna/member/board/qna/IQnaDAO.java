@@ -2,6 +2,11 @@ package com.test.bnna.member.board.qna;
 
 import java.util.List;
 
+/**
+ * 
+ * Q&A 게시판 DAO 인터페이스
+ *
+ */
 public interface IQnaDAO {
 
 	List<QnaDTO> list();

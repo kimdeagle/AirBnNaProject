@@ -6,6 +6,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * 
+ * Q&A 게시판 DAO
+ *
+ */
 @Repository
 public class QnaDAO implements IQnaDAO {
 	
