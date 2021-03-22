@@ -13,7 +13,7 @@ Map API를 활용해 숙소 주변의 관광정보를 확인하고 이를 가지
 - 2021년 3월 4일 - 2021년 3월 21일 (총 18일)
 - 김다은, 김주혁, 오수경, 이현우, 조아라, 최진영 (6명)
 
-## ⚙️ Traveler 기술 스택
+## ⚙️ AirBnNa 기술 스택
 <p align="center">
   <img src="https://img.shields.io/badge/API-국문_관광_정보-skyblue?style=flat">&nbsp 
   <img src="https://img.shields.io/badge/API-KakaoMap-yellow?style=flat">&nbsp 
@@ -30,6 +30,7 @@ Map API를 활용해 숙소 주변의 관광정보를 확인하고 이를 가지
 
 
 ## 📷 AirBnNa ERD 
+![AirBnNa ERD](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/8d75b70f-d3f9-49f9-955d-5be7899ac77b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210322%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210322T062624Z&X-Amz-Expires=86400&X-Amz-Signature=f22133350a2960a6d61d68fb4818e5d9a3d21cc82a3e7740c209c8985a90c618&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 
 
