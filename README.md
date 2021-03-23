@@ -39,8 +39,7 @@
 <br>
 
 ## ✈️ AirBnNa 기능 소개
-![image](https://user-images.githubusercontent.com/74163296/112174994-33cd0c80-8c3a-11eb-9cc1-3cbf07ccdf68.png)
-
+<center><img src="https://user-images.githubusercontent.com/74163296/112174994-33cd0c80-8c3a-11eb-9cc1-3cbf07ccdf68.png" width="75%"></center>
 <br>
 
 ## 🔥 김다은 담당 업무
@@ -53,6 +52,7 @@
 
 ## 💻 담당 업무 구현 화면
 ### [사용자] ###
+<img src="https://user-images.githubusercontent.com/74163296/112177607-70016c80-8c3c-11eb-9e98-7f3fa0905ac9.png" width="45%"> <img src="https://user-images.githubusercontent.com/74163296/112178046-d1294000-8c3c-11eb-8a41-18a7954cb67c.png" width="45%">
 
 🔺<b>마이페이지</b> 
 ↑
