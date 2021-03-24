@@ -18,17 +18,17 @@
 
 ## ⚙️ AirBnNa 기술 스택
 <p align="center">
-  <img src="https://img.shields.io/badge/API-국문_관광_정보-skyblue?style=flat">&nbsp 
-  <img src="https://img.shields.io/badge/API-KakaoMap-yellow?style=flat">&nbsp 
-  <img src="https://img.shields.io/badge/Library-Bootstrap-563D7C?style=flat&logo=bootstrap">&nbsp 
+  <img src="https://img.shields.io/badge/Framework-SpringFramework_5.0.7-6DB33F?style=flat&logo=spring&logoColor=white">&nbsp 
   <img src="https://img.shields.io/badge/Language-Java_8-007396?style=flat&logo=java&logoColor=white">&nbsp 
+  <img src="https://img.shields.io/badge/Library-Bootstrap-563D7C?style=flat&logo=bootstrap">&nbsp 
   <img src="https://img.shields.io/badge/Language-JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=white">&nbsp 
   <img src="https://img.shields.io/badge/Language-JSP-orange?style=flat">&nbsp 
   <img src="https://img.shields.io/badge/Language-JSTL-green?style=flat">&nbsp 
   <img src="https://img.shields.io/badge/Language-jquery-0769AD?style=flat&logo=jquery&logoColor=white">&nbsp 
   <img src="https://img.shields.io/badge/Database-Oracle-F80000?style=flat&logo=oracle&logoColor=white">&nbsp 
   <img src="https://img.shields.io/badge/Server-ApacheTomcat_8.5v-D22128?style=flat&logo=apahce&logoColor=white">&nbsp 
-  <img src="https://img.shields.io/badge/Framework-SpringFramework_5.0.7-6DB33F?style=flat&logo=spring&logoColor=white">&nbsp 
+  <img src="https://img.shields.io/badge/API-국문_관광_정보-skyblue?style=flat">&nbsp 
+  <img src="https://img.shields.io/badge/API-KakaoMap-yellow?style=flat">&nbsp 
 </p>
 
 <br>
@@ -77,7 +77,7 @@
 ---
 
 ### [사용자] 여행일정 만들기 ###
-<img src="https://user-images.githubusercontent.com/74163296/112242794-dfed1280-8c8f-11eb-8cbe-f946f28ee7eb.png)" width="70%">
+<img src="https://user-images.githubusercontent.com/74163296/112242794-dfed1280-8c8f-11eb-8cbe-f946f28ee7eb.png" width="70%">
 
 **📷메인페이지** 
 - 여행일정 만들기 첫 페이지로, 헤더와 푸터부터 새로 만들어 기존의 에어비앤나 페이지와는 분리시켜 설계하였다.
@@ -89,7 +89,7 @@
 - 일정 만들기에 앞서, 여행지와 여행일자를 선택하는 페이지이다.(daterangepicker.js 사용) 
 - 여행지는 지역 분류 버튼을 통해 지역별로 확인이 가능하다.
 
-<img src="https://user-images.githubusercontent.com/74163296/112242858-ef6c5b80-8c8f-11eb-9032-864f61d3d407.png" width="48%"> <img src="https://user-images.githubusercontent.com/74163296/112242875-f2ffe280-8c8f-11eb-856a-627410d2d644.png" width="48%">
+<img src="https://user-images.githubusercontent.com/74163296/112242858-ef6c5b80-8c8f-11eb-9032-864f61d3d407.png" width="70%"> <img src="https://user-images.githubusercontent.com/74163296/112242875-f2ffe280-8c8f-11eb-856a-627410d2d644.png" width="70%">
 
 **📷일정 만들기 & 세부정보 확인** 
 - 테마선택 또는 키워드 검색을 통해 해당 지역의 관광정보를 알 수 있으며, 해당 장소를 일정에 추가할 수 있다. (국문관광정보 API 사용)
@@ -103,7 +103,7 @@
 - 여행일정을 공유할 수 있으며, 인기순 또는 신규순으로 게시글을 확인할 수 있다.
 - 필터기능(여행지/여행시기/여행기간)을 통해 원하는 게시물을 조회할 수 있다.
 
-<img src="https://user-images.githubusercontent.com/74163296/112242880-f4c9a600-8c8f-11eb-8e87-0c0b7b8e0bf7.png" width="48%">
+<img src="https://user-images.githubusercontent.com/74163296/112242880-f4c9a600-8c8f-11eb-8e87-0c0b7b8e0bf7.png" width="70%">
 
 **📷일정 상세 보기 (진행중)** 
 - 작성한 여행일정을 전체 또는 일차별로 확인할 수 있으며, 여행 일정에 대한 작성자의 소개글을 확인할 수 있다.
