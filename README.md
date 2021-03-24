@@ -65,15 +65,28 @@
 - 새 글을 추가/수정/삭제할 수 있으며, 파일추가 버튼을 통한 다중파일 업로드가 가능하다.
 
 ### [사용자] 마이페이지 ###
-<img src="https://user-images.githubusercontent.com/74163296/112242563-72d97d00-8c8f-11eb-9edc-770c2a9b6633.png" width="48"> <img src="https://user-images.githubusercontent.com/74163296/112240732-33f5f800-8c8c-11eb-8880-7a56fe172c25.png" width="48%"> 
+<img src="https://user-images.githubusercontent.com/74163296/112242563-72d97d00-8c8f-11eb-9edc-770c2a9b6633.png" width="48%"> <img src="https://user-images.githubusercontent.com/74163296/112240732-33f5f800-8c8c-11eb-8880-7a56fe172c25.png" width="48%"> 
 
 **📷마일리지 & 찜한 숙소**
 - 마일리지 내역을 전체, 사용, 적립별로 확인할 수 있다.
 - 간단한 회원 정보를 확인할 수 있고, 문의 내역 수를 확인할 수 있다.
 - 찜 한 숙소들을 확인할 수 있으며, 하트 버튼을 누르면 찜 해제가 된다.
 
+### [사용자] 여행일정 만들기 ###
+![메인페이지](https://user-images.githubusercontent.com/74163296/112242794-dfed1280-8c8f-11eb-8cbe-f946f28ee7eb.png)
 
-### [사용자] 마이페이지 ###
+**📷메인페이지** 여행일정 만들기 첫 페이지로, 헤더와 푸터부터 새로 만들어 기존의 에어비앤나 페이지와는 분리시켜 설계하였다.
+
+<img src="https://user-images.githubusercontent.com/74163296/112242819-e54a5d00-8c8f-11eb-9fc3-c3575f883931.png" width="45%"> <img src="https://user-images.githubusercontent.com/74163296/112242838-e9767a80-8c8f-11eb-86ef-14d8cdd89766.png" width="45%">
+
+**📷여행일정 기초정보 선택** 
+- 일정 만들기에 앞서, 여행지와 여행일자를 선택하는 페이지이다.(daterangepicker.js 사용) 
+- 여행지는 지역 분류 버튼을 통해 지역별로 확인이 가능하다.
+
+![여행일정공유게시판](https://user-images.githubusercontent.com/74163296/112242851-eda29800-8c8f-11eb-8e90-6f04e15e02d9.png)
+![일정만들기](https://user-images.githubusercontent.com/74163296/112242858-ef6c5b80-8c8f-11eb-9032-864f61d3d407.png)
+![일정만들기_세부정보확인](https://user-images.githubusercontent.com/74163296/112242875-f2ffe280-8c8f-11eb-856a-627410d2d644.png)
+![일정확인하기_진행중](https://user-images.githubusercontent.com/74163296/112242880-f4c9a600-8c8f-11eb-8e87-0c0b7b8e0bf7.png)
 
 <br>
 
