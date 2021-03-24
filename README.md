@@ -18,7 +18,7 @@
 
 ## ⚙️ AirBnNa 기술 스택
 <p align="center">
-  <img src="https://img.shields.io/badge/Framework-SpringFramework_5.0.7-6DB33F?style=flat&logo=spring&logoColor=white">&nbsp 
+  <img src="https://img.shields.io/badge/Framework-SpringFramework-6DB33F?style=flat&logo=spring&logoColor=white">&nbsp 
   <img src="https://img.shields.io/badge/Language-Java_8-007396?style=flat&logo=java&logoColor=white">&nbsp 
   <img src="https://img.shields.io/badge/Library-Bootstrap-563D7C?style=flat&logo=bootstrap">&nbsp 
   <img src="https://img.shields.io/badge/Language-JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=white">&nbsp 
