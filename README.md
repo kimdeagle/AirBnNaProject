@@ -13,7 +13,8 @@
 
 - 2021년 3월 4일 - 2021년 3월 21일 (총 18일)
 - <b>김다은</b>, 김주혁, 오수경, 이현우, 조아라, 최진영 (6명)
- 
+<img src="https://user-images.githubusercontent.com/74163296/112713792-3a999f00-8f1a-11eb-9897-0ebedf6a18df.png" width="50%">
+
 <br>
 
 ## ⚙️ AirBnNa 기술 스택
@@ -34,7 +35,7 @@
 <br>
 
 ## 📷 AirBnNa ERD 
-![AirBnNa ERD](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/8d75b70f-d3f9-49f9-955d-5be7899ac77b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210322%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210322T062624Z&X-Amz-Expires=86400&X-Amz-Signature=f22133350a2960a6d61d68fb4818e5d9a3d21cc82a3e7740c209c8985a90c618&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![image](https://user-images.githubusercontent.com/74163296/112713734-01f9c580-8f1a-11eb-8f0b-ad4e95d13c77.png)
 
 <br>
 
