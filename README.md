@@ -13,7 +13,7 @@
 
 - 2021년 3월 4일 - 2021년 3월 21일 (총 18일)
 - <b>김다은</b>, 김주혁, 오수경, 이현우, 조아라, 최진영 (6명)
-<img src="https://user-images.githubusercontent.com/74163296/112713792-3a999f00-8f1a-11eb-9897-0ebedf6a18df.png" width="50%">
+<img src="https://user-images.githubusercontent.com/74163296/112713792-3a999f00-8f1a-11eb-9897-0ebedf6a18df.png" width="35%">
 
 <br>
 
