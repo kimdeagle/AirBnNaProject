@@ -1,122 +1,132 @@
-# ✈️ AirBnNa [Spring Framework Project]
-## 💚 Spring Project _ Accommodation Booking System :: AirBnNa _ Group 4
-<br>
+# 온라인 숙소 예약 사이트 에어비엔나✈️
 
-## 🗒️ 프로젝트 개요
+<img src="https://user-images.githubusercontent.com/20657250/113282729-49b98c00-9322-11eb-99b3-972722853421.png" width="700">
 
-- 온라인 숙박 중개 사이트 에어비앤비를 벤치마킹하여, 웹 페이지 이용자가 숙소를 호스팅 또는 이용 할 수 있는 국내 숙소 예약 사이트를 구현한다.
-- 숙소 예약 이외에도 블랙회원 신고, 리뷰, 이벤트 및 여행정보를 보여주는 게시판이 있으며, Map API를 활용해 숙소 주변의 관광정보를 확인하고 이를 가지고 여행 일정을 작성, 다른 이용자들과 공유할 수 있다.
-
-<br>
-
-## 🚩 프로젝트 기간 및 팀원
-
-- 2021년 3월 4일 - 2021년 3월 21일 (총 18일)
-- <b>김다은</b>, 김주혁, 오수경, 이현우, 조아라, 최진영 (6명)
-<img src="https://user-images.githubusercontent.com/74163296/112713792-3a999f00-8f1a-11eb-9897-0ebedf6a18df.png" width="35%">
-
-<br>
-
-## ⚙️ AirBnNa 기술 스택
-<p align="center">
-  <img src="https://img.shields.io/badge/Framework-SpringFramework-6DB33F?style=flat&logo=spring&logoColor=white">&nbsp 
-  <img src="https://img.shields.io/badge/Language-Java_8-007396?style=flat&logo=java&logoColor=white">&nbsp 
-  <img src="https://img.shields.io/badge/Library-Bootstrap-563D7C?style=flat&logo=bootstrap">&nbsp 
-  <img src="https://img.shields.io/badge/Language-JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=white">&nbsp 
-  <img src="https://img.shields.io/badge/Language-JSP-orange?style=flat">&nbsp 
-  <img src="https://img.shields.io/badge/Language-JSTL-green?style=flat">&nbsp 
-  <img src="https://img.shields.io/badge/Language-jquery-0769AD?style=flat&logo=jquery&logoColor=white">&nbsp 
-  <img src="https://img.shields.io/badge/Database-Oracle-F80000?style=flat&logo=oracle&logoColor=white">&nbsp 
-  <img src="https://img.shields.io/badge/Server-ApacheTomcat_8.5v-D22128?style=flat&logo=apahce&logoColor=white">&nbsp 
-  <img src="https://img.shields.io/badge/API-국문_관광_정보-skyblue?style=flat">&nbsp 
-  <img src="https://img.shields.io/badge/API-KakaoMap-yellow?style=flat">&nbsp 
-</p>
-
-<br>
-
-## 📷 AirBnNa ERD 
-![image](https://user-images.githubusercontent.com/74163296/112713734-01f9c580-8f1a-11eb-8f0b-ad4e95d13c77.png)
-
-<br>
-
-## ✈️ AirBnNa 기능 소개
-<center><img src="https://user-images.githubusercontent.com/74163296/112174994-33cd0c80-8c3a-11eb-9cc1-3cbf07ccdf68.png" width="75%"></center>
-<br>
-
-## 🔥 김다은 담당 업무
-|    단계    |  담당업무                                              |
-| :--------: | :----------------------------------------------------------- |
-|  기획단계  | - 요구사항 분석, ERD 작성</br>- Script 작성</br>- 화면 설계</br>- 더미데이터 생성</br>- 깃허브 프로젝트 세팅 |
-|  구현단계  | - (사용자) 고객마이페이지(고객), 관심숙소, 여행일정, 여행정보 게시판</br>- (관리자)여행정보 게시판 관리 |
-| 마무리단계 | - 테스트 및 에러 수정</br>- 본인 구현파트 화면캡처</br>- 발표용 PPT 작성</br>- 프로젝트 최종요약본 세팅</br>- 프로젝트 최종요약본 작성 |
-<br>
-
-## 💻 담당 업무 구현 화면
-### [관리자] 여행정보 게시판 관리 ###
-<img src="https://user-images.githubusercontent.com/74163296/112239918-b978a880-8c8a-11eb-9f67-258e80321361.png" width="48%"> <img src="https://user-images.githubusercontent.com/74163296/112178046-d1294000-8c3c-11eb-8a41-18a7954cb67c.png" width="48%"> 
-
-**📷게시판 상세조회 & 목록조회** 
-- 글에 업로드 된 이미지 파일을 슬라이드 형식으로 확인할 수 있으며, 글에 달린 댓글 또는 관련글을 확인할 수 있다.
-- 글을 공유하고 싶을 땐, 스크랩 버튼을 눌러 클립보드에 현재 url을 복사할 수 있다.
-- 검색을 통해 게시글을 조회 할 수 있으며, 관련글(답글)도 확인이 가능하다.
-
-<img src="https://user-images.githubusercontent.com/74163296/112240444-ac0fee00-8c8b-11eb-9980-bf1c93153df9.png" width="32%"> <img src="https://user-images.githubusercontent.com/74163296/112240448-af0ade80-8c8b-11eb-94c6-ff1f3e8deece.png" width="32%"> <img src="https://user-images.githubusercontent.com/74163296/112240451-afa37500-8c8b-11eb-9299-3ae8a574777f.png" width="32%"> 
-
-**📷게시글 쓰기 & 수정 & 삭제** 
-- 새 글을 추가/수정/삭제할 수 있으며, 파일추가 버튼을 통한 다중파일 업로드가 가능하다.
-
----
-
-### [사용자] 마이페이지 ###
-<img src="https://user-images.githubusercontent.com/74163296/112242563-72d97d00-8c8f-11eb-9edc-770c2a9b6633.png" width="48%"> <img src="https://user-images.githubusercontent.com/74163296/112240732-33f5f800-8c8c-11eb-8880-7a56fe172c25.png" width="48%"> 
-
-**📷마일리지 & 찜한 숙소**
-- 마일리지 내역을 전체, 사용, 적립별로 확인할 수 있다.
-- 간단한 회원 정보를 확인할 수 있고, 문의 내역 수를 확인할 수 있다.
-- 찜 한 숙소들을 확인할 수 있으며, 하트 버튼을 누르면 찜 해제가 된다.
-
----
-
-### [사용자] 여행일정 만들기 ###
-<img src="https://user-images.githubusercontent.com/74163296/112242794-dfed1280-8c8f-11eb-8cbe-f946f28ee7eb.png" width="70%">
-
-**📷메인페이지** 
-- 여행일정 만들기 첫 페이지로, 헤더와 푸터부터 새로 만들어 기존의 에어비앤나 페이지와는 분리시켜 설계하였다.
-- 슬라이더를 사용하여 랜덤으로 메인 페이지 배경사진이 바뀌는 것을 확인할 수 있다. (slick slider.js 사용)
-
-<img src="https://user-images.githubusercontent.com/74163296/112242819-e54a5d00-8c8f-11eb-9fc3-c3575f883931.png" width="48%"> <img src="https://user-images.githubusercontent.com/74163296/112242838-e9767a80-8c8f-11eb-86ef-14d8cdd89766.png" width="48%">
-
-**📷여행일정 기초정보 선택** 
-- 일정 만들기에 앞서, 여행지와 여행일자를 선택하는 페이지이다.(daterangepicker.js 사용) 
-- 여행지는 지역 분류 버튼을 통해 지역별로 확인이 가능하다.
-
-<img src="https://user-images.githubusercontent.com/74163296/112242858-ef6c5b80-8c8f-11eb-9032-864f61d3d407.png" width="70%"> <img src="https://user-images.githubusercontent.com/74163296/112242875-f2ffe280-8c8f-11eb-856a-627410d2d644.png" width="70%">
-
-**📷일정 만들기 & 세부정보 확인** 
-- 테마선택 또는 키워드 검색을 통해 해당 지역의 관광정보를 알 수 있으며, 해당 장소를 일정에 추가할 수 있다. (국문관광정보 API 사용)
-- 일정을 날짜별로 작성할 수 있으며, 드래그를 통해 손쉽게 일정 순서를 변경 할 수 있다. 
-- 세부정보보기 버튼을 클릭하면 장소이름, 전화번호, 사진, 간단한 설명을 확인할 수 있다. 
-- 일정을 추가하면 지도에 해당 장소 MAP marker가 표시되며 이를 확인할 수 있다. (kakaomap API)
-
-<img src="https://user-images.githubusercontent.com/74163296/112242851-eda29800-8c8f-11eb-8e90-6f04e15e02d9.png" width="70%">
-
-**📷다른 여행자들의 일정보기** 
-- 여행일정을 공유할 수 있으며, 인기순 또는 신규순으로 게시글을 확인할 수 있다.
-- 필터기능(여행지/여행시기/여행기간)을 통해 원하는 게시물을 조회할 수 있다.
-
-<img src="https://user-images.githubusercontent.com/74163296/112242880-f4c9a600-8c8f-11eb-8e87-0c0b7b8e0bf7.png" width="70%">
-
-**📷일정 상세 보기** 
-- 작성한 여행일정을 전체 또는 일차별로 확인할 수 있으며, 여행 일정에 대한 작성자의 소개글을 확인할 수 있다.
-- 확인하고자 하는 날짜 버튼을 누르면 우측의 지도에서 일정 경로를 확인할 수 있다.
-<br>
-
-## 📝 AirBnNa 프로젝트 후기
-<p> 이번 스프링 프로젝트는 센터에서 과정 중 진행하는 마지막 프로젝트로써 우리 조는 에어비앤비 를 벤치마킹하여 "에어비앤나"라는 숙소 중개 사이트를 구현해보았다. 10일 남짓한 시간 안 에 타이트하게 진행하는 프로젝트다 보니 앞서 한 프로젝트들과는 차원이 다른 속도로 일을 했는데, 스프링의 이점을 이 때 안 것 같다. 물론 초기 세팅하는데 좀 애를 먹었 지만 익숙해지고나니 JSP/Servlet으로 같은 업무를 구현했을 때보다 걸리는 시간이 1/3로 줄어서 촉박했던 프로젝트 기간 대비 구현해낸 업무량이 꽤 많았다는 생각이 든다. 처음 JAVA 개발자 과정에 입과 해서 첫 프로젝트를 시작했을 때부터 여행일정 만드는 것 을 구현해보고 싶었는데 마지막 프로젝트 때 드디어 하게 되어서 신나게 작업했던 것 같다. 이 과정에서 내가 어느 쪽으로 진로를 결정해야 할 지도 다시 생각해보는 계기가 되었다.</p>
-<p> 마지막 프로젝트다보니 취업준비와 병행하며 진행해서 시간이 좀 더 빠듯하게 느껴졌지만, 바쁘게 진행하니 더 활력이 생겨서 좋았고, 뿌듯한 마음이 들어 좋았다. 수료 전 마지막 두 프로젝트를 함께한 팀장님, 그리고 팀원분들께 함께 해서 고마웠고, 즐거웠다는 말을 전하고 싶다.</p>
-
-## 🔗 AirBnNa 깃허브 주소
-
-👉🏻 [AirBnNa github](https://github.com/abcdana/AirBnNaProject)
+### 에어비엔나는 MVC 기반 Spring Framework를 사용한 온라인 숙소 예약 사이트 입니다.
 
 
+### ▶ 특징 Feature
++ 지도 API를 사용하여 예약한 숙소 주변 맛집, 관광지 정보 확인
++ 숙소, 관광지, 식당을 연결하여 여행 일정 추가
++ 자유, 신고, 여행정보 게시판 등 다양한 게시판 활용
+
+
+### ▶ 프로젝트 일정 Project Schedule
+<img src="https://user-images.githubusercontent.com/20657250/113282742-51793080-9322-11eb-873c-c08a7362dc7e.png" width="700">
+
+
+### ▶ 개발 환경 Develop Environment
+|구분|개발 환경|
+|:--:|--------|
+|**OS**|Windows 10 x64|
+|**Language**|Java(JDK 1.8)|
+|**IDE**|Spring Tool Suite(3.9.11)|
+|**DB**|Oracle|
+|**Server**|Apache Tomcat 8.5|
+
+
+### ▶ 개발 팀원 Project Member
++ __김주혁__ , 김다은 , 이현우 , 오수경 , 최진영 , 조아라
+
+
+### ▶ 데이터 구조 Data Structure
+<img src="https://user-images.githubusercontent.com/20657250/113282753-563de480-9322-11eb-8a14-b4aba13e6c4a.png" width="700">
+
+
+### ▶ 담당 업무 구현 Development
++ __(사용자) 신고게시판__
++ __(관리자) 회원 관리, 호스트 관리, 블랙리스트 관리, 신고게시판 관리__   
+(아래 구현 화면은 사용자 신고게시판 구현 화면입니다. 관리자 구현 화면은 추후 업데이트 예정입니다.)
+
+
+#### ✔️신고게시판 목록
+<img src="https://user-images.githubusercontent.com/20657250/113276187-8bdecf80-931a-11eb-907e-0bf1e57b9c4c.png" width="700">   
+사용자가 작성한 게시글을 DB에서 가져와 목록으로 출력합니다.
+
+검색조건을 선택하고 검색어를 입력 받아 부합하는 게시글을 DB에서 가져와 출력하고, 페이징 기능을 제공합니다.
+
+
+#### ✔️게시글 검색
+<img src="https://user-images.githubusercontent.com/20657250/113280231-f8f46400-931e-11eb-877f-6572b8ae5b95.png" width="700">   
+<img src="https://user-images.githubusercontent.com/20657250/113280232-f98cfa80-931e-11eb-8d48-6931a7509903.png" width="700">   
+제목, 이름, 아이디로 검색할 수 있고 검색조건과 검색어를 통해 DB에서 조건에 부합하는 데이터를 가져와 출력합니다.
+
+
+#### ✔️게시글 작성
+<img src="https://user-images.githubusercontent.com/20657250/113280168-f134bf80-931e-11eb-8a51-06454832f8d4.png" width="700">   
+신고대상회원 검색을 통해 선택할 수 있습니다.
+
+이미지 다중 업로드를 제공합니다.
+
+
+#### ✔️신고대상회원 검색
+<img src="https://user-images.githubusercontent.com/20657250/113280171-f1cd5600-931e-11eb-9f35-7fb2c5bb24ce.png" width="700">
+<img src="https://user-images.githubusercontent.com/20657250/113280172-f1cd5600-931e-11eb-9153-f537d2dfe4f4.png" width="700">   
+이름, 아이디로 검색이 가능하며 ajax를 통해 검색조건, 검색어를 전달하여 DB에서 조건에 부합하는 데이터를 가져와 json 형식의 데이터를 전달하고 화면에 출력합니다.
+
+
+#### ✔️이미지 다중 업로드
+<img src="https://user-images.githubusercontent.com/20657250/113280175-f265ec80-931e-11eb-8bf2-929f54057c39.png" width="700">   
+이미지 다중 업로드를 제공하며 jQuery를 사용하여 이미지 이외의 파일 첨부 시 예외처리 하였습니다.
+
+업로드한 이미지들을 저장하기 위해 MultipartFile을 사용했습니다.
+
+
+#### ✔️게시글 상세
+<img src="https://user-images.githubusercontent.com/20657250/113280180-f2fe8300-931e-11eb-82ee-3abd95bd0af5.png" width="700">   
+게시글 정보를 DB에서 가져와 화면에 출력합니다.
+
+이미지 다운로드 기능을 제공하며, 로그인한 본인의 게시글만 수정, 삭제가 가능하도록 AOP를 사용해 해당 페이지가 호출되기 전에 예외처리 하였습니다.
+
+
+#### ✔️댓글 작성
+<img src="https://user-images.githubusercontent.com/20657250/113280188-f42fb000-931e-11eb-9d8f-8e78b9d70477.png" width="700">   
+<img src="https://user-images.githubusercontent.com/20657250/113280191-f42fb000-931e-11eb-9198-d2ce73d65f3c.png" width="700">   
+해당 게시글에 달린 댓글 정보를 DB에서 가져와 출력합니다.
+
+댓글 작성 시 ajax를 통해 전달한 데이터를 DB에 반영하고 json 형식의 데이터를 클라이언트로 전달하여 page reload 없이 화면에 출력합니다.
+
+
+#### ✔️답글 작성
+<img src="https://user-images.githubusercontent.com/20657250/113280208-f5f97380-931e-11eb-8a23-01ab5ebdd488.png" width="700">   
+<img src="https://user-images.githubusercontent.com/20657250/113280211-f6920a00-931e-11eb-892c-f5bb02e1b42c.png" width="700">   
+답글 작성 시 신고대상회원을 선택하지 않도록 JSTL을 사용해서 예외처리 하였습니다.
+
+답글을 작성한 경우 부모글 밑에 위치하도록 select문에 조건절을 추가하여 조정하였습니다.
+
+
+#### ✔️글 삭제
+<img src="https://user-images.githubusercontent.com/20657250/113280212-f6920a00-931e-11eb-9859-06ca48bb30b4.png" width="700">   
+글 삭제 시 실수로 삭제하는 일을 방지하기 위해 삭제여부를 최종 확인할 수 있도록 구현했습니다.
+
+
+#### ✔️글 삭제 예외 처리
+<img src="https://user-images.githubusercontent.com/20657250/113280215-f72aa080-931e-11eb-9d19-fbd01b73068a.png">   
+<img src="https://user-images.githubusercontent.com/20657250/113280216-f7c33700-931e-11eb-9cc0-c6da0a191f9e.png">   
+답글이 있거나 댓글이 달려있는 게시글은 삭제할 수 없도록 DB 작업을 통해 예외처리 하였습니다.
+
+
+#### ✔️URL 직접 입력하여 접근 시 예외 처리(로그인 하지 않은 경우)
+<img src="https://user-images.githubusercontent.com/20657250/113280235-f98cfa80-931e-11eb-821d-66ee3f543261.png">   
+로그인 하지 않은 사용자가 URL을 직접 입력하여 접근하는 경우 AOP를 사용해 페이지 호출 전에 예외처리 하였습니다.
+
+
+#### ✔️URL 직접 입력하여 접근 시 예외 처리(본인이 아닌 경우)
+<img src="https://user-images.githubusercontent.com/20657250/113280236-fa259100-931e-11eb-86c0-4e3e64a0d697.png">   
+본인이 작성하지 않은 글을 수정, 삭제하는 URL을 직접 입력하여 접근하는 경우 AOP를 사용해 페이지 호출 전에 예외처리 하였습니다.
+
+
+### ▶ 후기 Comment
+> __쌍용교육센터에서의 마지막 프로젝트__   
+Servlet/JSP 프로젝트가 끝나자마자 Spring 프로젝트를 시작해서 처음엔 조금 벅찬 느낌이었습니
+다. 그래도 전 프로젝트와 동일한 팀원으로 프로젝트를 진행해서 작업 시간은 많이 단축되었습니
+다. 프로젝트를 진행하면서 동시에 이력서와 포트폴리오 작업을 병행하다 보니 생각했던 모든 업
+무를 구현하지 못해서 아쉽지만, 특정 업무에 집중하여 구현했습니다. 그 결과 퀄리티는 전 프로젝
+트보다 좋아졌다고 생각합니다.   
+스프링 프레임워크를 사용해 작업하는데 아직 많이 부족하다고 느꼈습니다. 의존 주입(DI)과 관점
+지향 프로그래밍(AOP)에 대한 이해와 사용 방법이 조금 어려웠고, 앞으로 공부도 많이 하고 연습
+도 많이 해야겠다고 생각했습니다.   
+벌써 쌍용교육센터에서의 마지막 프로젝트를 마무리한다는 것이 실감 나지 않습니다. 약 6개월이
+라는 시간이 금방 지나간 느낌입니다. 그동안 했던 프로젝트를 더 신경 써서 했더라면 더 완벽하
+게 했을 텐데... 하는 아쉬움도 있지만, 같이 프로젝트를 진행한 팀원들 덕분에 잘 마무리할 수 있
+었고 정말 고마웠고, 고생했다고 말하고 싶습니다.
